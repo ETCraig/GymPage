@@ -10,6 +10,7 @@ connectDB();
 app.use(express.json({ extended: false }));
 
 //Defines & Delegates Routes
+console.log('HERE');
 delegateRoutes(app);
 
 const Port = process.env.PORT || 4000;

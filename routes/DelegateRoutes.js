@@ -7,6 +7,7 @@ const store = require('./Store');
 const users = require('./Users');
 
 function delegateRoute(app) {
+    console.log('ROUTES');
     app.use('/api/articles', articles)
     app.use('/api/auth', auth)
     app.use('/api/posts', posts)
