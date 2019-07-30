@@ -24,14 +24,6 @@ const ProfileSchema = new Schema({
     bmi: {
         type: Number
     },
-    routines: [
-        {
-            routine: {
-                type: Schema.Types.ObjectId,
-                ref: 'routine'
-            }
-        }
-    ],
     sessions: [
         {
             routine: {
