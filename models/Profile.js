@@ -7,12 +7,14 @@ const ProfileSchema = new Schema({
         ref: 'user'
     },
     username: {
-        type: String
-    },
-    bio: {
-        type: String
+        type: String,
+        required: true
     },
     exp: {
+        type: String,
+        required: true
+    },
+    bio: {
         type: String
     },
     weight: {
@@ -31,16 +33,20 @@ const ProfileSchema = new Schema({
                 ref: 'routine'
             },
             weight: {
-                type: Number
+                type: Number,
+                required: true
             },
             exercises: {
-                type: String
+                type: String,
+                required: true
             },
             newRecord: {
-                type: Number
+                type: Number,
+                required: true
             },
             duration: {
-                type: Number
+                type: Number,
+                required: true
             }
         }
     ],
