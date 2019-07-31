@@ -44,4 +44,11 @@ router.delete('/', Authentication, async (req, res) => {
 
 });
 
+//@Route    POST api/profile/session
+//@Desc     Record Workout Session
+//@Access   Private
+router.post('/session', Authentication, async (req, res) => {
+    
+});
+
 module.exports = router;
