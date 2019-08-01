@@ -9,18 +9,14 @@ const PostSchema = new mongoose.Schema({
     text: {
         type: String
     },
-    images: [
-        {
-            image: {
-                type: String
-            }
-        }
-    ],
-    videos: [
-        {
+    images: {
+        image: {
             type: String
         }
-    ],
+    },
+    videos: {
+        type: String
+    },
     //Optional / Debating Over
     tags: [
         {
@@ -47,16 +43,16 @@ const PostSchema = new mongoose.Schema({
                 type: Schema.Types.ObjectId,
                 ref: 'user'
             },
+            avatar: {
+                type: String
+            },
+            name: {
+                type: String
+            },
             text: {
                 String
             },
             image: {
-                type: String
-            },
-            video: {
-                type: String
-            },
-            avatar: {
                 type: String
             },
             date: {
