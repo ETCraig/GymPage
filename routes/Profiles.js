@@ -44,7 +44,7 @@ router.post('/', [Authentication, [
         let profile = await Profile.findOne({ user: req.user.id });
 
         if (profile) {
-            profile = await Profile.findByIdAndUpdate(
+            profile = await Profile.findOneAndUpdate(
                 { user: req.user.id },
                 { $set: profileFields },
                 { new: true }
@@ -95,12 +95,12 @@ router.get('/community', async (req, res) => {
     }
 });
 
-//@Route    GET api/profile/user/:user_id
+//@Route    GET api/profile/user/:profile_id
 //@Desc     Get Profile by ID
 //@Access   Public
-router.get('/user/:user_id', async (req, res) => {
+router.get('/user/:profile_id', async (req, res) => {
     try {
-        const profile = await profile.findOne({ user: req.params.user_id }).populate('user', ['name', 'avatar']);
+        const profile = await Profile.findOne({ _id: req.params.profile_id }).populate('user', ['name', 'avatar']);
 
         if (!profile) {
             return res.status(400).json({ msg: 'There is no Profile for this User.' });
