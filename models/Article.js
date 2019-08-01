@@ -8,7 +8,6 @@ const ArticleSchema = new Schema({
     },
     text: {
         type: String,
-        required: true
     },
     image: {
         type: String
@@ -40,11 +39,10 @@ const ArticleSchema = new Schema({
         {
             user: {
                 type: Schema.Types.ObjectId,
-                ref: user
+                ref: 'user'
             },
             text: {
                 String,
-                required: true
             },
             avatar: {
                 type: String

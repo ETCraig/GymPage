@@ -27,7 +27,7 @@ const RoutineSchema = new Schema({
     },
     saves: [
         {
-            save: {
+            user: {
                 type: Schema.Types.ObjectId,
                 ref: 'user'
             }
@@ -37,15 +37,13 @@ const RoutineSchema = new Schema({
         {
             user: {
                 type: Schema.Types.ObjectId,
-                ref: user
+                ref: 'user'
             },
             text: {
                 String,
-                required: true
             },
             rating: {
                 type: Number,
-                required: true
             },
             avatar: {
                 type: String

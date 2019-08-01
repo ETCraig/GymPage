@@ -30,11 +30,9 @@ const ProductSchema = new Schema({
         {
             size: {
                 type: String,
-                required: true
             },
             price: {
                 type: Number,
-                required: true
             },
         }
     ],
@@ -42,15 +40,13 @@ const ProductSchema = new Schema({
         {
             user: {
                 type: Schema.Types.ObjectId,
-                ref: user
+                ref: 'user'
             },
             text: {
                 String,
-                required: true
             },
             rating: {
                 type: Number,
-                required: true
             },
             avatar: {
                 type: String

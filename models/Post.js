@@ -7,8 +7,7 @@ const PostSchema = new mongoose.Schema({
         ref: 'user'
     },
     text: {
-        type: String,
-        required: true
+        type: String
     },
     images: [
         {
@@ -49,8 +48,7 @@ const PostSchema = new mongoose.Schema({
                 ref: 'user'
             },
             text: {
-                String,
-                required: true
+                String
             },
             image: {
                 type: String

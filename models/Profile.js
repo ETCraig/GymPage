@@ -29,7 +29,7 @@ const ProfileSchema = new Schema({
     sessions: [
         {
             routine: {
-                type: Schema.type.ObjectId,
+                type: Schema.Types.ObjectId,
                 ref: 'routine'
             },
             weight: {
