@@ -169,7 +169,7 @@ router.get('/muscle/:muscle', Authentication, async (req, res) => {
     } catch (err) {
         console.error(err.message);
         if (err.kind === 'ObjectId') {
-            return res.status(404).json({ msg: 'Exercise Not Found.' });
+            return res.status(404).json({ msg: 'No Exercises Found.' });
         }
         res.status(500).send('Server Error.');
     }

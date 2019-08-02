@@ -11,21 +11,49 @@ const User = require('../models/User');
 //@Desc     Get all Products
 //@Access   Private
 router.get('/', Authentication, async (req, res) => {
+    try {
+        let products = await Product.find().sort({ name: -1 });
 
+        if (!products) {
+            return res.status(404).json({ msg: 'No Products Found.' });
+        }
+
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'No Products Found.' });
+        }
+        res.status(500).send('Server Error.');
+    }
 });
 
 //@Route    GET api/store/:id
 //@Desc     Get Specific Product by ID
 //@Access   Private
 router.get('/:id', Authentication, async (req, res) => {
+    try {
+        let product = await Product.findById(req.params.id);
 
+        if (!product) {
+            return res.status(404).json({ msg: 'Product Not Found.' });
+        }
+
+        res.json(product);
+    } catch (err) {
+        console.error(err.message);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Product Not Found.' });
+        }
+        res.status(500).send('Server Error.');
+    }
 });
 
 //@Route    GET api/store/methods
 //@Desc     Get User's Payment Methods
 //@Access   Private
 router.get('/methods', Authentication, async (req, res) => {
-
+    
 });
 
 //@Route    POST api/store/method

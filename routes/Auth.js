@@ -7,6 +7,11 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+
+//Stripe Set up
+const secret_key = config.get('secretKey');
+const stripe = require('stripe')(secret_key);
+
 //@Route    POST api/auth/login
 //@Desc     Authenticate User & Decode Token
 //@Access   Public
@@ -39,7 +44,7 @@ router.post('/login', [
                 id: user.id
             }
         }
-        
+        console.log(user)
         jwt.sign(
             payload,
             config.get('jwtSecret'),
@@ -86,23 +91,28 @@ router.post('/register', [
 
         user.password = await bcrypt.hash(password, salt);
 
-        await user.save();
+        stripe.customers.create({ email: email }, async function (err, customer) {
+            console.log(customer.id)
+            user.stripe_id = customer.id
 
-        const payload = {
-            user: {
-                id: user.id
+            await user.save();
+            console.log(user)
+            const payload = {
+                user: {
+                    id: user.id
+                }
             }
-        }
 
-        jwt.sign(
-            payload,
-            config.get('jwtSecret'),
-            { expiresIn: 3600 },
-            (err, token) => {
-                if (err) throw err;
-                res.json({ token });
-            }
-        );
+            jwt.sign(
+                payload,
+                config.get('jwtSecret'),
+                { expiresIn: 3600 },
+                (err, token) => {
+                    if (err) throw err;
+                    res.json({ token });
+                }
+            );
+        });
     } catch (err) {
         console.error(err)
         res.status(500).send('Server Error');
