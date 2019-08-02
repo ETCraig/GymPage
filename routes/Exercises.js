@@ -246,16 +246,16 @@ router.put('/:workout_id/:id', Authentication, async (req, res) => {
 //@Desc     Edit Exercise in Workout
 //@Access   Private
 router.put('/:workout_id/:id', Authentication, async (req, res) => {
+    let { sets, reps } = req.body;
     try {
-        // let workout = await Workout.findById(req.params.workout_id);
+        await Workout.update(
+            { "_id": req.params.workout_id, "exercises._id": req.params.id },
+            { $set: { reps, sets } }
+        );
 
-        // let exercise = await Exercise.findByIdAndUpdate(req.params.id);
-        
-        // workout.exercises.splice(removeIndex, 1);
+        const workout = await Workout.findById(req.params.workout_id);
 
-        // await workout.save();
-
-        // res.json(workout.exercises);
+        res.json(workout.exercises);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error.');

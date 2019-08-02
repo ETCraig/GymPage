@@ -6,6 +6,9 @@ const ArticleSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'user'
     },
+    name: {
+        type: String,
+    },
     text: {
         type: String,
     },
@@ -15,6 +18,10 @@ const ArticleSchema = new Schema({
     routine: {
         type: Schema.Types.ObjectId,
         ref: 'routine'
+    },
+    product: {
+        type: Schema.Types.ObjectId,
+        ref: 'product'
     },
     exercises: [
         {
@@ -29,7 +36,7 @@ const ArticleSchema = new Schema({
     },
     favorites: [
         {
-            favorite: {
+            user: {
                 type: Schema.Types.ObjectId,
                 ref: 'user'
             }
