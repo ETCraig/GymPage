@@ -10,9 +10,7 @@ const PostSchema = new mongoose.Schema({
         type: String
     },
     images: {
-        image: {
-            type: String
-        }
+        type: String
     },
     videos: {
         type: String

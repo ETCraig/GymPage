@@ -33,107 +33,126 @@ const S3 = new AWS.S3({ useAccelerateEndpoint: true });
 router.post('/', [Authentication, [
     check('text', 'Text is Required.').not().isEmpty()
 ]], async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array() });
+    // }
 
     try {
+        console.log(req.files)
         const profile = await Profile.findOne({ user: req.user.id });
 
-        if (req.files && req.files.length) {
-            if (req.files[0].mimetype === 'image/jpeg' || req.files[0].mimetype === 'image/png') {
-                upload(req, res, async (err) => {
+        upload(req, res, async (err) => {
+            console.log(req.body, req.files[0].mimetype)
+            if (req.files && req.files.length) {
+                console.log('IN', req.files[0].mimetype)
+                if (req.files[0].mimetype === 'image/jpg' || req.files[0].mimetype === 'image/png') {
                     let uri = req.files[0];
                     var datauri = new AvatarDatauri();
                     datauri.format('.png', uri.buffer);
                     let { mimetype } = datauri;
-
-                    if (mimetype === 'image/png' || mimetype === 'image/jpg') {
-                        let { content } = datauri;
-                        buf = new Buffer(content.replace(/^data:image\/\w+;base64,/, ""), "base64");
-                        let params = {
-                            Bucket: bucketName,
-                            Body: buf,
-                            Key: `user/${req.user.id}/posts/${Date.now()}.png`,
-                            ContentType: mimetype,
-                            ACL: 'public-read'
-                        };
-                        S3.upload(params, async (err, data) => {
-                            if (err) {
-                                errors.endpoint = "Create New Post.";
-                                errors.unsave_creator_image = "Failed at S3.upload().";
-                                return res.status(500).json(errors);
-                            }
-                            const newPost = new Post({
-                                text: req.body.text,
-                                name: profile.username,
-                                avatar: profile.avatar,
-                                user: req.user.id,
-                                images: data.Location
-                            });
-
-                            const post = await newPost.save();
-
-                            res.json(post);
+                    console.log(mimetype)
+                    let { content } = datauri;
+                    buf = new Buffer(content.replace(/^data:image\/\w+;base64,/, ""), "base64");
+                    let params = {
+                        Bucket: bucketName,
+                        Body: buf,
+                        Key: `user/${req.user.id}/posts/${Date.now()}.png`,
+                        ContentType: mimetype,
+                        ACL: 'public-read'
+                    };
+                    S3.upload(params, async (err, data) => {
+                        if (err) {
+                            errors.endpoint = "Create New Post.";
+                            errors.unsave_creator_image = "Failed at S3.upload().";
+                            return res.status(500).json(errors);
+                        }
+                        const newPost = new Post({
+                            text: req.body.text,
+                            name: profile.username,
+                            avatar: profile.avatar,
+                            user: req.user.id,
+                            images: await data.Location
                         });
-                    }
-                })
+
+                        const post = await newPost.save();
+                        console.log('ZZZ')
+                        res.status(200).json(post);
+                    });
+                } else if (req.files[0].mimetype === 'video/mp4') {
+                    let uri = req.files[0];
+                    var datauri = new AvatarDatauri();
+                    datauri.format('.mp4', uri.buffer);
+                    let { mimetype } = datauri;
+                    console.log(mimetype)
+                    let { content } = datauri;
+                    buf = new Buffer(content.replace(/^data:video\/\w+;base64,/, ""), "base64");
+                    let params = {
+                        Bucket: bucketName,
+                        Body: buf,
+                        Key: `user/${req.user.id}/posts/${Date.now()}.mp4`,
+                        ContentType: mimetype,
+                        ACL: 'public-read'
+                    };
+                    console.log('DDD')
+                    S3.upload(params, async (err, data) => {
+                        if (err) {
+                            errors.endpoint = "Create New Post.";
+                            errors.unsave_creator_image = "Failed at S3.upload().";
+                            return res.status(500).json(errors);
+                        }
+                        console.log(data.Location)
+                        const newPost = new Post({
+                            text: req.body.text,
+                            name: profile.username,
+                            avatar: profile.avatar,
+                            user: req.user.id,
+                            videos: data.Location
+                        });
+
+                        const post = await newPost.save();
+
+                        res.json(post);
+                    });
+                }
             } else {
-                upload(req, res, async (err) => {
-                    let uri = req.files[0];
-                    var datauri = new AvatarDatauri();
-                    datauri.format('.png', uri.buffer);
-                    let { mimetype } = datauri;
+                console.log('PASSED')
+                const newPost = new Post({
+                    text: req.body.text,
+                    name: profile.username,
+                    avatar: profile.avatar,
+                    user: req.user.id
+                });
 
-                    if (mimetype === 'video/mp4') {
-                        let { content } = datauri;
-                        buf = new Buffer(content.replace(/^data:video\/\w+;base64,/, ""), "base64");
-                        let params = {
-                            Bucket: bucketName,
-                            Body: buf,
-                            Key: `user/${req.user.id}/posts/${Date.now()}.png`,
-                            ContentType: mimetype,
-                            ACL: 'public-read'
-                        };
-                        S3.upload(params, async (err, data) => {
-                            if (err) {
-                                errors.endpoint = "Create New Post.";
-                                errors.unsave_creator_image = "Failed at S3.upload().";
-                                return res.status(500).json(errors);
-                            }
-                            const newPost = new Post({
-                                text: req.body.text,
-                                name: profile.username,
-                                avatar: profile.avatar,
-                                user: req.user.id,
-                                videos: data.Location
-                            });
+                const post = await newPost.save();
 
-                            const post = await newPost.save();
-
-                            res.json(post);
-                        });
-                    }
-                })
+                res.json(post);
             }
-        }
 
-        const newPost = new Post({
-            text: req.body.text,
-            name: profile.username,
-            avatar: profile.avatar,
-            user: req.user.id
-        });
-
-        const post = await newPost.save();
-
-        res.json(post);
+        })
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error.');
     }
 });
+
+//@Route    GET api/posts
+//@Desc     Gets sll Posts
+//@Access   private
+router.get('/', Authentication, async (req, res) => {
+    try {
+        const posts = await Post.find().sort({ date: -1 });
+
+        res.json(posts);
+    } catch (err) {
+        console.error(err.message);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Post Not Found.' });
+        }
+        res.status(500).send('Server Error.');
+    }
+});
+
 
 //@Route    GET api/posts/:id
 //@Desc     Gets Post by id
@@ -192,6 +211,8 @@ router.put('/like/:id', Authentication, async (req, res) => {
 
         post.likes.unshift({ user: req.user.id });
 
+        await post.save();
+
         res.json(post.likes);
     } catch (err) {
         console.error(err.message);
@@ -229,10 +250,10 @@ router.put('/unlike/:id', Authentication, async (req, res) => {
 router.post('/comment/:id', [Authentication, [
     check('text', 'Text is Required.').not().isEmpty()
 ]], async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array() });
+    // }
 
     try {
         const user = await User.findById(req.user.id).select('-password');
@@ -241,8 +262,9 @@ router.post('/comment/:id', [Authentication, [
 
         const post = await Post.findById(req.params.id);
 
-        if (req.files && req.files.length) {
-            upload(req, res, async (err) => {
+        upload(req, res, async (err) => {
+
+            if (req.files && req.files.length) {
                 let uri = req.files[0];
                 var datauri = new AvatarDatauri();
                 datauri.format('.png', uri.buffer);
@@ -276,24 +298,26 @@ router.post('/comment/:id', [Authentication, [
 
                         await post.save();
 
-                        res.json(post.comment);
+                        res.json(post.comments);
                     });
                 }
-            })
-        }
+            } else {
 
-        const newComment = {
-            user: req.user.id,
-            text: req.body.text,
-            name: profile.username,
-            avatar: user.avatar
-        };
+                const newComment = {
+                    user: req.user.id,
+                    text: req.body.text,
+                    name: profile.username,
+                    avatar: user.avatar
+                };
 
-        post.comments.unshift(newComment);
+                post.comments.unshift(newComment);
 
-        await post.save();
+                await post.save();
 
-        res.json(post.comment);
+                res.json(post.comments);
+            }
+        })
+
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error.');
@@ -305,7 +329,7 @@ router.post('/comment/:id', [Authentication, [
 //@Access   Private
 router.delete('/comment/:id/:comment_id', Authentication, async (req, res) => {
     try {
-        const post = await Post.findById(req.params.comment_id);
+        const post = await Post.findById(req.params.id);
 
         const comment = post.comments.find(comment => comment.id == req.params.comment_id);
 
