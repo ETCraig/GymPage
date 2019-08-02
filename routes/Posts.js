@@ -33,10 +33,10 @@ const S3 = new AWS.S3({ useAccelerateEndpoint: true });
 router.post('/', [Authentication, [
     check('text', 'Text is Required.').not().isEmpty()
 ]], async (req, res) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 
     try {
         console.log(req.files)
@@ -250,10 +250,10 @@ router.put('/unlike/:id', Authentication, async (req, res) => {
 router.post('/comment/:id', [Authentication, [
     check('text', 'Text is Required.').not().isEmpty()
 ]], async (req, res) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 
     try {
         const user = await User.findById(req.user.id).select('-password');

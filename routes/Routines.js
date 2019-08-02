@@ -38,7 +38,7 @@ router.delete('/workout/:routine_id', Authentication, async (req, res) => {
 //@Route    POST api/routine/exercise/:id
 //@Desc     Create Or Update User's Record
 //@Access   Private
-router.post('/exercise.:id', Authentication, async (req, res) => {
+router.post('/exercise/:id', Authentication, async (req, res) => {
 
 });
 

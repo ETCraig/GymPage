@@ -6,13 +6,9 @@ const ExerciseSchema = new Schema({
         type: String,
         required: true
     },
-    images: [
-        {
-            image: {
-                types: String
-            }
-        }
-    ],
+    images: {
+        type: String
+    },
     muscle: {
         type: String,
         required: true
@@ -48,7 +44,7 @@ const ExerciseSchema = new Schema({
             },
             max_weight: {
                 type: Number
-            } 
+            }
         }
     ]
 });
