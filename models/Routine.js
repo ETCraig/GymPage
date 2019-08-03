@@ -13,6 +13,9 @@ const RoutineSchema = new Schema({
     type: {
         type: String
     },
+    description: {
+        type: String
+    },
     workouts: [
         {
             workout: {
@@ -23,7 +26,6 @@ const RoutineSchema = new Schema({
     ],
     public: {
         type: Boolean,
-        default: false
     },
     saves: [
         {
