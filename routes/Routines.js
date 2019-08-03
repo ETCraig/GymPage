@@ -94,6 +94,7 @@ router.delete('/:routine_id', Authentication, async (req, res) => {
 router.delete('/workout/:workout_id', Authentication, async (req, res) => {
     let { workoutId } = req.params.workout_id;
     try {
+        //CHECK IF REMOVES FOR REF AS WELL...?
         let workout = await Workout.findById(workoutId);
 
         if (!workout) {
@@ -116,7 +117,21 @@ router.delete('/workout/:workout_id', Authentication, async (req, res) => {
 //@Desc     Create Or Update User's Record
 //@Access   Private
 router.post('/exercise/:id', Authentication, async (req, res) => {
+    const { holder } = req.user.id;
+    const { max_reps, max_weight } = req.body;
 
+    try {
+        let exercise = await Exercise.findOneAndUpdate(
+            { "_id": req.params.id, "user_record.holder": holder },
+            { $set: max_reps, max_weight },
+            { new: true }
+        );
+
+        res.json(exercise);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error.');
+    }
 });
 
 //@Route    PATCH api/routine/:id
@@ -177,18 +192,61 @@ router.patch('/workout/:id', [Authentication, [
     }
 });
 
-//@Route    PUT api/routine/workout/exercise/:exercise_id
+//@Route    PUT api/routine/workout/:id/:exercise_id
 //@Desc     Add Exercise to Workout
 //@Access   Private
-router.put('/workout/exercise/:exercise_id', Authentication, async (req, res) => {
+router.put('/workout/:id/:exercise_id', Authentication, async (req, res) => {
+    let { sets, reps } = req.body;
+    try {
+        let workout = await Workout.findById(req.params.id);
 
+        let exercise = await Exercise.findById(req.params.exercise_id)
+
+        let newExercise = {
+            exercise,
+            reps,
+            sets
+        };
+
+        workout.exercises.unshift(newExercise);
+
+        await workout.save();
+
+        res.json(workout.exercises);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error.');
+    }
 });
 
-//@Route    PUT api/routine/workout/exercise/:exercise_id
+//@Route    PUT api/routine/workout/:id/:exercise_id
 //@Desc     Remove Exercise from Workout
 //@Access   Private
-router.delete('/workout/exercise/:exercise_id', Authentication, async (req, res) => {
+router.delete('/workout/:id/:exercise_id', Authentication, async (req, res) => {
+    try {
+        const workout = await Workout.findById(req.params.id);
 
+        const exercise = routine.exercises.find(exer => exer.id == req.params.exercise_id);
+
+        if (!exercise) {
+            return res.status(404).json({ msg: 'Exercise Not Found.' });
+        }
+
+        // if (exercise.user.toString() !== req.user.id) {
+        //     return res.status(401).json({ msg: 'Account Not Authorized.' });
+        // }
+
+        const removeIndex = workout.exercises.map(exer => exer.exercise.toString()).indexOf(req.params.exercise_id);
+
+        workout.exercises.splice(removeIndex, 1);
+
+        await workout.save();
+
+        res.json(workout.exercises);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error.');
+    }
 });
 
 //@Route    PUT api/routine/save/:id
