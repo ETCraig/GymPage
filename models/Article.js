@@ -23,14 +23,10 @@ const ArticleSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'product'
     },
-    exercises: [
-        {
-            exercise: {
-                type: Schema.Types.ObjectId,
-                ref: 'exercise'
-            }
-        }
-    ],
+    exercises: {
+        type: Schema.Types.ObjectId,
+        ref: 'exercise'
+    },
     avatar: {
         type: String
     },

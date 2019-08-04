@@ -11,6 +11,18 @@ const User = require('../models/User');
 const secret_key = config.get('secretKey');
 const stripe = require('stripe')(secret_key);
 
+//@Route    POST api/store
+//@Desc     Create a Product
+//@Access   Admin
+router.post('/', Authentication, async (req, res) => {
+    try {
+        
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error.');
+    }
+});
+
 //@Route    GET api/store
 //@Desc     Get all Products
 //@Access   Private
@@ -18,7 +30,7 @@ router.get('/', Authentication, async (req, res) => {
     try {
         let products = await Product.find().sort({ name: -1 });
 
-        if (!products) {
+        if (!products || products.length < 1) {
             return res.status(404).json({ msg: 'No Products Found.' });
         }
 
@@ -131,10 +143,10 @@ router.delete('/method/:id', Authentication, async (req, res) => {
     }
 });
 
-//@Route    POST api/store
+//@Route    POST api/store/checkout
 //@Desc     Purchase Product's
 //@Access   Private
-router.post('/', Authentication, async (req, res) => {
+router.post('/checkout', Authentication, async (req, res) => {
 
 });
 

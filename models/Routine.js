@@ -42,7 +42,7 @@ const RoutineSchema = new Schema({
                 ref: 'user'
             },
             text: {
-                String,
+                type: String,
             },
             rating: {
                 type: Number,

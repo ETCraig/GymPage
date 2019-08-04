@@ -4,7 +4,9 @@ const router = express.Router();
 const Authentication = require('../middleware/Authentication');
 const { check, validationResult } = require('express-validator');
 const Exercise = require('../models/Exercise');
+const Profile = require('../models/Profile');
 const Routine = require('../models/Routine');
+const User = require('../models/User');
 const Workout = require('../models/Workout');
 
 //@Route    POST api/routine
@@ -32,9 +34,7 @@ router.post('/', [Authentication, [
 
         await routine.save();
 
-        let routines = await Routine.find({ creator });
-
-        res.json(routines)
+        res.json(routine)
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error.');
@@ -49,7 +49,7 @@ router.post('/workout/:routine_id', [Authentication, [
     check('name', 'Workout Name is Required.').not().isEmpty()
 ]], async (req, res) => {
     let { day_num, name } = req.body;
-    let { routine } = req.params.routine_id;
+    let routine = req.params.routine_id;
     try {
         let workout = await new Workout({
             routine,
@@ -70,13 +70,11 @@ router.post('/workout/:routine_id', [Authentication, [
 //@Desc     Delete a Routine
 //@Access   Private
 router.delete('/:routine_id', Authentication, async (req, res) => {
-    const { routineId } = req.params.routine_id;
+    const routineId = req.params.routine_id;
     try {
         await Workout.deleteMany({ routine: routineId });
 
-        const routine = await Routine.findById(routineId);
-
-        await routine.remove();
+        await Routine.findOneAndDelete({ _id: routineId });
 
         res.json({ msg: 'Routine Removed.' });
     } catch (err) {
@@ -92,10 +90,9 @@ router.delete('/:routine_id', Authentication, async (req, res) => {
 //@Desc     Delete a Routine's Workout
 //@Access   Private
 router.delete('/workout/:workout_id', Authentication, async (req, res) => {
-    let { workoutId } = req.params.workout_id;
     try {
         //CHECK IF REMOVES FOR REF AS WELL...?
-        let workout = await Workout.findById(workoutId);
+        const workout = await Workout.findById(req.params.workout_id);
 
         if (!workout) {
             return res.status(404).json({ msg: 'Workout Not Found.' });
@@ -117,17 +114,35 @@ router.delete('/workout/:workout_id', Authentication, async (req, res) => {
 //@Desc     Create Or Update User's Record
 //@Access   Private
 router.post('/exercise/:id', Authentication, async (req, res) => {
-    const { holder } = req.user.id;
-    const { max_reps, max_weight } = req.body;
-
+    let { max_reps, max_weight } = req.body;
     try {
-        let exercise = await Exercise.findOneAndUpdate(
-            { "_id": req.params.id, "user_record.holder": holder },
-            { $set: max_reps, max_weight },
-            { new: true }
-        );
+        let exer = await Exercise.find({ _id: req.params.id, "user_record.holder": req.user.id });
 
-        res.json(exercise);
+        if (exer.length < 1) {
+
+            let exercise = await Exercise.findById(req.params.id);
+
+            const newRecord = {
+                holder: req.user.id,
+                max_reps,
+                max_weight
+            };
+
+            exercise.user_record.unshift(newRecord);
+
+            await exercise.save();
+
+            res.json(exercise);
+        } else {
+
+            let exercise = await Exercise.findOneAndUpdate(
+                { _id: req.params.id, "user_record.holder": req.user.id },
+                { $set: { "user_record.$.max_reps": max_reps, "user_record.$.max_weight": max_weight } },
+                { new: true }
+            );
+
+            res.json(exercise);
+        }
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error.');
@@ -146,13 +161,13 @@ router.patch('/:id', [Authentication, [
         res.status(400).json({ errors: errors.array() });
     }
 
-    let { routineId } = req.params.id;
+    const routineId = req.params.id;
     let { name, type, description, public } = req.body;
 
     try {
         let routine = await Routine.findByIdAndUpdate(
             { _id: routineId },
-            { $set: name, type, description, public },
+            { $set: { name, type, description, public } },
             { new: true }
         );
 
@@ -167,7 +182,7 @@ router.patch('/:id', [Authentication, [
 //@Desc     Edit Routine Workout
 //@Access   Private
 router.patch('/workout/:id', [Authentication, [
-    check('day_num', 'Day 0r Number is Required.').not().isEmpty(),
+    check('day_num', 'Day Or Number is Required.').not().isEmpty(),
     check('name', 'Workout Name is Required.').not().isEmpty()
 ]], async (req, res) => {
     const errors = validationResult(req);
@@ -175,13 +190,13 @@ router.patch('/workout/:id', [Authentication, [
         res.status(400).json({ errors: errors.array() });
     }
 
-    let { routineId } = req.params.id;
+    const routineId = req.params.id;
     let { day_num, name } = req.body;
 
     try {
         let workout = await Workout.findByIdAndUpdate(
             { _id: routineId },
-            { $set: day_num, name },
+            { $set: { day_num, name } },
             { new: true }
         );
 
@@ -201,6 +216,8 @@ router.put('/workout/:id/:exercise_id', Authentication, async (req, res) => {
         let workout = await Workout.findById(req.params.id);
 
         let exercise = await Exercise.findById(req.params.exercise_id)
+
+        //Check if Exercise Already In Workout
 
         let newExercise = {
             exercise,
@@ -226,12 +243,13 @@ router.delete('/workout/:id/:exercise_id', Authentication, async (req, res) => {
     try {
         const workout = await Workout.findById(req.params.id);
 
-        const exercise = routine.exercises.find(exer => exer.id == req.params.exercise_id);
+        const exercise = workout.exercises.find(exer => exer.exercise == req.params.exercise_id);
 
         if (!exercise) {
             return res.status(404).json({ msg: 'Exercise Not Found.' });
         }
 
+        //Check User Ownership
         // if (exercise.user.toString() !== req.user.id) {
         //     return res.status(401).json({ msg: 'Account Not Authorized.' });
         // }
@@ -306,6 +324,8 @@ router.post('/comment/:id', [Authentication, [
         res.status(400).json({ errors: errors.array() });
     }
 
+    let { text, rating } = req.body;
+
     try {
         const user = await User.findById(req.user.id).select('-password');
 
@@ -315,7 +335,8 @@ router.post('/comment/:id', [Authentication, [
 
         const newComment = {
             user: req.user.id,
-            text: req.body.text,
+            text: text,
+            rating: rating,
             name: profile.username,
             avatar: user.avatar
         };

@@ -316,7 +316,7 @@ router.post('/comment/:id', [Authentication, [
 
                 res.json(post.comments);
             }
-        })
+        });
 
     } catch (err) {
         console.error(err.message);

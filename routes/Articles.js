@@ -9,6 +9,7 @@ const config = require('config');
 const Exercise = require('../models/Exercise');
 const multer = require('multer');
 const Product = require('../models/Product');
+const Profile  = require('../models/Profile');
 const Routine = require('../models/Routine');
 const User = require('../models/User');
 
@@ -42,7 +43,71 @@ router.post('/', [Authentication, [
     }
 
     try {
+        let user = await User.findById(req.user.id).select('-password');
 
+        upload(req, res, async (err) => {
+            let { name, text, routine_id, product_id, exercises_id } = req.body;
+            let product = null;
+            let routine = null;
+            let exercises = null;
+            if (routine_id) routine = routine_id;
+            if (product_id) product = product_id;
+            if (exercises_id) exercises = exercises_id;
+            if (req.files && req.files.length) {
+                let uri = req.files[0];
+                var datauri = new AvatarDatauri();
+                datauri.format('.png', uri.buffer);
+                let { mimetype } = datauri;
+
+                if (mimetype === 'image/png' || mimetype === 'image/jpg') {
+                    let { content } = datauri;
+                    buf = new Buffer(content.replace(/^data:image\/\w+;base64,/, ""), "base64");
+                    let params = {
+                        Bucket: bucketName,
+                        Body: buf,
+                        Key: `user/${req.params.id}/articles/${Date.now()}.png`,
+                        ContentType: mimetype,
+                        ACL: 'public-read'
+                    };
+                    S3.upload(params, async (err, data) => {
+                        if (err) {
+                            errors.endpoint = "Create New Post.";
+                            errors.unsave_creator_image = "Failed at S3.upload().";
+                            return res.status(500).json(errors);
+                        }
+                        const article = new Article({
+                            user: req.user.id,
+                            name: name,
+                            text: text,
+                            image: data.Location,
+                            routine: routine,
+                            product: product,
+                            exercises: exercises,
+                            avatar: user.avatar
+                        });
+
+                        await article.save();
+
+                        res.json(article);
+                    });
+                }
+            } else {
+
+                const article = new Article({
+                    user: req.user.id,
+                    name: name,
+                    text: text,
+                    routine: routine,
+                    product: product,
+                    exercises: exercises,
+                    avatar: user.avatar
+                });
+
+                await article.save();
+
+                res.json(article);
+            }
+        });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error.');
@@ -85,12 +150,12 @@ router.get('/:id', Authentication, async (req, res) => {
     }
 });
 
-//@Route    GET api/articles/community
+//@Route    GET api/articles/community/all
 //@Desc     Get Community Articles
 //@Access   Private
-router.get('/community', Authentication, async (req, res) => {
+router.get('/community/all', Authentication, async (req, res) => {
     try {
-        let articles = await Article.find().sort({ date: -1 });
+        const articles = await Article.find();
 
         if (!articles) {
             return res.status(404).json({ msg: 'No Articles Found.' });
@@ -107,13 +172,13 @@ router.get('/community', Authentication, async (req, res) => {
 //@Desc     Edit Article by ID
 //@Access   Private
 router.patch('/:article_id', [Authentication,], async (req, res) => {
-
+    //COME BACK TO AND CREATE
 });
 
 //@Route    PUT api/articles/favorite/:id
 //@Desc     Favorite Article by ID
 //@Access   Private
-router.post('/favorite/:id', Authentication, async (req, res) => {
+router.put('/favorite/:id', Authentication, async (req, res) => {
     try {
         const article = await Article.findById(req.params.id);
 
@@ -135,7 +200,7 @@ router.post('/favorite/:id', Authentication, async (req, res) => {
 //@Route    POST api/articles/unfavorite/:id
 //@Desc     Unfavorite Article by ID
 //@Access   Private
-router.post('/unfavorite/:id', Authentication, async (req, res) => {
+router.put('/unfavorite/:id', Authentication, async (req, res) => {
     try {
         const article = await Article.findById(req.params.id);
 
@@ -197,7 +262,7 @@ router.post('/comment/:id', [Authentication, [
 //@Access   Private
 router.delete('/comment/:id/:comment_id', Authentication, async (req, res) => {
     try {
-        const article = await Post.findById(req.params.id);
+        const article = await Article.findById(req.params.id);
 
         const comment = article.comments.find(comment => comment.id == req.params.comment_id);
 
