@@ -5,6 +5,7 @@ const Authentication = require('../middleware/Authentication');
 const { check, validationResult } = require('express-validator');
 const config = require('config');
 const Product = require('../models/Product');
+const Receipt = require('../models/Receipt');
 const User = require('../models/User');
 
 //Stripe Set up
@@ -16,7 +17,7 @@ const stripe = require('stripe')(secret_key);
 //@Access   Admin
 router.post('/', Authentication, async (req, res) => {
     try {
-        
+
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error.');
@@ -154,7 +155,31 @@ router.post('/checkout', Authentication, async (req, res) => {
 //@Desc     Get User's Receipts & Past Orders
 //@Access   Private
 router.get('/receipts', Authentication, async (req, res) => {
+    let { limit } = req.query;
+    let user = req.user.id;
+    try {
+        let maxLength = await Receipt.find({ user: user }).countDocuments();
 
+        let receipt = await Receipt.find({ user: user }).populate(
+            'user', [
+                'amount',
+                'currency',
+                'receipt_url',
+                'time'
+            ]
+        ).sort({ date: -1 }).limit(Number(limit));
+
+        let data = {
+            receipt,
+            maxLength,
+            limit
+        }
+
+        res.status(200).json(data);
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Server Error');
+    }
 });
 
 module.exports = router;

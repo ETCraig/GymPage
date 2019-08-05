@@ -6,11 +6,8 @@ const Authentication = require('../middleware/Authentication');
 const AWS = require('aws-sdk');
 const { check, validationResult } = require('express-validator');
 const config = require('config');
-const Exercise = require('../models/Exercise');
 const multer = require('multer');
-const Product = require('../models/Product');
-const Profile  = require('../models/Profile');
-const Routine = require('../models/Routine');
+const Profile = require('../models/Profile');
 const User = require('../models/User');
 
 //AWS Configuration
@@ -172,7 +169,69 @@ router.get('/community/all', Authentication, async (req, res) => {
 //@Desc     Edit Article by ID
 //@Access   Private
 router.patch('/:article_id', [Authentication,], async (req, res) => {
-    //COME BACK TO AND CREATE
+    try {
+        let user = await User.findById(req.user.id).select('-password');
+
+        upload(req, res, async (err) => {
+            let { name, text, routine_id, product_id, exercises_id } = req.body;
+            let product = null;
+            let routine = null;
+            let exercises = null;
+            let avatar = req.user.avatar;
+            if (routine_id) routine = routine_id;
+            if (product_id) product = product_id;
+            if (exercises_id) exercises = exercises_id;
+            if (req.files && req.files.length) {
+                let uri = req.files[0];
+                var datauri = new AvatarDatauri();
+                datauri.format('.png', uri.buffer);
+                let { mimetype } = datauri;
+
+                if (mimetype === 'image/png' || mimetype === 'image/jpg') {
+                    let { content } = datauri;
+                    buf = new Buffer(content.replace(/^data:image\/\w+;base64,/, ""), "base64");
+                    let params = {
+                        Bucket: bucketName,
+                        Body: buf,
+                        Key: `user/${req.params.id}/articles/${Date.now()}.png`,
+                        ContentType: mimetype,
+                        ACL: 'public-read'
+                    };
+                    S3.upload(params, async (err, data) => {
+                        if (err) {
+                            errors.endpoint = "Create New Post.";
+                            errors.unsave_creator_image = "Failed at S3.upload().";
+                            return res.status(500).json(errors);
+                        }
+
+                        let image = data.Location;
+
+                        let UpdatedArticle = await Article.findOneAndUpdate(
+                            { _id: req.params.article_id, user: req.user.id },
+                            { $set: { name, text, image, routine, product, exercises, avatar } }
+                        );
+
+                        await UpdatedArticle.save();
+
+                        res.json(UpdatedArticle);
+                    });
+                }
+            } else {
+
+                let UpdatedArticle = await Article.findOneAndUpdate(
+                    { _id: req.params.article_id, user: req.user.id },
+                    { $set: { name, text, routine, product, exercises, avatar } }
+                );
+
+                await UpdatedArticle.save();
+
+                res.json(UpdatedArticle);
+            }
+        });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error.');
+    }
 });
 
 //@Route    PUT api/articles/favorite/:id
