@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const Authentication = require('../middleware/Authentication');
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 const config = require('config');
@@ -11,6 +12,20 @@ const User = require('../models/User');
 //Stripe Set up
 const secret_key = config.get('secretKey');
 const stripe = require('stripe')(secret_key);
+
+// @route   GET api/auth
+// @desc    Get Logged in user
+// @access  Private
+router.get('/', Authentication, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+
+        res.json(user);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error.');
+    }
+});
 
 //@Route    POST api/auth/login
 //@Desc     Authenticate User & Decode Token
