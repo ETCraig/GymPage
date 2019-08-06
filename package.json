@@ -4,7 +4,9 @@
   "description": "A full stack application bringing gym goers together for routines, articles, reviews, and a community. Allowing each individual user a resource to help them organize their goals and ultimately realize them.",
   "main": "Server.js",
   "scripts": {
-    "server": "nodemon server"
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "E.T. Craig",
   "license": "ISC",
