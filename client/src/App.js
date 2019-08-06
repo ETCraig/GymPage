@@ -7,6 +7,11 @@ import NavBar from './components/layout/NavBar';
 import Register from './components/auth/Register';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import setAuthToken from './utils/setAuthToken';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
   return (
