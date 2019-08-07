@@ -68,7 +68,7 @@ const AuthState = props => {
                 payload: err.response.data.msg
             });
         }
-    },
+    }
 
     //LOGIN USER
     const login = async formData => {

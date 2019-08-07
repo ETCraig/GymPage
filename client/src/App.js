@@ -6,6 +6,7 @@ import Login from './components/auth/Login';
 import NavBar from './components/layout/NavBar';
 import Register from './components/auth/Register';
 
+import AuthState from './context/auth/AuthState';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import setAuthToken from './utils/setAuthToken';
 
@@ -15,18 +16,20 @@ if (localStorage.token) {
 
 const App = () => {
   return (
-    <Router>
-      <Fragment>
-        <NavBar />
-        <div className="App">
-          <Switch>
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/Login" component={Login} />
-            <Route exact path="/Register" component={Register} />
-          </Switch>
-        </div>
-      </Fragment>
-    </Router>
+    <AuthState>
+      <Router>
+        <Fragment>
+          <NavBar />
+          <div className="App">
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
+            </Switch>
+          </div>
+        </Fragment>
+      </Router>
+    </AuthState>
   );
 }
 
