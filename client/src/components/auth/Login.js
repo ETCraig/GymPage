@@ -21,7 +21,6 @@ const Login = () => {
         if (email === '' || password === '') {
 
         } else {
-            console.log('Logged In User.');
             login({
                 email,
                 password

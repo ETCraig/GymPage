@@ -10,27 +10,28 @@ const Register = props => {
     const [user, setUser] = useState({
         name: '',
         email: '',
-        avatar: 'https://www.bsn.eu/wp-content/uploads/2016/12/user-icon-image-placeholder.jpg',
         password: '',
         password2: '',
-        uri: ''
     });
 
-    const { name, email, password, password2, avatar, uri } = user;
+    const { name, email, password, password2 } = user;
 
     const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
-    const onFileChange = e => {
-        let file = e.target.files[0];
-        console.log(file.type)
-        if (file.type === 'image/png' || file.type === 'image/jpeg') {
-            setUser({ uri: file, avatar: URL.createObjectURL(file) });
-        }
-    }
-
     const onSubmit = e => {
         e.preventDefault();
-        console.log(user)
+        if (name === '' || email === '' || password === '') {
+            console.log('Empty', name, email, password);
+        } else if (password !== password2) {
+            console.log('Different', password, password2);
+        } else {
+            console.log('PASSED');
+            register({
+                name,
+                email,
+                password
+            });
+        }
     }
 
     return (
@@ -39,9 +40,6 @@ const Register = props => {
                 Account <span className="text-primary">Register</span>
             </h1>
             <form onSubmit={onSubmit}>
-                <div className="form-group text-center">
-                    <img src={avatar} value={avatar} alt="user Avatar" className="rounded-circle" style={{ height: "180px", width: "200px" }} />
-                </div>
                 <div className="form-group">
                     <label htmlFor="name">Name</label>
                     <input
@@ -79,14 +77,6 @@ const Register = props => {
                         onChange={onChange}
                         minLength="6"
                     />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="avatar">Avatar</label>
-                    <div className="file-field">
-                        <div className="btn btn-primary btn-sm">
-                            <input type="file" onChange={e => onFileChange(e)} />
-                        </div>
-                    </div>
                 </div>
 
                 <input
