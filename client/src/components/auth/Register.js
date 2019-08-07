@@ -12,19 +12,25 @@ const Register = props => {
         email: '',
         avatar: 'https://www.bsn.eu/wp-content/uploads/2016/12/user-icon-image-placeholder.jpg',
         password: '',
-        password2: ''
+        password2: '',
+        uri: ''
     });
 
     const { name, email, password, password2, avatar, uri } = user;
 
     const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
-    const onFileChange = e => { 
-        
+    const onFileChange = e => {
+        let file = e.target.files[0];
+        console.log(file.type)
+        if (file.type === 'image/png' || file.type === 'image/jpeg') {
+            setUser({ uri: file, avatar: URL.createObjectURL(file) });
+        }
     }
 
     const onSubmit = e => {
         e.preventDefault();
+        console.log(user)
     }
 
     return (
@@ -34,7 +40,7 @@ const Register = props => {
             </h1>
             <form onSubmit={onSubmit}>
                 <div className="form-group text-center">
-                    <img src={avatar} value={avatar} alt="user Avatar" class="rounded-circle" style={{ height: "180px", width: "200px" }} />
+                    <img src={avatar} value={avatar} alt="user Avatar" className="rounded-circle" style={{ height: "180px", width: "200px" }} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="name">Name</label>
@@ -78,8 +84,7 @@ const Register = props => {
                     <label htmlFor="avatar">Avatar</label>
                     <div className="file-field">
                         <div className="btn btn-primary btn-sm">
-                            <span>Choose File</span>
-                            <input type="file" onChange={onFileChange} />
+                            <input type="file" onChange={e => onFileChange(e)} />
                         </div>
                     </div>
                 </div>
