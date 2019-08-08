@@ -1,6 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 
 import AuthContext from '../../context/auth/authContext';
+
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
     const authContext = useContext(AuthContext);
@@ -10,9 +12,9 @@ const Dashboard = () => {
         //eslint-disable-next-line
     }, []);
     return (
-        <div>
+        <Fragment>
             Dashboard
-        </div>
+        </Fragment>
     );
 }
 
