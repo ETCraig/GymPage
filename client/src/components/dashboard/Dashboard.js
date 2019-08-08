@@ -1,8 +1,7 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 
 import AuthContext from '../../context/auth/authContext';
-
-import { Link } from 'react-router-dom';
+import DashReRoute from './DashReRoute';
 
 const Dashboard = () => {
     const authContext = useContext(AuthContext);
@@ -14,6 +13,7 @@ const Dashboard = () => {
     return (
         <Fragment>
             Dashboard
+            <DashReRoute />
         </Fragment>
     );
 }

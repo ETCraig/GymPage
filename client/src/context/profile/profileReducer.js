@@ -4,7 +4,8 @@ import {
     GET_PROFILES,
     GET_USER_PROFILE,
     RECORD_SESSION,
-    UPDATE_PROFILE
+    UPDATE_PROFILE,
+    PROFILE_ERROR
 } from '../Types';
 
 export default (state, action) => {
@@ -12,9 +13,10 @@ export default (state, action) => {
     switch (type) {
         case GET_USER_PROFILE:
             return {
-
+                ...state,
+                profile: payload
             }
-        case UPDATE_PROFILE: 
+        case UPDATE_PROFILE:
             return {
 
             }
@@ -22,7 +24,7 @@ export default (state, action) => {
             return {
 
             }
-        case GET_PROFILE: 
+        case GET_PROFILE:
             return {
 
             }
@@ -32,7 +34,13 @@ export default (state, action) => {
             }
         case DELETE_PROFILE:
             return {
-                
+
+            }
+        case PROFILE_ERROR:
+            return {
+                ...state,
+                profile: null,
+                error: payload
             }
         default:
             return state;

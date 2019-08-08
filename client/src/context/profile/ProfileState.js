@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import React, { useReducer } from 'react';
 
 import ProfileContext from './profileContext';
 import ProfileReducer from './profileReducer';
@@ -8,6 +8,7 @@ import {
     GET_PROFILE,
     GET_PROFILES,
     GET_USER_PROFILE,
+    PROFILE_ERROR,
     RECORD_SESSION,
     UPDATE_PROFILE
 } from '../Types';
@@ -25,9 +26,18 @@ const ProfileState = props => {
 
     const getUserProfile = async () => {
         try {
-
+            const res = await axios.get('/api/profile');
+            console.log(res);
+            dispatch({
+                type: GET_USER_PROFILE,
+                payload: res.data
+            });
         } catch (err) {
-
+            console.log(err);
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
@@ -72,13 +82,16 @@ const ProfileState = props => {
     }
 
     return (
-        <AuthContext.Provider
+        <ProfileContext.Provider
             value={{
-
+                profile: state.profile,
+                profiles: state.profiles,
+                error: state.error,
+                getUserProfile
             }}
         >
             {props.children}
-        </AuthContext.Provider>
+        </ProfileContext.Provider>
     );
 }
 
