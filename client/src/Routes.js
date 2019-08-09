@@ -1,5 +1,6 @@
 import React from 'react';
 
+import CreateProfile from './components/profile-form/CreateProfile';
 import Dashboard from './components/dashboard/Dashboard';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
@@ -16,6 +17,7 @@ const Routes = () => {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 <PrivateRoute exact path="/" component={Dashboard} />
+                <PrivateRoute exact path="/create-profile" component={CreateProfile} />
             </Switch>
         </section>
     );

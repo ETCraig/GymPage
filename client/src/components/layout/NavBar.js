@@ -16,7 +16,22 @@ const NavBar = () => {
     const authLinks = (
         <Fragment>
             <li>
-                <a href='#!' onClick={handleLogout}>
+                <Link to='/'>Dashboard</Link>
+            </li>
+            <li>
+                <Link><i class="fas fa-shopping-cart"></i> Store</Link>
+            </li>
+            <li>
+                <Link to='/routines'><i class="fas fa-th-list"></i> Routine</Link>
+            </li>
+            <li>
+                <Link to='/articles'><i class="fas fa-newspaper"></i> Article</Link>
+            </li>
+            <li>
+                <Link to='/profile'><i class="fas fa-user"></i> Profile</Link>
+            </li>
+            <li>
+                <a href='#!' onClick={handleLogout} style={{color: "#333333"}}>
                     <i className="fas fa-sign-out-alt"></i> <span className="hide-sm">Logout</span>
                 </a>
             </li>
@@ -34,10 +49,11 @@ const NavBar = () => {
         </Fragment>
     );
     return (
-        <div className="navbar bg-primary">
+        <div className="navbar" style={{ background: "#da7618" }}>
             <h1>
-                GymPage
+                <i class="fas fa-dumbbell"></i> GymPage
             </h1>
+            
             <ul>
                 {isAuthenticated ? authLinks : guestLinks}
             </ul>
