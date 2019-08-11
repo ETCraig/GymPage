@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import './App.css';
 
+import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 import NavBar from './components/layout/NavBar';
 
@@ -26,6 +27,7 @@ const App = () => {
                 <Route component={Routes} />
               </Switch>
             </div>
+            <Footer />
           </Fragment>
         </Router>
       </ProfileState>
