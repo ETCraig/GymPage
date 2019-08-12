@@ -42,7 +42,7 @@ img {
 
 /* Utilities */
 .container {
-  max-width: 100%;
+  max-width: 90%;
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
