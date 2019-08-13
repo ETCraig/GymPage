@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import './App.css';
 
 import Footer from './components/layout/Footer';
-import Landing from './components/layout/Landing';
 import NavBar from './components/layout/NavBar';
 
+import AlertState from './context/alerts/AlertState';
 import AuthState from './context/auth/AuthState';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProfileState from './context/profile/ProfileState';
@@ -17,21 +17,23 @@ if (localStorage.token) {
 
 const App = () => {
   return (
-    <AuthState>
-      <ProfileState>
-        <Router>
-          <Fragment>
-            <NavBar />
-            <div className="App">
-              <Switch>
-                <Route component={Routes} />
-              </Switch>
-            </div>
-            <Footer />
-          </Fragment>
-        </Router>
-      </ProfileState>
-    </AuthState>
+    <AlertState>
+      <AuthState>
+        <ProfileState>
+          <Router>
+            <Fragment>
+              <NavBar />
+              <div className="App">
+                <Switch>
+                  <Route component={Routes} />
+                </Switch>
+              </div>
+              <Footer />
+            </Fragment>
+          </Router>
+        </ProfileState>
+      </AuthState>
+    </AlertState>
   );
 }
 
