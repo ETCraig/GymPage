@@ -16,11 +16,16 @@
 }
 
 body {
+  height: 100%;
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   background-color: #fff;
   color: #333;
+}
+
+.App {
+  min-height: 100%;
 }
 
 a {
@@ -398,6 +403,10 @@ table th {
 .item-exit-active {
   opacity: 0;
   transition: opacity 1000ms ease-in;
+}
+
+.footer-app-wrapper {
+
 }
 
 /* Mobile Styles */

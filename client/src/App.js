@@ -27,8 +27,10 @@ const App = () => {
                 <Switch>
                   <Route component={Routes} />
                 </Switch>
+                <div className="footer-app-wrapper">
+                  <Footer />
+                </div>
               </div>
-              <Footer />
             </Fragment>
           </Router>
         </ProfileState>

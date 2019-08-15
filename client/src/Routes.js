@@ -5,6 +5,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import ExerciseMenu from './components/exercises/ExerciseMenu';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
+import MuscleGroup from './components/exercises/MuscleGroup';
 import NotFound from './components/layout/NotFound';
 import UserProfile from './components/profile/UserProfile';
 import Register from './components/auth/Register';
@@ -22,6 +23,7 @@ const Routes = () => {
                 <PrivateRoute exact path="/" component={Dashboard} />
                 <PrivateRoute exact path="/create-profile" component={CreateProfile} />
                 <PrivateRoute exact path='/exercise-menu' component={ExerciseMenu} />
+                <PrivateRoute exact path="/exercise-menu/:muscle" component={MuscleGroup} />
                 <PrivateRoute exact path='/profile' component={UserProfile} />
                 <Route component={NotFound} />
             </Switch>
