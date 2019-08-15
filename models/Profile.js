@@ -20,7 +20,10 @@ const ProfileSchema = new Schema({
     weight: {
         type: Number
     },
-    height: {
+    feet: {
+        type: Number
+    },
+    inches: {
         type: Number
     },
     bmi: {

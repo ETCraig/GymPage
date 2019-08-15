@@ -11,8 +11,8 @@ const Landing = () => {
                             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                                 <h1 class="text-white">Don't just map out your goals, but cursh them!</h1>
                                 <div class="mt-3">
-                                    <a class="btn bg-red text-white mr-2" href="" role="button">Start Now</a>
-                                    <a class="btn bg-red text-white" href="" role="button">Select Your Routine</a>
+                                    <a class="btn bg-red text-white mr-2" href="http://localhost:3000/blank" role="button">Start Now</a>
+                                    <a class="btn bg-red text-white" href="http://localhost:3000/blank" role="button">Select Your Routine</a>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +102,7 @@ const Landing = () => {
                                 <h2 class="pb-3 text-red">Popular Routines</h2>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4">
-                                <a href="" class="text-white">
+                                <a href="http://localhost:3000/blank" class="text-white">
                                     <figure class="position-relative overflow-hidden">
                                         <img class="img-fluid" src="https://www.t-nation.com/system/publishing/articles/10000206/original/531-and-Rest-Pause.jpg?1379624212" alt="Vienna" />
                                         <figcaption class="d-flex align-items-center justify-content-center position-absolute">
@@ -112,7 +112,7 @@ const Landing = () => {
                                 </a>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4">
-                                <a href="" class="text-white">
+                                <a href="http://localhost:3000/blank" class="text-white">
                                     <figure class="position-relative overflow-hidden">
                                         <img class="img-fluid" src="https://www.t-nation.com/system/publishing/articles/10006179/original/Push-Pull-Legs-The-Ultimate-Split.jpg?1524161871" alt="Edinburgh" />
                                         <figcaption class="d-flex align-items-center justify-content-center position-absolute">
@@ -122,7 +122,7 @@ const Landing = () => {
                                 </a>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4">
-                                <a href="" class="text-white">
+                                <a href="http://localhost:3000/blank" class="text-white">
                                     <figure class="position-relative overflow-hidden">
                                         <img class="img-fluid" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdc4a7KeaWhzwImxwh-LcVCsBU1OBx5XiUTqSmm-ceEGcEefDX" alt="New York" />
                                         <figcaption class="d-flex align-items-center justify-content-center position-absolute">
@@ -132,7 +132,7 @@ const Landing = () => {
                                 </a>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <a href="" class="text-white">
+                                <a href="http://localhost:3000/blank" class="text-white">
                                     <figure class="position-relative overflow-hidden">
                                         <img class="img-fluid" src="http://madbuzzhk.com/wp-content/uploads/2015/04/deadlift_main.jpg" />
                                         <figcaption class="d-flex align-items-center justify-content-center position-absolute">
@@ -142,7 +142,7 @@ const Landing = () => {
                                 </a>
                             </div>
                             <div class="col-12 col-md-6">
-                                <a href="" class="text-white">
+                                <a href="http://localhost:3000/blank" class="text-white">
                                     <figure class="position-relative overflow-hidden">
                                         <img class="img-fluid" src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/young-man-tired-after-training-showing-his-royalty-free-image-867351234-1555686029.jpg?resize=480:*" alt="Manarola" />
                                         <figcaption class="d-flex align-items-center justify-content-center position-absolute">
@@ -154,7 +154,7 @@ const Landing = () => {
                         </div>
                         <div class="row">
                             <div class="col text-center">
-                                <a class="btn bg-red text-white" href="" role="button">More Routines ↓</a>
+                                <a class="btn bg-red text-white" href="http://localhost:3000/blank" role="button">More Routines ↓</a>
                             </div>
                         </div>
                     </div>
@@ -168,7 +168,7 @@ const Landing = () => {
                                 <p class="mb-0 h4 text-red font-weight-normal">Get started today!</p>
                             </div>
                             <div class="col-12 col-md-auto d-flex justify-content-center align-items-center">
-                                <a class="btn bg-red text-white font-weight-bold" href="" role="button">
+                                <a class="btn bg-red text-white font-weight-bold" href="http://localhost:3000/blank" role="button">
                                     Create Your Account
                                     <i class="ml-1 fas fa-hand-point-right"></i>
                                 </a>

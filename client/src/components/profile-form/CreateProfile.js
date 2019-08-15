@@ -10,24 +10,62 @@ const CreateProfile = () => {
         exp: '',
         bio: '',
         weight: 0,
-        height: 0,
+        feet: 0,
+        inches: 0,
         bmi: 0
     });
-
-    const [displayBmiCalculator, toggleBmiCalculator] = useState(false);
 
     const {
         username,
         exp,
         bio,
         weight,
-        height,
+        feet,
+        inches,
         bmi
     } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    //     bmi
+    const calculatorBMI = (e) => {
+        e.preventDefault();
+        if (weight && feet && inches) {
+            console.log('IN CALC');
+            const INCHES_IN_FEET = 12;
+            let userHeight = Number(feet);
+            userHeight *= INCHES_IN_FEET;
+            userHeight += Number(inches);
+            let userWeight = weight;
+            let userBmi = (userWeight / (userHeight * userHeight)) * 703;
+            userBmi = userBmi.toFixed(2);
+            setFormData({ bmi: userBmi });
+            return userBmi;
+        }
+    }
+    const getBMIResults = (bmiInput) => {
+        let bmiResults = {
+            label: '',
+            alertClass: ''
+        };
+        if (bmiInput <= 18.5) {
+            bmiResults.label = 'Underweight';
+            bmiResults.alertClass = 'alert-danger';
+        } else if (bmiInput <= 24.9) {
+            bmiResults.label = 'Normal Weight';
+            bmiResults.alertClass = 'alert-success';
+        } else if (bmiInput <= 29.9) {
+            bmiResults.label = 'Overweight';
+            bmiResults.alertClass = 'alert-warning';
+        } else if (bmiInput >= 30) {
+            bmiResults.label = 'Obesity';
+            bmiResults.alertClass = 'alert-danger';
+        } else {
+            bmiResults.label = 'BMI';
+            bmiResults.alertClass = 'alert-primary'
+        }
+        return bmiResults;
+    }
+
     return (
         <Fragment>
             <h1 className="large text-primary">Create Your Profile</h1>
@@ -36,7 +74,7 @@ const CreateProfile = () => {
             </p>
             <form className="form">
                 <div className="form-group">
-                    <input 
+                    <input
                         type="text"
                         placeholder="Username"
                         name="username"
@@ -55,8 +93,8 @@ const CreateProfile = () => {
                     </select>
                 </div>
                 <div className="form-group">
-                    <input 
-                        type="text"
+                    <input
+                        type="number"
                         placeholder="Bio"
                         name="bio"
                         value={bio}
@@ -64,7 +102,7 @@ const CreateProfile = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <input 
+                    <input
                         type="number"
                         placeholder="Weight"
                         name="weight"
@@ -73,41 +111,50 @@ const CreateProfile = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <input 
+                    <input
                         type="number"
-                        placeholder="Height"
-                        name="height"
-                        value={height}
+                        placeholder="Feet"
+                        name="feet"
+                        value={feet}
                         onChange={e => onChange(e)}
                     />
                 </div>
                 <div className="form-group">
-                    <input 
+                    <input
                         type="number"
+                        placeholder="Inches"
+                        name="inches"
+                        value={inches}
+                        onChange={e => onChange(e)}
+                    />
+                </div>
+                <div className="form-group">
+                    <input
+                        readOnly
+                        type="text"
                         placeholder="BMI"
                         name="bmi"
                         value={bmi}
                         onChange={e => onChange(e)}
                     />
                 </div>
-                <div className='my-2'>
-                    <button
-                        onClick={() => toggleBmiCalculator(!displayBmiCalculator)}
-                        type='button'
-                        className='btn btn-light'>
-                       BMI Calculator
-                    </button>
-                    <span>Optional</span>
-                </div>
-                {displayBmiCalculator && (
-                    <Fragment>
-
-                    </Fragment>
-                )}
+                <button className="btn btn-info" onClick={e => calculatorBMI(e)}>Calculate BMI</button>
                 <input type="submit" className="btn btn-primary my-1" />
             </form>
+            {/* <div className="col-sm-6">
+                <div className={'bmi-result alert' + getBMIResults().alertClass}>
+                    <div>{calculatorBMI() || '--.-'}</div>
+                    <div>{getBMIResults().label}</div>
+                </div>
+            </div> */}
         </Fragment>
     );
 }
+
+// function BmiDisplay(props) {
+//     return (
+        
+//     );
+// }
 
 export default CreateProfile;

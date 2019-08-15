@@ -1,6 +1,6 @@
 //ALERT TYPES
-export default SET_ALERT = 'SET_ALERT';
-export default REMOVE_ALERT = 'REMOVE_ALERT';
+export const SET_ALERT = 'SET_ALERT';
+export const REMOVE_ALERT = 'REMOVE_ALERT';
 //AUTH TYPES
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';

@@ -19,16 +19,16 @@ const NavBar = () => {
                 <Link to='/'>Dashboard</Link>
             </li>
             <li>
-                <Link><i class="fas fa-shopping-cart"></i> Store</Link>
+                <Link to=''><i className="fas fa-shopping-cart"></i> Store</Link>
             </li>
             <li>
-                <Link to='/routines'><i class="fas fa-th-list"></i> Routine</Link>
+                <Link to='/routines'><i className="fas fa-th-list"></i> Routine</Link>
             </li>
             <li>
-                <Link to='/articles'><i class="fas fa-newspaper"></i> Article</Link>
+                <Link to='/articles'><i className="fas fa-newspaper"></i> Article</Link>
             </li>
             <li>
-                <Link to='/profile'><i class="fas fa-user"></i> Profile</Link>
+                <Link to='/profile'><i className="fas fa-user"></i> Profile</Link>
             </li>
             <li>
                 <a href='#!' onClick={handleLogout} style={{color: "#333333"}}>
@@ -51,7 +51,7 @@ const NavBar = () => {
     return (
         <div className="navbar" style={{ background: "#da7618" }}>
             <h1>
-                <i class="fas fa-dumbbell"></i> GymPage
+                <i className="fas fa-dumbbell"></i> GymPage
             </h1>
             
             <ul>

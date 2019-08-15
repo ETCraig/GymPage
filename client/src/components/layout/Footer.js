@@ -3,17 +3,17 @@ import '../styles/Landing.css';
 
 const Footer = () => {
     return (
-        <footer class="py-5 page-footer">
-            <div class="container-fluid container-fluid-max">
-                <div class="row">
-                    <div class="col-12 col-md-6 footer-child copyright">
-                        HoneyDreams © 2018 All Rights Reserved
+        <footer className="py-5 page-footer">
+            <div className="container-fluid container-fluid-max">
+                <div className="row">
+                    <div className="col-12 col-md-6 footer-child copyright">
+                        GymPage © 2019 All Rights Reserved
                             </div>
-                    <div class="col-12 col-md-6 footer-child footer-links">
-                        <a href="" class="mr-3">Privacy Policy</a>
-                        <a href="">FAQ</a>
+                    <div className="col-12 col-md-6 footer-child footer-links">
+                        <p className="mr-3">Privacy Policy</p>
+                        <p>FAQ</p>
                         <div>
-                            <small>Made with <i class="fas fa-heart text-red"></i> by <a href="http://georgemartsoukos.com/" target="_blank">George Martsoukos</a>
+                            <small>Made by <a href="https://github.com/ETCraig" target="_blank"><i className="fas fa-code"></i> ETCraig</a>
                             </small>
                         </div>
                     </div>
