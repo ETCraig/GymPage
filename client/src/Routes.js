@@ -5,6 +5,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import NotFound from './components/layout/NotFound';
+import UserProfile from './components/profile/UserProfile';
 import Register from './components/auth/Register';
 
 import { Route, Switch } from 'react-router-dom';
@@ -19,6 +20,7 @@ const Routes = () => {
                 <Route exact path="/register" component={Register} />
                 <PrivateRoute exact path="/" component={Dashboard} />
                 <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+                <PrivateRoute exact path='/profile' component={UserProfile} />
                 <Route component={NotFound} />
             </Switch>
         </section>

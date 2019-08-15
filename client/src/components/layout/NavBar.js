@@ -22,10 +22,13 @@ const NavBar = () => {
                 <Link to=''><i className="fas fa-shopping-cart"></i> Store</Link>
             </li>
             <li>
-                <Link to='/routines'><i className="fas fa-th-list"></i> Routine</Link>
+                <Link to='/exercises'><i className="fas fa-columns"></i> Exercises</Link>
             </li>
             <li>
-                <Link to='/articles'><i className="fas fa-newspaper"></i> Article</Link>
+                <Link to='/routines'><i className="fas fa-th-list"></i> Routines</Link>
+            </li>
+            <li>
+                <Link to='/articles'><i className="fas fa-newspaper"></i> Articles</Link>
             </li>
             <li>
                 <Link to='/profile'><i className="fas fa-user"></i> Profile</Link>
@@ -49,7 +52,7 @@ const NavBar = () => {
         </Fragment>
     );
     return (
-        <div className="navbar" style={{ background: "#da7618" }}>
+        <nav className="navbar" style={{ background: "#da7618" }}>
             <h1>
                 <i className="fas fa-dumbbell"></i> GymPage
             </h1>
@@ -57,7 +60,7 @@ const NavBar = () => {
             <ul>
                 {isAuthenticated ? authLinks : guestLinks}
             </ul>
-        </div>
+        </nav>
     );
 }
 
