@@ -2,6 +2,7 @@ import React from 'react';
 
 import CreateProfile from './components/profile-form/CreateProfile';
 import Dashboard from './components/dashboard/Dashboard';
+import ExerciseMenu from './components/exercises/ExerciseMenu';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import NotFound from './components/layout/NotFound';
@@ -20,6 +21,7 @@ const Routes = () => {
                 <Route exact path="/register" component={Register} />
                 <PrivateRoute exact path="/" component={Dashboard} />
                 <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+                <PrivateRoute exact path='/exercise-menu' component={ExerciseMenu} />
                 <PrivateRoute exact path='/profile' component={UserProfile} />
                 <Route component={NotFound} />
             </Switch>
