@@ -41,11 +41,26 @@ const ProfileState = props => {
         }
     }
 
-    const updateProfile = async () => {
+    const updateProfile = async formData => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        console.log(formData)
         try {
-
+            const res = await axios.post('/api/profile', formData, config);
+            console.log(res);
+            dispatch({
+                type: UPDATE_PROFILE,
+                payload: res.data
+            });
         } catch (err) {
-
+            console.log(err);
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
@@ -87,7 +102,8 @@ const ProfileState = props => {
                 profile: state.profile,
                 profiles: state.profiles,
                 error: state.error,
-                getUserProfile
+                getUserProfile,
+                updateProfile
             }}
         >
             {props.children}

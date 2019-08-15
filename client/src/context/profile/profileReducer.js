@@ -18,7 +18,8 @@ export default (state, action) => {
             }
         case UPDATE_PROFILE:
             return {
-
+                ...state,
+                profile: payload
             }
         case GET_PROFILES:
             return {

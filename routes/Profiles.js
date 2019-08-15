@@ -16,6 +16,7 @@ router.post('/', [Authentication, [
     check('username', 'A Username is Required.').not().isEmpty(),
     check('exp', 'Please Select an Experience Level.').not().isEmpty()
 ]], async (req, res) => {
+    console.log('INSIDE', req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() });
@@ -26,7 +27,8 @@ router.post('/', [Authentication, [
         exp,
         bio,
         weight,
-        height,
+        feet,
+        inches,
         bmi
     } = req.body;
 
@@ -37,7 +39,8 @@ router.post('/', [Authentication, [
     if (exp) profileFields.exp = exp;
     if (bio) profileFields.bio = bio;
     if (weight) profileFields.weight = weight;
-    if (height) profileFields.height = height;
+    if (feet) profileFields.feet = feet;
+    if (inches) profileFields.inches = inches;
     if (bmi) profileFields.bio = bio;
 
     try {
