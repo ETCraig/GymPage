@@ -7,6 +7,7 @@ import NavBar from './components/layout/NavBar';
 import AlertState from './context/alerts/AlertState';
 import AuthState from './context/auth/AuthState';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ExerciseState from './context/exercise/ExerciseState';
 import ProfileState from './context/profile/ProfileState';
 import Routes from './Routes';
 import setAuthToken from './utils/setAuthToken';
@@ -17,25 +18,27 @@ if (localStorage.token) {
 
 const App = () => {
   return (
-    <AlertState>
-      <AuthState>
+    <AuthState>
+      <AlertState>
         <ProfileState>
-          <Router>
-            <Fragment>
-              <NavBar />
-              <div className="App">
-                <Switch>
-                  <Route component={Routes} />
-                </Switch>
-                <div className="footer-app-wrapper">
-                  <Footer />
+          <ExerciseState>
+            <Router>
+              <Fragment>
+                <NavBar />
+                <div className="App">
+                  <Switch>
+                    <Route component={Routes} />
+                  </Switch>
+                  <div className="footer-app-wrapper">
+                    <Footer />
+                  </div>
                 </div>
-              </div>
-            </Fragment>
-          </Router>
+              </Fragment>
+            </Router>
+          </ExerciseState>
         </ProfileState>
-      </AuthState>
-    </AlertState>
+      </AlertState>
+    </AuthState>
   );
 }
 

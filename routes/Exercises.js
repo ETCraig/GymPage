@@ -159,6 +159,7 @@ router.get('/', Authentication, async (req, res) => {
 //@Access   Private
 router.get('/muscle/:muscle', Authentication, async (req, res) => {
     try {
+        console.log(req.params.muscle)
         const exercises = await Exercise.find({ muscle: req.params.muscle });
 
         if (!exercises) {

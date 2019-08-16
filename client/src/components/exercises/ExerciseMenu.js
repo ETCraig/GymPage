@@ -16,40 +16,40 @@ const ExerciseMenu = () => {
         <div>
             <div className="row d-flex justify-content-center m-5">
                 <div className="thumbnail m-1 muscle-link">
-                    <Link to="/exercise-menu/shoulders">
+                    <Link to="/exercise-menu/Shoulders">
                         <div className="col">
                             <img style={{ border: "1px solid #eee" }} src={Shoulder} />
-                            <div class="caption">
+                            <div className="caption">
                                 <p>Shoulders</p>
                             </div>
                         </div>
                     </Link>
                 </div>
                 <div className="thumbnail m-1 muscle-link">
-                    <Link to="/exercise-menu/back">
+                    <Link to="/exercise-menu/Back">
                         <div className="col">
                             <img style={{ border: "1px solid #eee" }} src={Back} />
-                            <div class="caption">
+                            <div className="caption">
                                 <p>Back</p>
                             </div>
                         </div>
                     </Link>
                 </div>
                 <div className="thumbnail m-1 muscle-link">
-                    <Link to="/exercise-menu/arms">
+                    <Link to="/exercise-menu/Arms">
                         <div className="col">
                             <img style={{ border: "1px solid #eee" }} src={Arm} />
-                            <div class="caption">
+                            <div className="caption">
                                 <p>Arms</p>
                             </div>
                         </div>
                     </Link>
                 </div>
                 <div className="thumbnail m-1 muscle-link">
-                    <Link to="/exercise-menu/chest">
+                    <Link to="/exercise-menu/Chest">
                         <div className="col">
                             <img style={{ border: "1px solid #eee" }} src={Chest} />
-                            <div class="caption">
+                            <div className="caption">
                                 <p>Chest</p>
                             </div>
                         </div>
@@ -58,30 +58,30 @@ const ExerciseMenu = () => {
             </div>
             <div className="row d-flex justify-content-center m-5">
                 <div className="thumbnail m-1 muscle-link">
-                    <Link to="/exercise-menu/core">
+                    <Link to="/exercise-menu/Core">
                         <div className="col">
                             <img style={{ border: "1px solid #eee" }} src={Core} />
-                            <div class="caption">
+                            <div className="caption">
                                 <p>Core</p>
                             </div>
                         </div>
                     </Link>
                 </div>
                 <div className="thumbnail m-1 muscle-link">
-                    <Link to="/exercise-menu/legs">
+                    <Link to="/exercise-menu/Legs">
                         <div className="col">
                             <img style={{ border: "1px solid #eee" }} src={Legs} />
-                            <div class="caption">
+                            <div className="caption">
                                 <p>Legs</p>
                             </div>
                         </div>
                     </Link>
                 </div>
                 <div className="thumbnail m-1 muscle-link">
-                    <Link to="/exercise-menu/cardio">
+                    <Link to="/exercise-menu/Cardio">
                         <div className="col">
                             <img style={{ border: "1px solid #eee" }} src={Cardio} />
-                            <div class="caption">
+                            <div className="caption">
                                 <p>Cardio</p>
                             </div>
                         </div>
