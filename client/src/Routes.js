@@ -10,6 +10,7 @@ import MuscleGroup from './components/exercises/MuscleGroup';
 import NotFound from './components/layout/NotFound';
 import UserProfile from './components/profile/UserProfile';
 import Register from './components/auth/Register';
+import Routines from './components/routines/Routines';
 
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './utils/PrivateRoute';
@@ -27,6 +28,7 @@ const Routes = () => {
                 <PrivateRoute exact path="/exercise-menu" component={ExerciseMenu} />
                 <PrivateRoute exact path="/exercise-menu/:muscle" component={MuscleGroup} />
                 <PrivateRoute exact path="/profile" component={UserProfile} />
+                <PrivateRoute exact path="/routines" component={Routines} />
                 <Route component={NotFound} />
             </Switch>
         </section>
