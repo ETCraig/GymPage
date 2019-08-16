@@ -7,15 +7,16 @@ import {
 
 export default (state, action) => {
     const { type, payload } = action;
-    console.log(type, payload);
     switch (action.type) {
         case GET_EXERCISES:
             return {
-
+                
             }
         case GET_EXERCISE: 
             return {
-
+                ...state,
+                exercise: payload,
+                loading: false
             }
         case GET_MUSCLE:
             return {

@@ -4,6 +4,7 @@ import ExerciseContext from './exerciseContext';
 import ExerciseReducer from './exerciseReducer';
 import {
     EXERCISE_ERROR,
+    GET_EXERCISE,
     GET_MUSCLE
 } from '../Types';
 
@@ -27,27 +28,32 @@ const ExerciseState = props => {
 
         }
     }
-    //
-    const getExercise = async () => {
+    //GET INDIVIDUAL EXERCISE BY ID
+    const getExercise = async id => {
         try {
+            const res = await axios.get(`/api/exercise/${id}`);
 
+            dispatch({
+                type: GET_EXERCISE,
+                payload: res.data
+            });
         } catch (err) {
-
+            dispatch({
+                type: EXERCISE_ERROR,
+                payload: err.response.msg
+            });
         }
     }
-    //
+    //GET EXERCISE BY MUSCLE GROUP
     const getGroup = async muscle => {
         try {
-            console.log(muscle);
             const res = await axios.get(`/api/exercise/muscle/${muscle}`);
-            console.log(res.data);
+            
             dispatch({
                 type: GET_MUSCLE,
                 payload: res.data
             });
-            console.log('REDU', state.exercises)
         } catch (err) {
-            console.log('ERR', err);
             dispatch({
                 type: EXERCISE_ERROR,
                 payload: err.response.msg
@@ -62,7 +68,8 @@ const ExerciseState = props => {
                 exercise: state.exercise,
                 error: state.error,
                 loading: state.loading,
-                getGroup
+                getGroup,
+                getExercise
             }}
         >
             {props.children}
