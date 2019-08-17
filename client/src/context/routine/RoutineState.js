@@ -11,6 +11,8 @@ import {
     DELETE_WORKOUT,
     EDIT_ROUTINE,
     EDIT_WORKOUT,
+    GET_ROUTINE,
+    GET_ROUTINES,
     REMOVE_EXERCISE,
     ROUTINE_ERROR,
     SAVE_ROUTINE,
@@ -32,7 +34,7 @@ const RoutineState = props => {
     const [state, dispatch] = useReducer(RoutineReducer, initialState);
 
     //
-    const createRoutine = () => {
+    const createRoutine = async () => {
         try {
             
         } catch (err) {
@@ -43,7 +45,7 @@ const RoutineState = props => {
         }
     }
     //
-    const createWorkout = () => {
+    const createWorkout = async () => {
         try {
 
         } catch (err) {
@@ -54,7 +56,41 @@ const RoutineState = props => {
         }
     }
     //
-    const deleteRoutine = () => {
+    const getRoutines = async () => {
+        try {
+            let res = await axios.get('/api/routines');
+            console.log(res)
+            dispatch({
+                type: GET_ROUTINES,
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+            dispatch({
+                type: ROUTINE_ERROR,
+                payload: err
+            });
+        }
+    }
+    //
+    const getRoutine = async () => {
+        try {
+            let res = await axios.get('/api/routines/private');
+            console.log(res)
+            dispatch({
+                type: GET_ROUTINE,
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+            dispatch({
+                type: ROUTINE_ERROR,
+                payload: err
+            });
+        }
+    }
+    //
+    const deleteRoutine = async () => {
         try {
 
         } catch (err) {
@@ -65,7 +101,7 @@ const RoutineState = props => {
         }
     }
     //
-    const deleteWorkout = () => {
+    const deleteWorkout = async () => {
         try {
 
         } catch (err) {
@@ -76,7 +112,7 @@ const RoutineState = props => {
         }
     }
     //
-    const updateRecord = () => {
+    const updateRecord = async () => {
         try {
 
         } catch (err) {
@@ -87,7 +123,7 @@ const RoutineState = props => {
         }
     }
     //
-    const editRoutine = () => {
+    const editRoutine = async () => {
         try {
 
         } catch (err) {
@@ -98,7 +134,7 @@ const RoutineState = props => {
         }
     }
     //
-    const editWorkout = () => {
+    const editWorkout = async () => {
         try {
 
         } catch (err) {
@@ -109,7 +145,7 @@ const RoutineState = props => {
         }
     }
     //
-    const addExercise = () => {
+    const addExercise = async () => {
         try {
 
         } catch (err) {
@@ -120,7 +156,7 @@ const RoutineState = props => {
         }
     }
     //
-    const removeExercise = () => {
+    const removeExercise = async () => {
         try {
 
         } catch (err) {
@@ -131,7 +167,7 @@ const RoutineState = props => {
         }
     }
     //
-    const saveRoutine = () => {
+    const saveRoutine = async () => {
         try {
 
         } catch (err) {
@@ -142,7 +178,7 @@ const RoutineState = props => {
         }
     }
     //
-    const unsaveRoutine = () => {
+    const unsaveRoutine = async () => {
         try {
 
         } catch (err) {
@@ -153,7 +189,7 @@ const RoutineState = props => {
         }
     }
     //
-    const createComment = () => {
+    const createComment = async () => {
         try {
 
         } catch (err) {
@@ -164,7 +200,7 @@ const RoutineState = props => {
         }
     }
     //
-    const deleteComment = () => {
+    const deleteComment = async () => {
         try {
 
         } catch (err) {
@@ -178,10 +214,12 @@ const RoutineState = props => {
     return (
         <RoutineContext.Provider
             value={{
-                routine: state.routines,
-                routine: routine,
+                routines: state.routines,
+                routine: state.routine,
                 workout: state.workout,
-                loading: state.loading
+                error: state.error,
+                loading: state.loading,
+                getRoutines
             }}
         >
             {props.children}

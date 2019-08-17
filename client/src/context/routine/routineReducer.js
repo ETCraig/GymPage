@@ -8,6 +8,8 @@ import {
     DELETE_WORKOUT,
     EDIT_ROUTINE,
     EDIT_WORKOUT,
+    GET_ROUTINE,
+    GET_ROUTINES,
     REMOVE_EXERCISE,
     ROUTINE_ERROR,
     SAVE_ROUTINE,
@@ -23,6 +25,16 @@ export default (state, action) => {
 
             }
         case CREATE_WORKOUT:
+            return {
+
+            }
+        case GET_ROUTINES:
+            return {
+                ...state,
+                routines: payload,
+                loading: false
+            }
+        case GET_ROUTINE:
             return {
 
             }

@@ -66,6 +66,34 @@ router.post('/workout/:routine_id', [Authentication, [
     }
 });
 
+//@Route    GET api/routine
+//@Desc     Get Routines
+//@Access   Private
+router.get('/', Authentication, async (req, res) => {
+    try {
+        let routines = await Routine.find({public: true});
+
+        res.json(routines);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error.');
+    }
+});
+
+//@Route    GET api/routine
+//@Desc     Get Routines
+//@Access   Private
+router.get('/private', Authentication, async (req, res) => {
+    try {
+        let routines = await Routine.find({creator: req.user.id});
+
+        res.json(routines);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error.');
+    }
+});
+
 //@Route    DELETE api/routine/:routine_id
 //@Desc     Delete a Routine
 //@Access   Private
