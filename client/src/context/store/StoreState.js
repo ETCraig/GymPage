@@ -16,7 +16,7 @@ import axios from 'axios';
 
 const StoreState = props => {
     const initialState = {
-        products: null,
+        products: [],
         product: null,
         cart: null,
         methods: null,
@@ -30,6 +30,16 @@ const StoreState = props => {
     const getProducts = async () => {
         try {
             const res = await axios.get('/api/store');
+            console.log('RES', res)
+
+            if(res.data.msg) {
+                let data = [];
+                console.log('IN')
+                dispatch({
+                    type: GET_PRODUCTS,
+                    payload: data
+                });
+            }
 
             dispatch({
                 type: GET_PRODUCTS,
@@ -38,7 +48,7 @@ const StoreState = props => {
         } catch (err) {
             dispatch({
                 type: STORE_ERROR,
-                payload: err.response.msg
+                payload: err
             });
         }
     }

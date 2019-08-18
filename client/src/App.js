@@ -8,6 +8,7 @@ import AlertState from './context/alerts/AlertState';
 import AuthState from './context/auth/AuthState';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ExerciseState from './context/exercise/ExerciseState';
+import StoreState from './context/store/StoreState';
 import ProfileState from './context/profile/ProfileState';
 import RoutineState from './context/routine/RoutineState';
 import Routes from './Routes';
@@ -24,19 +25,21 @@ const App = () => {
         <ProfileState>
           <RoutineState>
             <ExerciseState>
-              <Router>
-                <Fragment>
-                  <NavBar />
-                  <div className="App">
-                    <Switch>
-                      <Route component={Routes} />
-                    </Switch>
-                    <div className="footer-app-wrapper">
-                      <Footer />
+              <StoreState>
+                <Router>
+                  <Fragment>
+                    <NavBar />
+                    <div className="App">
+                      <Switch>
+                        <Route component={Routes} />
+                      </Switch>
+                      <div className="footer-app-wrapper">
+                        <Footer />
+                      </div>
                     </div>
-                  </div>
-                </Fragment>
-              </Router>
+                  </Fragment>
+                </Router>
+              </StoreState>
             </ExerciseState>
           </RoutineState>
         </ProfileState>
