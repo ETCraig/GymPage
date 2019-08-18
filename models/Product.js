@@ -16,9 +16,13 @@ const ProductSchema = new Schema({
             }
         }
     ],
-    description: {
-        type: String
-    },
+    description: [
+        {
+            paragraph: {
+                type: String
+            }
+        }
+    ],
     category: {
         type: String,
         required: true
@@ -28,12 +32,18 @@ const ProductSchema = new Schema({
     },
     sizes: [
         {
+            flavor: {
+                type: String,
+            },
             size: {
                 type: String,
             },
             price: {
                 type: Number,
             },
+            image: {
+                type: String
+            }
         }
     ],
     comments: [

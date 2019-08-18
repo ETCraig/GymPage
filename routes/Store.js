@@ -16,8 +16,17 @@ const stripe = require('stripe')(secret_key);
 //@Desc     Create a Product
 //@Access   Admin
 router.post('/', Authentication, async (req, res) => {
+    let { name, category, brand } = req.body;
     try {
+        let product = new Product({
+            name,
+            category,
+            brand
+        });
 
+        await product.save();
+
+        res.json(product);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error.');

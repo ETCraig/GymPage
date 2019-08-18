@@ -21,7 +21,7 @@ const Shop = () => {
         <Fragment>
             {products.length !== 0 && !loading ? (
                 products.map(product => (
-                    <div>
+                    <div key={product._id}>
                         {product.name}
                     </div>
                 ))
