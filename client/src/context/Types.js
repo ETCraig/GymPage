@@ -40,3 +40,12 @@ export const ROUTINE_ERROR = 'ROUTINE_ERROR';
 export const SAVE_ROUTINE = 'SAVE_ROUTINE';
 export const UNSAVE_ROUTINE = 'UNSAVE_ROUTINE';
 export const UPDATE_RECORD = 'UPDATE_RECORD';
+//STORE TYPES
+export const CREATE_METHOD = 'CREATE_METHOD';
+export const DELETE_METHOD = 'DELETE_METHOD';
+export const GET_METHODS = 'GET_METHODS';
+export const GET_ORDERS = 'GET_ORDERS';
+export const GET_PRODUCT = 'GET_PRODUCT';
+export const GET_PRODUCTS = 'GET_PRODUCTS';
+export const PROCESS_PURCHASE = 'PURCHASE_PRODUCTS';
+export const STORE_ERROR = 'STORE_ERROR';
