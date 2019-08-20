@@ -19,7 +19,7 @@ const NavBar = () => {
                 <Link to='/'>Dashboard</Link>
             </li>
             <li>
-                <Link to='/store'><i className="fas fa-shopping-cart"></i> Store</Link>
+                <Link to='/store'><i className="fas fa-store"></i> Store</Link>
             </li>
             <li>
                 <Link to='/exercise-menu'><i className="fas fa-columns"></i> Exercises</Link>

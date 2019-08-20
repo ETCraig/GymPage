@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import StoreContext from './storeContext';
 import StoreReducer from './storeReducer';
 import {
+    ADD_PRODUCT,
     CREATE_METHOD,
     DELETE_METHOD,
     GET_METHODS,
@@ -18,7 +19,7 @@ const StoreState = props => {
     const initialState = {
         products: [],
         product: null,
-        cart: null,
+        cart: [],
         methods: null,
         error: null,
         loading: true
@@ -150,6 +151,13 @@ const StoreState = props => {
             });
         }
     }
+    //
+    const addToCart = product => {
+        dispatch({
+            type: ADD_PRODUCT,
+            payload: product
+        });
+    }
 
     return (
         <StoreContext.Provider
@@ -161,7 +169,8 @@ const StoreState = props => {
                 error: state.error,
                 loading: state.loading,
                 getProduct,
-                getProducts
+                getProducts,
+                addToCart
             }}
         >
             {props.children}

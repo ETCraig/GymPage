@@ -1,4 +1,5 @@
 import {
+    ADD_PRODUCT,
     CREATE_METHOD,
     DELETE_METHOD,
     GET_METHODS,
@@ -6,7 +7,7 @@ import {
     GET_PRODUCT,
     GET_PRODUCTS,
     PROCESS_PURCHASE,
-    STORE_ERROR
+    STORE_ERROR,
 } from '../Types';
 
 export default (state, action) => {
@@ -24,6 +25,10 @@ export default (state, action) => {
                 product: payload,
                 loading: false
             }
+        case ADD_PRODUCT:
+            return {
+
+            }
         case GET_METHODS:
             return {
                 ...state,
@@ -31,7 +36,8 @@ export default (state, action) => {
             }
         case CREATE_METHOD:
             return {
-
+                ...state,
+                cart: state.cart.push(payload)
             }
         case PROCESS_PURCHASE: {
 

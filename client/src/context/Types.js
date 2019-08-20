@@ -41,6 +41,7 @@ export const SAVE_ROUTINE = 'SAVE_ROUTINE';
 export const UNSAVE_ROUTINE = 'UNSAVE_ROUTINE';
 export const UPDATE_RECORD = 'UPDATE_RECORD';
 //STORE TYPES
+export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const CREATE_METHOD = 'CREATE_METHOD';
 export const DELETE_METHOD = 'DELETE_METHOD';
 export const GET_METHODS = 'GET_METHODS';
