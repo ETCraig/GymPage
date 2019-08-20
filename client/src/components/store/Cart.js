@@ -7,16 +7,17 @@ const Cart = () => {
     const storeContext = useContext(StoreContext);
 
     const { cart, loading } = storeContext;
-    console.log(cart);
+    console.log(cart.items);
     return (
         <div>
-            {cart !== null && !loading ? (
+            Cart
+            {/* {cart !== null && !loading ? (
                 cart.items.map(item => (
                     <div>
                         {item}
                     </div>
                 ))
-            ) : <Loading />}
+            ) : <Loading />} */}
         </div>
     );
 }

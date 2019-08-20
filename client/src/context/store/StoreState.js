@@ -73,9 +73,15 @@ const StoreState = props => {
     }
     //
     const getCart = async () => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
         try {
             console.log('HIT GET');
-            const res = await axios.get('/api/store/cart');
+            const res = await axios.post('/api/store/user-cart', {}, config);
             console.log('GET RES', res);
             dispatch({
                 type: GET_CART,
@@ -114,7 +120,18 @@ const StoreState = props => {
         }
     }
     //
-    const removeFromCart = async (product, amount) => {
+    const editCartItem = async (product_id, amount) => {
+        try {
+            const res = await axios.patch(`/api`)
+        } catch (err) {
+            dispatch({
+                type: STORE_ERROR,
+                payload: err.response.msg
+            });
+        }
+    }
+    //
+    const removeFromCart = async product_id => {
         try {
             
         } catch (err) {

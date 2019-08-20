@@ -121,7 +121,7 @@ router.post('/cart', Authentication, async (req, res) => {
 //@Route    GET api/store/cart
 //@Desc     Get users Cart
 //@Access   Private
-router.get('/cart', Authentication, async (req, res) => {
+router.post('/user-cart', Authentication, async (req, res) => {
     try {
         console.log('IN');
         let cart = await Cart.findOne({ owner: req.user.id });
