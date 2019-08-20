@@ -55,8 +55,9 @@ const StoreState = props => {
     //
     const getProduct = async id => {
         try {
-            const res = axios.get(`/api/store/${id}`);
-
+            console.log(id)
+            const res = await axios.get(`/api/store/${id}`);
+            console.log(res);
             dispatch({
                 type: GET_PRODUCT,
                 payload: res.data
