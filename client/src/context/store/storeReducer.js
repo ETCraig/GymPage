@@ -2,6 +2,7 @@ import {
     ADD_PRODUCT,
     CREATE_METHOD,
     DELETE_METHOD,
+    GET_CART,
     GET_METHODS,
     GET_ORDERS,
     GET_PRODUCT,
@@ -23,6 +24,12 @@ export default (state, action) => {
             return {
                 ...state,
                 product: payload,
+                loading: false
+            }
+        case GET_CART:
+            return {
+                ...state,
+                cart: payload,
                 loading: false
             }
         case ADD_PRODUCT:

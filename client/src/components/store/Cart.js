@@ -7,12 +7,13 @@ const Cart = () => {
     const storeContext = useContext(StoreContext);
 
     const { cart, loading } = storeContext;
+    console.log(cart);
     return (
         <div>
             {cart !== null && !loading ? (
-                cart.map(item => (
+                cart.items.map(item => (
                     <div>
-                        {item.name}
+                        {item}
                     </div>
                 ))
             ) : <Loading />}

@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect } from 'react';
 
 import Loading from '../layout/Loading';
 import StoreContext from '../../context/store/storeContext';
+import StoreNav from './StoreNav';
 
 import { Link } from 'react-router-dom';
 
@@ -21,13 +22,7 @@ const Shop = () => {
 
     return (
         <Fragment>
-            <div style={{ marginBottom: "30px" }}>
-                <div className="float-right">
-                    <Link to="/cart">
-                        <i className="fas fa-shopping-cart"></i>
-                    </Link>
-                </div>
-            </div>
+            <StoreNav />
             <div style={{ minHeight: "400px" }}>
                 {products.length !== 0 && !loading ? (
                     products.map(product => (

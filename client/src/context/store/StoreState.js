@@ -5,6 +5,7 @@ import {
     ADD_PRODUCT,
     CREATE_METHOD,
     DELETE_METHOD,
+    GET_CART,
     GET_METHODS,
     GET_ORDERS,
     GET_PRODUCT,
@@ -71,6 +72,24 @@ const StoreState = props => {
         }
     }
     //
+    const getCart = async () => {
+        try {
+            console.log('HIT GET');
+            const res = await axios.get('/api/store/cart');
+            console.log('GET RES', res);
+            dispatch({
+                type: GET_CART,
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err);
+            dispatch({
+                type: STORE_ERROR,
+                payload: err.response.msg
+            });
+        }
+    }
+    //
     const addToCart = async (product, amount) => {
         const config = {
             headers: {
@@ -85,8 +104,19 @@ const StoreState = props => {
 
             dispatch({
                 type: ADD_PRODUCT,
-                payload: product
+                payload: res.data
             });
+        } catch (err) {
+            dispatch({
+                type: STORE_ERROR,
+                payload: err.response.msg
+            });
+        }
+    }
+    //
+    const removeFromCart = async (product, amount) => {
+        try {
+            
         } catch (err) {
             dispatch({
                 type: STORE_ERROR,
@@ -187,6 +217,7 @@ const StoreState = props => {
                 loading: state.loading,
                 getProduct,
                 getProducts,
+                getCart,
                 addToCart
             }}
         >

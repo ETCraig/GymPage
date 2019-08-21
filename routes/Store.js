@@ -76,6 +76,8 @@ router.get('/:id', Authentication, async (req, res) => {
     }
 });
 
+
+
 //@Route    POST api/store/cart
 //@Desc     Create or Update Cart
 //@Access   Private
@@ -103,14 +105,9 @@ router.post('/cart', Authentication, async (req, res) => {
 
             res.json(cart);
         } else {
-            let newItem = {
-                item,
-                count
-            };
-
             await cart.update(
-                {$push: {"items": {item: item, count: count}}},
-                {safe: true, upsert: true}
+                { $push: { "items": { item: item, count: count } } },
+                { safe: true, upsert: true }
             );
 
             res.json(cart);
@@ -121,6 +118,26 @@ router.post('/cart', Authentication, async (req, res) => {
     }
 });
 
+//@Route    GET api/store/cart
+//@Desc     Get users Cart
+//@Access   Private
+router.get('/cart', Authentication, async (req, res) => {
+    try {
+        console.log('IN');
+        let cart = await Cart.findOne({ owner: req.user.id });
+        console.log(cart)
+        if (!cart) {
+            cart = null;
+            
+            res.json(cart);
+        } else {
+            res.json(cart);
+        }
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Server Error');
+    }
+});
 
 //@Route    GET api/store/methods
 //@Desc     Get User's Payment Methods

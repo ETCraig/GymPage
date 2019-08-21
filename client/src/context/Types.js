@@ -44,6 +44,7 @@ export const UPDATE_RECORD = 'UPDATE_RECORD';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const CREATE_METHOD = 'CREATE_METHOD';
 export const DELETE_METHOD = 'DELETE_METHOD';
+export const GET_CART = 'GET_CART';
 export const GET_METHODS = 'GET_METHODS';
 export const GET_ORDERS = 'GET_ORDERS';
 export const GET_PRODUCT = 'GET_PRODUCT';
