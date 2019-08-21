@@ -5,12 +5,14 @@ import {
     ADD_PRODUCT,
     CREATE_METHOD,
     DELETE_METHOD,
+    EDIT_PRODUCT,
     GET_CART,
     GET_METHODS,
     GET_ORDERS,
     GET_PRODUCT,
     GET_PRODUCTS,
     PROCESS_PURCHASE,
+    REMOVE_PRODUCT,
     STORE_ERROR
 } from '../Types';
 
@@ -122,7 +124,12 @@ const StoreState = props => {
     //
     const editCartItem = async (product_id, amount) => {
         try {
-            const res = await axios.patch(`/api`)
+            const res = await axios.patch(`/api`);
+
+            dispatch({
+                type: EDIT_PRODUCT,
+                payload: res.data
+            });
         } catch (err) {
             dispatch({
                 type: STORE_ERROR,
@@ -134,6 +141,10 @@ const StoreState = props => {
     const removeFromCart = async product_id => {
         try {
             
+            dispatch({
+                type: REMOVE_PRODUCT,
+                payload: res.data
+            });
         } catch (err) {
             dispatch({
                 type: STORE_ERROR,
