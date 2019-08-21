@@ -27,7 +27,8 @@ export default (state, action) => {
             }
         case ADD_PRODUCT:
             return {
-
+                ...state,
+                cart: payload
             }
         case GET_METHODS:
             return {
@@ -36,8 +37,7 @@ export default (state, action) => {
             }
         case CREATE_METHOD:
             return {
-                ...state,
-                cart: state.cart.push(payload)
+                
             }
         case PROCESS_PURCHASE: {
 

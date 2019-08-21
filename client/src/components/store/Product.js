@@ -17,26 +17,29 @@ const Product = (props) => {
 
     const [type, setType] = useState({});
     const [selected, setSelected] = useState(20);
+    const [amount, setAmount] = useState(1);
 
-    // const onChange = e => setType({ ...type, [e.target.name]: e.target.name });
+    const onChange = e => setAmount( e.target.value );
 
     const selectOption = (option, index) => {
         console.log(option)
-        setType({ option });
+        setType({ type: option });
         setSelected(index);
-        console.log(type, selected);
+        console.log(type, selected, amount);
     }
 
     const addProduct = () => {
-        if (!type.price || !type.size || selected === 20) {
+        console.log(type.type.size)
+        if (!type.type.price || !type.type.size || selected === 20) {
             console.log('Select a Type.');
         } else {
-            console.log(type.option.flavor);
+            console.log(type.type.flavor);
             let editedProduct = product;
+            editedProduct.comments = [];
             editedProduct.sizes = [];
-            editedProduct.sizes.push(type.option);
+            editedProduct.sizes.push(type.type);
             console.log(editedProduct);
-            addToCart(editedProduct);
+            addToCart(editedProduct, amount);
         }
     }
     console.log(product)
@@ -78,6 +81,15 @@ const Product = (props) => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                    <div className="btn-group">
+                        <select value={amount} onChange={e => onChange(e)}>
+                            <option value={1}>1</option>
+                            <option value={2}>2</option>
+                            <option value={3}>3</option>
+                            <option value={4}>4</option>
+                            <option value={5}>5</option>
+                        </select>
                     </div>
                     <div className="card">
                         <button className="btn btn-success" onClick={() => addProduct()}>Add To Cart</button>

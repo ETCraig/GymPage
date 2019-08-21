@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Cart from './components/store/Cart';
 import CreateProfile from './components/profile-form/CreateProfile';
 import Dashboard from './components/dashboard/Dashboard';
 import Exercise from './components/exercises/Exercise';
@@ -32,6 +33,7 @@ const Routes = () => {
                 <PrivateRoute exact path="/store/:id" component={Product} />
                 <PrivateRoute exact path="/profile" component={UserProfile} />
                 <PrivateRoute exact path="/store" component={Store} />
+                <PrivateRoute exact path="/cart" component={Cart} />
                 <PrivateRoute exact path="/routines" component={Routines} />
                 <Route component={NotFound} />
             </Switch>

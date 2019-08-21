@@ -19,7 +19,7 @@ const StoreState = props => {
     const initialState = {
         products: [],
         product: null,
-        cart: [],
+        cart: null,
         methods: null,
         error: null,
         loading: true
@@ -33,7 +33,7 @@ const StoreState = props => {
             const res = await axios.get('/api/store');
             console.log('RES', res)
 
-            if(res.data.msg) {
+            if (res.data.msg) {
                 let data = [];
                 console.log('IN')
                 dispatch({
@@ -62,6 +62,30 @@ const StoreState = props => {
             dispatch({
                 type: GET_PRODUCT,
                 payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: STORE_ERROR,
+                payload: err.response.msg
+            });
+        }
+    }
+    //
+    const addToCart = async (product, amount) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        let data = { product, amount };
+
+        try {
+            const res = await axios.post('/api/store/cart', data, config);
+
+            dispatch({
+                type: ADD_PRODUCT,
+                payload: product
             });
         } catch (err) {
             dispatch({
@@ -111,7 +135,7 @@ const StoreState = props => {
     //
     const processPurchase = async () => {
         try {
-            
+
         } catch (err) {
             dispatch({
                 type: STORE_ERROR,
@@ -150,13 +174,6 @@ const StoreState = props => {
                 payload: err.response.msg
             });
         }
-    }
-    //
-    const addToCart = product => {
-        dispatch({
-            type: ADD_PRODUCT,
-            payload: product
-        });
     }
 
     return (

@@ -21,9 +21,11 @@ const Shop = () => {
 
     return (
         <Fragment>
-            <div style={{marginBottom: "30px"}}>
+            <div style={{ marginBottom: "30px" }}>
                 <div className="float-right">
-                    <i className="fas fa-shopping-cart"></i>
+                    <Link to="/cart">
+                        <i className="fas fa-shopping-cart"></i>
+                    </Link>
                 </div>
             </div>
             <div style={{ minHeight: "400px" }}>

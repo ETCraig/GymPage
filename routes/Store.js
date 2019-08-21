@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Authentication = require('../middleware/Authentication');
+const Cart = require('../models/Cart');
 const { check, validationResult } = require('express-validator');
 const config = require('config');
 const Product = require('../models/Product');
@@ -74,6 +75,52 @@ router.get('/:id', Authentication, async (req, res) => {
         res.status(500).send('Server Error.');
     }
 });
+
+//@Route    POST api/store/cart
+//@Desc     Create or Update Cart
+//@Access   Private
+router.post('/cart', Authentication, async (req, res) => {
+    let item = req.body.product;
+    let count = req.body.amount;
+    try {
+        let cart = await Cart.findOne({ owner: req.user.id });
+        console.log(cart);
+        if (!cart || cart.length < 1) {
+            console.log('IN')
+            let newItem = {
+                item,
+                count
+            };
+
+            let cart = new Cart({
+                owner: req.user.id,
+                items: newItem
+            });
+
+            // cart.items.unshift(newItem);
+
+            await cart.save();
+
+            res.json(cart);
+        } else {
+            let newItem = {
+                item,
+                count
+            };
+
+            await cart.update(
+                {$push: {"items": {item: item, count: count}}},
+                {safe: true, upsert: true}
+            );
+
+            res.json(cart);
+        }
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Server Error');
+    }
+});
+
 
 //@Route    GET api/store/methods
 //@Desc     Get User's Payment Methods
