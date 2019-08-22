@@ -6,6 +6,7 @@ import {
     CREATE_METHOD,
     DELETE_METHOD,
     EDIT_PRODUCT,
+    EMPTY_CART,
     GET_CART,
     GET_METHODS,
     GET_ORDERS,
@@ -13,6 +14,7 @@ import {
     GET_PRODUCTS,
     PROCESS_PURCHASE,
     REMOVE_PRODUCT,
+    SET_LOADING,
     STORE_ERROR
 } from '../Types';
 
@@ -140,10 +142,27 @@ const StoreState = props => {
     //
     const removeFromCart = async product_id => {
         try {
-            
+            await axios.delete(`/api/store/cart/${product_id}`);
+
             dispatch({
                 type: REMOVE_PRODUCT,
-                payload: res.data
+                payload: product_id
+            });
+        } catch (err) {
+            dispatch({
+                type: STORE_ERROR,
+                payload: err.response.msg
+            });
+        }
+    }
+    //
+    const emptyCart = async product_id => {
+        try {
+            await axios.delete(`/api/store/cart/${product_id}`);
+
+            dispatch({
+                type: EMPTY_CART,
+                payload: product_id
             });
         } catch (err) {
             dispatch({
@@ -234,6 +253,10 @@ const StoreState = props => {
         }
     }
 
+    const setLoading = () => {
+        dispatch({ type: SET_LOADING });
+    }
+
     return (
         <StoreContext.Provider
             value={{
@@ -246,7 +269,10 @@ const StoreState = props => {
                 getProduct,
                 getProducts,
                 getCart,
-                addToCart
+                addToCart,
+                removeFromCart,
+                emptyCart,
+                setLoading
             }}
         >
             {props.children}

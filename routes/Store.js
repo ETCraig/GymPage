@@ -139,6 +139,34 @@ router.post('/user-cart', Authentication, async (req, res) => {
     }
 });
 
+//@Route    DELETE api/store/cart/:product_id
+//@Desc     Delete Product from users Cart
+//@Access   Private
+router.delete('/cart/:product_id', Authentication, async (req, res) => {
+    console.log(req.params.product_id);
+    let product = req.params.product_id;
+    try {
+        const cart = await Cart.findOne({owner: req.user.id});
+
+        const item = cart.items.find(item => item._id == product);
+
+        if (!item) {
+            return res.status(404).json({ msg: 'Product Not Found.' });
+        }
+
+        const removeIndex = cart.items.map(item => item._id.toString()).indexOf(product);
+
+        cart.items.splice(removeIndex, 1);
+
+        await cart.save();
+
+        res.json(cart.items);
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Server Error');
+    }
+});
+
 //@Route    GET api/store/methods
 //@Desc     Get User's Payment Methods
 //@Access   Private

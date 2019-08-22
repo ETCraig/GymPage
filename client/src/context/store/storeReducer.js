@@ -2,12 +2,15 @@ import {
     ADD_PRODUCT,
     CREATE_METHOD,
     DELETE_METHOD,
+    EMPTY_CART,
     GET_CART,
     GET_METHODS,
     GET_ORDERS,
     GET_PRODUCT,
     GET_PRODUCTS,
     PROCESS_PURCHASE,
+    REMOVE_PRODUCT,
+    SET_LOADING,
     STORE_ERROR,
 } from '../Types';
 
@@ -37,6 +40,18 @@ export default (state, action) => {
                 ...state,
                 cart: payload
             }
+        case REMOVE_PRODUCT:
+            return {
+                ...state,
+                cart: state.cart.items.filter(item => item._id !== payload),
+                loading: false
+            }
+        case EMPTY_CART:
+            return {
+                ...state,
+                cart: null,
+                loading: false
+            }
         case GET_METHODS:
             return {
                 ...state,
@@ -59,6 +74,11 @@ export default (state, action) => {
             return {
                 ...state,
                 methods: state.methods.filter(method => method.sourceId !== method.payload)
+            }
+        case SET_LOADING:
+            return {
+                ...state,
+                loading: true
             }
         case STORE_ERROR:
             return {
