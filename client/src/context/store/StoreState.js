@@ -124,9 +124,15 @@ const StoreState = props => {
         }
     }
     //
-    const editCartItem = async (product_id, amount) => {
+    const editCartItem = async (product_id, count) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
         try {
-            const res = await axios.patch(`/api`);
+            const res = await axios.patch(`/api/store/cart/${product_id}`, count, config);
 
             dispatch({
                 type: EDIT_PRODUCT,

@@ -38,7 +38,6 @@ const Cart = () => {
         );
     }
 
-    // console.log(cart.items.length);
     return (
         <div>
             Cart

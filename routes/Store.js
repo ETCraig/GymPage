@@ -167,6 +167,28 @@ router.delete('/cart/:product_id', Authentication, async (req, res) => {
     }
 });
 
+//@Route    PATCH api/store/cart/:product_id
+//@Desc     Edit Product in users Cart
+//@Access   Private
+router.patch('/cart/:product_id', Authentication, async (req, res) => {
+    let product = req.params.product_id;
+    let newCount = req.body.count;
+    try {
+        let updatedCart = await Cart.findOneAndUpdate(
+            {"owner": req.user.id, "items._id": product},
+            {$set: {"items.$.count": newCount}},
+            {new: true}
+        );
+
+        const cart = await Cart.findOne({owner: req.user.id});
+
+        res.json(cart.items);
+    } catch (err) {
+        console.error('ERROR', err);
+        res.status(500).send('Server Error');
+    }
+});
+
 //@Route    GET api/store/methods
 //@Desc     Get User's Payment Methods
 //@Access   Private
