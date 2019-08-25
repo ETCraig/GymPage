@@ -6,7 +6,14 @@ import StoreContext from '../../context/store/storeContext';
 const Cart = () => {
     const storeContext = useContext(StoreContext);
 
-    const { cart, loading, setLoading, emptyCart, editCartItem, removeFromCart } = storeContext;
+    const { cart, calculateTotal, loading, setLoading, emptyCart, editCartItem, removeFromCart } = storeContext;
+
+    useEffect(() => {
+        console.log(cart)
+        if(cart && cart.items.length > 0) {
+            calculateTotal();
+        }
+    }, []);
 
     const [userCart, setCart] = useState(cart)
 
@@ -44,6 +51,7 @@ const Cart = () => {
     return (
         <div>
             Cart
+            <button className="btn btn-success">Check out</button>
             {userCart !== null && !loading ? (
                 userCart.items.map(item => (
                     <div className="container-fluid" key={item._id}>

@@ -3,6 +3,7 @@ import StoreContext from './storeContext';
 import StoreReducer from './storeReducer';
 import {
     ADD_PRODUCT,
+    CALCULATE_TOTAL,
     CREATE_METHOD,
     DELETE_METHOD,
     EDIT_PRODUCT,
@@ -26,6 +27,7 @@ const StoreState = props => {
         product: null,
         cart: null,
         methods: null,
+        total: 0,
         error: null,
         loading: true
     }
@@ -82,7 +84,6 @@ const StoreState = props => {
                 'Content-Type': 'application/json'
             }
         }
-
         try {
             console.log('HIT GET');
             const res = await axios.post('/api/store/user-cart', {}, config);
@@ -264,6 +265,21 @@ const StoreState = props => {
         dispatch({ type: SET_LOADING });
     }
 
+    const calculateTotal = () => {
+        let due = initialState.total;
+        console.log(state.cart)
+        let products = state.cart.items;
+
+        for(let i = 0; i< products.length; i++) {
+            due = due + products[i].item.sizes[0].price
+        }
+        console.log(due);
+        dispatch({
+            type: CALCULATE_TOTAL,
+            payload: due
+        });
+    }
+
     return (
         <StoreContext.Provider
             value={{
@@ -276,6 +292,7 @@ const StoreState = props => {
                 getProduct,
                 getProducts,
                 getCart,
+                calculateTotal,
                 addToCart,
                 editCartItem,
                 removeFromCart,

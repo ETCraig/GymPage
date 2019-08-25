@@ -13,6 +13,7 @@ import {
     REMOVE_PRODUCT,
     SET_LOADING,
     STORE_ERROR,
+    CALCULATE_TOTAL,
 } from '../Types';
 
 export default (state, action) => {
@@ -33,7 +34,12 @@ export default (state, action) => {
         case GET_CART:
             return {
                 ...state,
-                cart: payload,
+                cart: payload
+            }
+        case CALCULATE_TOTAL:
+            return {
+                ...state,
+                total: payload,
                 loading: false
             }
         case ADD_PRODUCT:

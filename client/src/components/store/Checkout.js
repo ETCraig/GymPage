@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 const Checkout = () => {
     return (
-        <div>
+        <div className="container">
             
         </div>
     );
