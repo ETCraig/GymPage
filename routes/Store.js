@@ -171,8 +171,10 @@ router.delete('/cart/:product_id', Authentication, async (req, res) => {
 //@Desc     Edit Product in users Cart
 //@Access   Private
 router.patch('/cart/:product_id', Authentication, async (req, res) => {
+    console.log('HIT')
     let product = req.params.product_id;
     let newCount = req.body.count;
+    console.log('HERE', product, newCount);
     try {
         let updatedCart = await Cart.findOneAndUpdate(
             {"owner": req.user.id, "items._id": product},

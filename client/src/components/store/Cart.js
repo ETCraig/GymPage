@@ -6,12 +6,15 @@ import StoreContext from '../../context/store/storeContext';
 const Cart = () => {
     const storeContext = useContext(StoreContext);
 
-    const { cart, loading, setLoading, emptyCart, removeFromCart } = storeContext;
+    const { cart, loading, setLoading, emptyCart, editCartItem, removeFromCart } = storeContext;
 
     const [userCart, setCart] = useState(cart)
 
-    const handleUpdate = () => {
-
+    const handleUpdate = (e, id) => {
+        console.log(e.target.value, id);
+        let product_id = id;
+        let count = e.target.value;
+        editCartItem(product_id, count);
     }
 
     const handleDelete = async (product_id) => {
@@ -61,7 +64,7 @@ const Cart = () => {
                                         <small className="text-muted">
                                             Count:
                                         </small>
-                                        <select defaultValue={item.count}>
+                                        <select defaultValue={item.count} onChange={(e) => handleUpdate(e, item._id)}>
                                             <option value={1}>1</option>
                                             <option value={2}>2</option>
                                             <option value={3}>3</option>

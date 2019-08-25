@@ -132,13 +132,14 @@ const StoreState = props => {
         }
 
         try {
-            const res = await axios.patch(`/api/store/cart/${product_id}`, count, config);
+            const res = await axios.patch(`/api/store/cart/${product_id}`, {count}, config);
 
             dispatch({
                 type: EDIT_PRODUCT,
                 payload: res.data
             });
         } catch (err) {
+            console.log(err);
             dispatch({
                 type: STORE_ERROR,
                 payload: err.response.msg
@@ -276,6 +277,7 @@ const StoreState = props => {
                 getProducts,
                 getCart,
                 addToCart,
+                editCartItem,
                 removeFromCart,
                 emptyCart,
                 setLoading
