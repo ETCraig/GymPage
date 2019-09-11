@@ -2,6 +2,7 @@ import React from 'react'
 
 import {
     injectStripe,
+    CardElement,
     CardNumberElement,
     CardExpiryElement,
     CardCVCElement,
@@ -15,7 +16,7 @@ const handleSubscribe = e => {
         console.log('HIT')
         if (props.stripe) {
             props.stripe.createToken().then(payload => {
-                
+
             })
         } else {
             console.log('Stripe.js has not loaded.');
@@ -25,14 +26,8 @@ const handleSubscribe = e => {
     return (
         <div>
             <form>
-                <label>Card Number</label>
-                <CardNumberElement />
-                <label>Expiration Date</label>
-                <CardExpiryElement />
-                <label>CVC</label>
-                <CardCVCElement />
-                <label>Postal Code</label>
-                <PostalCodeElement />
+                {/* Will Be Expanded in Future */}
+                <CardElement />
                 <button className="mt-2 btn btn-block">Continue</button>
             </form>
         </div>

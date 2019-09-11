@@ -53,6 +53,30 @@ const ProfileSchema = new Schema({
             }
         }
     ],
+    addresses: [
+        {
+            name: {
+                type: String,
+                required: true
+            },
+            street: {
+                type: String,
+                required: true
+            },
+            city: {
+                type: String,
+                required: true
+            },
+            state: {
+                type: String,
+                required: true
+            },
+            zip: {
+                type: Number,
+                required: true
+            }
+        }
+    ],
     date: {
         type: Date,
         default: Date.now
