@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 
+import Checkout from './Checkout';
 import Loading from '../layout/Loading';
 import StoreContext from '../../context/store/storeContext';
 
@@ -15,7 +16,8 @@ const Cart = () => {
         }
     }, []);
 
-    const [userCart, setCart] = useState(cart)
+    const [userCart, setCart] = useState(cart);
+    const [show, setShow] = useState(false);
 
     const handleUpdate = (e, id) => {
         console.log(e.target.value, id);
@@ -40,6 +42,14 @@ const Cart = () => {
         }
     }
 
+    const showModal = () => {
+        setShow(true);
+    }
+
+    const hideModal = () => {
+        setShow(false)
+    }
+
     if(cart === null && userCart === null) {
         return (
             <div className="container-fluid">
@@ -51,7 +61,8 @@ const Cart = () => {
     return (
         <div>
             Cart
-            <button className="btn btn-success">Check out</button>
+            <button className="btn btn-success" onClick={showModal}>Check out</button>
+            <Checkout show={show} handleClose={hideModal} />
             {userCart !== null && !loading ? (
                 userCart.items.map(item => (
                     <div className="container-fluid" key={item._id}>

@@ -39,12 +39,12 @@ router.post('/login', [
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-
+    console.log(req.body)
     const { email, password } = req.body;
 
     try {
         let user = await User.findOne({ email });
-
+        console.log(user)
         if (!user) {
             res.status(400).json({ errors: [{ msg: 'Invalid Credentials.' }] });
         }
@@ -67,7 +67,8 @@ router.post('/login', [
             { expiresIn: 3600 },
             (err, token) => {
                 if (err) throw err;
-                res.json({ token });
+                console.log(token)
+                res.status(200).json({ token });
             }
         );
     } catch (err) {

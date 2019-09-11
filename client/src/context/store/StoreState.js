@@ -181,8 +181,14 @@ const StoreState = props => {
     }
     //
     const getMethods = async () => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
         try {
-            const res = await axios.get('/api/store/methods');
+            console.log('HIT GET METHODS');
+            const res = await axios.post('/api/store/methods', {}, config);
 
             dispatch({
                 type: GET_METHODS,
@@ -297,6 +303,7 @@ const StoreState = props => {
                 editCartItem,
                 removeFromCart,
                 emptyCart,
+                getMethods,
                 setLoading
             }}
         >

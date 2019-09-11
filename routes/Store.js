@@ -194,10 +194,14 @@ router.patch('/cart/:product_id', Authentication, async (req, res) => {
 //@Route    GET api/store/methods
 //@Desc     Get User's Payment Methods
 //@Access   Private
-router.get('/methods', Authentication, async (req, res) => {
-    let { stripe_id } = req.user;
+router.post('/methods', Authentication, async (req, res) => {
+    console.log('stripe_id', req.body);
     try {
-        let sources = await stripe.customers.listSources(stripe_id);
+        let user = await User.findById(req.user.id);
+
+        console.log(user);
+
+        let sources = await stripe.customers.listSources(user.stripe_id);
 
         if (!sources) {
             return res.status(404).json({ msg: 'No Payment Methods Found.' });
