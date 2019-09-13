@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 
+import Loading from '../layout/Loading';
 import ProfileContext from '../../context/profile/profileContext';
 
 import { Link } from 'react-router-dom';
@@ -7,7 +8,7 @@ import { Link } from 'react-router-dom';
 const DashReRoute = () => {
     const profileContext = useContext(ProfileContext);
 
-    const { getUserProfile, profile, profiles } = profileContext;
+    const { getUserProfile, profile, profiles, loading } = profileContext;
 
     useEffect(() => {
         getUserProfile();
@@ -15,7 +16,9 @@ const DashReRoute = () => {
     }, []);
     return (
         <Fragment>
-            {profile !== null ?
+            {loading ? 
+                <Loading /> :
+            profile !== null && !loading ?
                 <Fragment>
                     <h4>Your Profile Was Found.</h4>
                 </Fragment> :

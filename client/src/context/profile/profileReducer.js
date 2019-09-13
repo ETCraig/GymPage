@@ -14,12 +14,14 @@ export default (state, action) => {
         case GET_USER_PROFILE:
             return {
                 ...state,
-                profile: payload
+                profile: payload,
+                loading: false
             }
         case UPDATE_PROFILE:
             return {
                 ...state,
-                profile: payload
+                profile: payload,
+                loading: false
             }
         case GET_PROFILES:
             return {
@@ -41,7 +43,8 @@ export default (state, action) => {
             return {
                 ...state,
                 profile: null,
-                error: payload
+                error: payload,
+                loading: false
             }
         default:
             return state;

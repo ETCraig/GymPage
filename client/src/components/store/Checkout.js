@@ -26,8 +26,11 @@ const Checkout = (props) => {
     return (
         <div className={showHideClassname}>
             <section className="modal-main">
-                <div className="container">
-                    <h5>Total: $24.99</h5>
+                <h5 style={{float: "left"}}>Total: $24.99</h5>
+                <button onClick={props.handleClose} className="btn" style={{float: "right"}}>
+                    <i class="fas fa-times"></i>
+                </button>
+                    <div className="container">
                     <label>Shipping Address:</label>
                     {addresses.length ? (
                         <div>
@@ -146,7 +149,6 @@ const Checkout = (props) => {
                             </Elements>
                         )}
                 </div>
-                <button onClick={props.handleClose}>Cancel</button>
             </section>
         </div>
     );

@@ -19,6 +19,7 @@ const ProfileState = props => {
     const initialState = {
         profile: null,
         profiles: [],
+        loading: true,
         error: null
     }
 
@@ -101,6 +102,7 @@ const ProfileState = props => {
             value={{
                 profile: state.profile,
                 profiles: state.profiles,
+                loading: state.loading,
                 error: state.error,
                 getUserProfile,
                 updateProfile
