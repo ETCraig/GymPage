@@ -1,17 +1,20 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 
 import Loading from '../layout/Loading';
+import AuthContext from '../../context/auth/authContext';
 import StoreContext from '../../context/store/storeContext';
 import StoreNav from './StoreNav';
 
 import { Link } from 'react-router-dom';
 
 const Shop = () => {
+    const authContext = useContext(AuthContext);
     const storeContext = useContext(StoreContext);
 
     const { getProducts, products, loading } = storeContext;
 
     useEffect(() => {
+        authContext.loadUser();
         getProducts();
         // eslint-disable-next-line
     }, []);
@@ -28,7 +31,7 @@ const Shop = () => {
                     products.map(product => (
                         <Link to={`/store/${product._id}`} key={product._id}>
                             <div className="card" style={{ width: "20rem", textAlign: "center", display: "inline-block", margin: "10px" }} key={product._id}>
-                                <img className="card-img-top" src={product.primary_image} alt="Card image cap" height="200" width="200" style={{ borderRadius: ".60rem" }} />
+                                <img className="card-img-top" src={product.primary_image} alt="Card cap" height="200" width="200" style={{ borderRadius: ".60rem" }} />
                                 <div className="card-block">
                                     <h4 className="card-title">{product.name}</h4>
                                     <p className="card-text">Some quick example text to build</p>

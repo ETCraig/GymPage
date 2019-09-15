@@ -58,7 +58,7 @@ const Landing = () => {
                                 <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.</p>
                             </div>
                             <div className="col-12 pt-3">
-                                <a className="btn bg-red text-white" target="_blank" href="https://en.wikipedia.org/wiki/Neuschwanstein_Castle" role="button">Learn More →</a>
+                                <a className="btn bg-red text-white" target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Neuschwanstein_Castle" role="button">Learn More →</a>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ const Landing = () => {
                                 architecture. The town of Ålesund is the administrative centre of Ålesund Municipality, as well as the principal shipping town of the Sunnmøre district. </p>
                                 <p>The 99-square-kilometre (38 sq mi) municipality is the 382nd largest by area out of the 422 municipalities in Norway. Ålesund is the 17th most populous municipality in Norway with a population of 47,199. The municipality's population density
                                 is 506.6 inhabitants per square kilometre (1,312/sq mi) and its population has increased by 14% over the last decade.</p>
-                                <a className="btn bg-red text-white" target="_blank" href="https://en.wikipedia.org/wiki/%C3%85lesund" role="button">Read More →</a>
+                                <a className="btn bg-red text-white" target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/%C3%85lesund" role="button">Read More →</a>
                             </div>
                         </div>
                         <div className="col-12 col-md-6 order-0 order-md-1">
@@ -89,7 +89,7 @@ const Landing = () => {
                                 and in honour of Richard Wagner. Ludwig paid for the palace out of his personal fortune and by means of extensive borrowing, rather than Bavarian public funds.</p>
                                 <p>The castle was intended as a home for the king, until he died in 1886. It was open to the public shortly after his death. Since then more than 61 million people have visited Neuschwanstein Castle. More than 1.3 million people visit annually,
                                 with as many as 6,000 per day in the summer.</p>
-                                <a className="btn bg-red text-white" target="_blank" href="https://en.wikipedia.org/wiki/Neuschwanstein_Castle" role="button">Read More →</a>
+                                <a className="btn bg-red text-white" target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Neuschwanstein_Castle" role="button">Read More →</a>
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@ const Landing = () => {
                             <div className="col-12 col-sm-6">
                                 <a href="http://localhost:3000/blank" className="text-white">
                                     <figure className="position-relative overflow-hidden">
-                                        <img className="img-fluid" src="http://madbuzzhk.com/wp-content/uploads/2015/04/deadlift_main.jpg" />
+                                        <img className="img-fluid" alt="Routine" src="http://madbuzzhk.com/wp-content/uploads/2015/04/deadlift_main.jpg" />
                                         <figcaption className="d-flex align-items-center justify-content-center position-absolute">
                                             <h3>Beginner Powerlifting</h3>
                                         </figcaption>

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const DashReRoute = () => {
     const profileContext = useContext(ProfileContext);
 
-    const { getUserProfile, profile, profiles, loading } = profileContext;
+    const { getUserProfile, profile, loading } = profileContext;
 
     useEffect(() => {
         getUserProfile();

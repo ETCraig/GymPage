@@ -1,14 +1,17 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 
+import AuthContext from '../../context/auth/authContext';
 import Loading from '../layout/Loading';
 import StoreContext from '../../context/store/storeContext';
 
 const Product = (props) => {
+    const authContext = useContext(AuthContext);
     const storeContext = useContext(StoreContext);
 
     const { getProduct, loading, product, addToCart } = storeContext;
 
     useEffect(() => {
+        authContext.loadUser();
         const id = props.match.params.id;
 
         getProduct(id);

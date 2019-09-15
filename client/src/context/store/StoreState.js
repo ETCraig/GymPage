@@ -4,16 +4,16 @@ import StoreReducer from './storeReducer';
 import {
     ADD_PRODUCT,
     CALCULATE_TOTAL,
-    CREATE_METHOD,
-    DELETE_METHOD,
+    // CREATE_METHOD,
+    // DELETE_METHOD,
     EDIT_PRODUCT,
     EMPTY_CART,
     GET_CART,
     GET_METHODS,
-    GET_ORDERS,
+    // GET_ORDERS,
     GET_PRODUCT,
     GET_PRODUCTS,
-    PROCESS_PURCHASE,
+    // PROCESS_PURCHASE,
     REMOVE_PRODUCT,
     SET_LOADING,
     STORE_ERROR
@@ -202,70 +202,70 @@ const StoreState = props => {
         }
     }
     //
-    const createMethod = async (tokenId) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
+    // const createMethod = async (tokenId) => {
+    //     const config = {
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //     }
 
-        try {
-            const res = await axios.post('/api/store/methods', tokenId, config);
+    //     try {
+    //         const res = await axios.post('/api/store/methods', tokenId, config);
 
-            dispatch({
-                type: CREATE_METHOD,
-                payload: res.data
-            });
-        } catch (err) {
-            dispatch({
-                type: STORE_ERROR,
-                payload: err.response.msg
-            });
-        }
-    }
-    //
-    const processPurchase = async () => {
-        try {
+    //         dispatch({
+    //             type: CREATE_METHOD,
+    //             payload: res.data
+    //         });
+    //     } catch (err) {
+    //         dispatch({
+    //             type: STORE_ERROR,
+    //             payload: err.response.msg
+    //         });
+    //     }
+    // }
+    // //
+    // const processPurchase = async () => {
+    //     try {
 
-        } catch (err) {
-            dispatch({
-                type: STORE_ERROR,
-                payload: err.response.msg
-            });
-        }
-    }
-    //
-    const getOrders = async limit => {
-        try {
-            const res = await axios.get(`/api/store/receipts?page=1&limit=${limit}`);
+    //     } catch (err) {
+    //         dispatch({
+    //             type: STORE_ERROR,
+    //             payload: err.response.msg
+    //         });
+    //     }
+    // }
+    // //
+    // const getOrders = async limit => {
+    //     try {
+    //         const res = await axios.get(`/api/store/receipts?page=1&limit=${limit}`);
 
-            dispatch({
-                type: GET_ORDERS,
-                payload: res.data
-            });
-        } catch (err) {
-            dispatch({
-                type: STORE_ERROR,
-                payload: err.response.msg
-            });
-        }
-    }
-    //
-    const deleteMethod = async sourceId => {
-        try {
-            const res = await axios.delete(`/api/store/method/${sourceId}`);
+    //         dispatch({
+    //             type: GET_ORDERS,
+    //             payload: res.data
+    //         });
+    //     } catch (err) {
+    //         dispatch({
+    //             type: STORE_ERROR,
+    //             payload: err.response.msg
+    //         });
+    //     }
+    // }
+    // //
+    // const deleteMethod = async sourceId => {
+    //     try {
+    //         const res = await axios.delete(`/api/store/method/${sourceId}`);
 
-            dispatch({
-                type: DELETE_METHOD,
-                payload: sourceId
-            });
-        } catch (err) {
-            dispatch({
-                type: STORE_ERROR,
-                payload: err.response.msg
-            });
-        }
-    }
+    //         dispatch({
+    //             type: DELETE_METHOD,
+    //             payload: sourceId
+    //         });
+    //     } catch (err) {
+    //         dispatch({
+    //             type: STORE_ERROR,
+    //             payload: err.response.msg
+    //         });
+    //     }
+    // }
 
     const setLoading = () => {
         dispatch({ type: SET_LOADING });

@@ -4,12 +4,12 @@ import ProfileContext from './profileContext';
 import ProfileReducer from './profileReducer';
 
 import {
-    DELETE_PROFILE,
-    GET_PROFILE,
-    GET_PROFILES,
+    // DELETE_PROFILE,
+    // GET_PROFILE,
+    // GET_PROFILES,
     GET_USER_PROFILE,
     PROFILE_ERROR,
-    RECORD_SESSION,
+    // RECORD_SESSION,
     UPDATE_PROFILE
 } from '../Types';
 
@@ -65,37 +65,37 @@ const ProfileState = props => {
         }
     }
 
-    const getProfiles = async () => {
-        try {
+    // const getProfiles = async () => {
+    //     try {
 
-        } catch (err) {
+    //     } catch (err) {
 
-        }
-    }
+    //     }
+    // }
 
-    const getProfile = async () => {
-        try {
+    // const getProfile = async () => {
+    //     try {
 
-        } catch (err) {
+    //     } catch (err) {
 
-        }
-    }
+    //     }
+    // }
 
-    const recordSession = async () => {
-        try {
+    // const recordSession = async () => {
+    //     try {
 
-        } catch (err) {
+    //     } catch (err) {
 
-        }
-    }
+    //     }
+    // }
 
-    const deleteProfile = async () => {
-        try {
+    // const deleteProfile = async () => {
+    //     try {
 
-        } catch (err) {
+    //     } catch (err) {
 
-        }
-    }
+    //     }
+    // }
 
     return (
         <ProfileContext.Provider

@@ -21,13 +21,13 @@ const ExerciseState = props => {
     const [state, dispatch] = useReducer(ExerciseReducer, initialState);
 
     //
-    const getExercises = async () => {
-        try {
+    // const getExercises = async () => {
+    //     try {
 
-        } catch (err) {
+    //     } catch (err) {
 
-        }
-    }
+    //     }
+    // }
     //GET INDIVIDUAL EXERCISE BY ID
     const getExercise = async id => {
         try {

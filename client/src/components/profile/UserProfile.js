@@ -1,9 +1,8 @@
-import React, { Fragment, useContext } from 'react';
+import React from 'react';
 
-import ProfileContext from '../../context/profile/profileContext';
+// import ProfileContext from '../../context/profile/profileContext';
 
 const UserProfile = () => {
-    const profileContext = useContext(ProfileContext);
 
     return (
         <div>

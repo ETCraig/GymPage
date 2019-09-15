@@ -13,14 +13,15 @@ const Checkout = (props) => {
 
     useEffect(() => {
         getMethods();
+        //eslint-disable-next-line
     }, []);
 
     // if(props.show) {
     //     getMethods();
     // }
 
-    const [wallets, setWallets] = useState([]);
-    const [addresses, serAddresses] = useState([]);
+    const [wallets] = useState([]);
+    const [addresses] = useState([]);
 
     const showHideClassname = props.show ? "modal display-block" : "modal display-none";
     return (

@@ -2,8 +2,6 @@ import React, { Fragment, useContext, useState } from 'react';
 
 import ProfileContext from '../../context/profile/profileContext';
 
-import { Link, withRouter } from 'react-router-dom';
-
 const CreateProfile = (props) => {
     const profileContext = useContext(ProfileContext);
 

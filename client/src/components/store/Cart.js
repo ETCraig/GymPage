@@ -1,19 +1,23 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
+import AuthContext from '../../context/auth/authContext';
 import Checkout from './Checkout';
 import Loading from '../layout/Loading';
 import StoreContext from '../../context/store/storeContext';
 
 const Cart = () => {
+    const authContext = useContext(AuthContext);
     const storeContext = useContext(StoreContext);
 
     const { cart, calculateTotal, loading, setLoading, emptyCart, editCartItem, removeFromCart } = storeContext;
 
     useEffect(() => {
-        console.log(cart)
+        authContext.loadUser();
+        console.log(cart);
         if(cart && cart.items.length > 0) {
             calculateTotal();
         }
+        //eslint-disable-next-line
     }, []);
 
     const [userCart, setCart] = useState(cart);
@@ -30,7 +34,7 @@ const Cart = () => {
         await setLoading();
         var array = userCart; // make a separate copy of the array
         console.log(array);
-        var index = array.items.findIndex(obj => obj._id == product_id);
+        var index = array.items.findIndex(obj => obj._id === product_id);
         if (index !== -1) {
             array.items.splice(index, 1);
             setCart(array);
@@ -71,7 +75,7 @@ const Cart = () => {
                                 <div className="card">
                                     <div style={{ display: "flex", flex: "1 1 auto" }}>
                                         <div className="img-square-wrapper">
-                                            <img src={item.item.sizes[0].image} alt="Card image cap" style={{ width: "300px", height: "220px" }} />
+                                            <img src={item.item.sizes[0].image} alt="Card cap" style={{ width: "300px", height: "220px" }} />
                                         </div>
                                         <div className="card-body">
                                             <h4 className="card-title">{item.item.name}</h4>

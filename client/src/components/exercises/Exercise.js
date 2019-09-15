@@ -21,7 +21,7 @@ const Exercise = (props) => {
                 <div className="card card-cascade wider reverse">
 
                     <div className="view view-cascade overlay text-center">
-                        <img className="card-img-top" src="https://ak4.picdn.net/shutterstock/videos/1017371524/thumb/1.jpg" style={{ width: "70%", height: "70%" }} alt="Card image cap" />
+                        <img className="card-img-top" src="https://ak4.picdn.net/shutterstock/videos/1017371524/thumb/1.jpg" style={{ width: "70%", height: "70%" }} alt="Card cap" />
                         <a href="#!">
                             <div className="mask rgba-white-slight"></div>
                         </a>

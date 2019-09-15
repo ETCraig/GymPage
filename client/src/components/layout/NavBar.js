@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 const NavBar = () => {
     const authContext = useContext(AuthContext);
 
-    const { isAuthenticated, logout, user } = authContext;
+    const { isAuthenticated, logout } = authContext;
 
     const handleLogout = () => {
         logout();
     }
-
+    console.log('Authenticated', isAuthenticated)
     const authLinks = (
         <Fragment>
             <li>

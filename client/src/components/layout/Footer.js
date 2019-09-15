@@ -13,7 +13,7 @@ const Footer = () => {
                         <p className="mr-3">Privacy Policy</p>
                         <p>FAQ</p>
                         <div>
-                            <small>Made by <a href="https://github.com/ETCraig" target="_blank"><i className="fas fa-code"></i> ETCraig</a>
+                            <small>Made by <a href="https://github.com/ETCraig" target="_blank" rel="noopener noreferrer"><i className="fas fa-code"></i> ETCraig</a>
                             </small>
                         </div>
                     </div>

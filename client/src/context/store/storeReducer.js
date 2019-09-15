@@ -73,9 +73,10 @@ export default (state, action) => {
             return {
                 
             }
-        case PROCESS_PURCHASE: {
+        case PROCESS_PURCHASE:
+            return {
 
-        }
+            }
         case GET_ORDERS: 
             return {
                 ...state,

@@ -11,6 +11,7 @@ const StoreNav = () => {
 
     useEffect(() => {
         getCart();
+        //eslint-disable-next-line
     }, []);
     return (
         <div style={{ marginBottom: "30px" }}>

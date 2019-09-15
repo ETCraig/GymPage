@@ -2,26 +2,10 @@ import React from 'react'
 
 import {
     injectStripe,
-    CardElement,
-    CardNumberElement,
-    CardExpiryElement,
-    CardCVCElement,
-    PostalCodeElement
+    CardElement
 } from 'react-stripe-elements';
 
 const AddMethodForm = (props) => {
-
-const handleSubscribe = e => {
-        e.preventDefault();
-        console.log('HIT')
-        if (props.stripe) {
-            props.stripe.createToken().then(payload => {
-
-            })
-        } else {
-            console.log('Stripe.js has not loaded.');
-        }
-    }
 
     return (
         <div>

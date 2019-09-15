@@ -18,7 +18,7 @@ const ExerciseMenu = () => {
                 <div className="thumbnail m-1 muscle-link">
                     <Link to="/exercise-menu/Shoulders">
                         <div className="col">
-                            <img style={{ border: "1px solid #eee" }} src={Shoulder} />
+                            <img alt="Muscle Group" style={{ border: "1px solid #eee" }} src={Shoulder} />
                             <div className="caption">
                                 <p>Shoulders</p>
                             </div>
@@ -28,7 +28,7 @@ const ExerciseMenu = () => {
                 <div className="thumbnail m-1 muscle-link">
                     <Link to="/exercise-menu/Back">
                         <div className="col">
-                            <img style={{ border: "1px solid #eee" }} src={Back} />
+                            <img alt="Muscle Group" style={{ border: "1px solid #eee" }} src={Back} />
                             <div className="caption">
                                 <p>Back</p>
                             </div>
@@ -38,7 +38,7 @@ const ExerciseMenu = () => {
                 <div className="thumbnail m-1 muscle-link">
                     <Link to="/exercise-menu/Arms">
                         <div className="col">
-                            <img style={{ border: "1px solid #eee" }} src={Arm} />
+                            <img alt="Muscle Group" style={{ border: "1px solid #eee" }} src={Arm} />
                             <div className="caption">
                                 <p>Arms</p>
                             </div>
@@ -48,7 +48,7 @@ const ExerciseMenu = () => {
                 <div className="thumbnail m-1 muscle-link">
                     <Link to="/exercise-menu/Chest">
                         <div className="col">
-                            <img style={{ border: "1px solid #eee" }} src={Chest} />
+                            <img alt="Muscle Group" style={{ border: "1px solid #eee" }} src={Chest} />
                             <div className="caption">
                                 <p>Chest</p>
                             </div>
@@ -60,7 +60,7 @@ const ExerciseMenu = () => {
                 <div className="thumbnail m-1 muscle-link">
                     <Link to="/exercise-menu/Core">
                         <div className="col">
-                            <img style={{ border: "1px solid #eee" }} src={Core} />
+                            <img alt="Muscle Group" style={{ border: "1px solid #eee" }} src={Core} />
                             <div className="caption">
                                 <p>Core</p>
                             </div>
@@ -70,7 +70,7 @@ const ExerciseMenu = () => {
                 <div className="thumbnail m-1 muscle-link">
                     <Link to="/exercise-menu/Legs">
                         <div className="col">
-                            <img style={{ border: "1px solid #eee" }} src={Legs} />
+                            <img alt="Muscle Group" style={{ border: "1px solid #eee" }} src={Legs} />
                             <div className="caption">
                                 <p>Legs</p>
                             </div>
@@ -80,7 +80,7 @@ const ExerciseMenu = () => {
                 <div className="thumbnail m-1 muscle-link">
                     <Link to="/exercise-menu/Cardio">
                         <div className="col">
-                            <img style={{ border: "1px solid #eee" }} src={Cardio} />
+                            <img alt="Muscle Group" style={{ border: "1px solid #eee" }} src={Cardio} />
                             <div className="caption">
                                 <p>Cardio</p>
                             </div>
