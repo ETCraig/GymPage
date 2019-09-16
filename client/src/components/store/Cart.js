@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import AuthContext from '../../context/auth/authContext';
 import Checkout from './Checkout';
+import {Elements} from 'react-stripe-elements';
 import Loading from '../layout/Loading';
 import StoreContext from '../../context/store/storeContext';
 
@@ -66,7 +67,9 @@ const Cart = () => {
         <div>
             Cart
             <button className="btn btn-success" onClick={showModal}>Check out</button>
-            <Checkout show={show} handleClose={hideModal} />
+            <Elements>
+                <Checkout show={show} handleClose={hideModal} />
+            </Elements>
             {userCart !== null && !loading ? (
                 userCart.items.map(item => (
                     <div className="container-fluid" key={item._id}>

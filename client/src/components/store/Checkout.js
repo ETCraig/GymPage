@@ -4,12 +4,16 @@ import AddMethodForm from './AddMethodForm';
 import '../styles/Checkout.css';
 import StoreContext from '../../context/store/storeContext';
 
-import { Elements } from 'react-stripe-elements';
+import { 
+    CardElement, 
+    Elements, 
+    injectStripe 
+} from 'react-stripe-elements';
 
 const Checkout = (props) => {
     const storeContext = useContext(StoreContext);
 
-    const { getMethods } = storeContext;
+    const { getMethods, processPurchase } = storeContext;
 
     useEffect(() => {
         getMethods();
@@ -19,19 +23,37 @@ const Checkout = (props) => {
     // if(props.show) {
     //     getMethods();
     // }
+    
+    const handleInputChange = e => {
+        const {name, value} = e.target
+        setAddress({...address, [name]: value});
+    }
+
+    const handleCheckout = async e => {
+        e.preventDefault();
+        console.log('HIT', address)
+        if (props.stripe) {
+            let {token} = await props.stripe.createToken();
+            console.log(token);
+            // let data = {}
+        } else {
+            console.log('Stripe.js has not loaded.');
+        }
+    }
 
     const [wallets] = useState([]);
     const [addresses] = useState([]);
+    const [address, setAddress] = useState({name: '', street: '', city: '', state: '', zip: '',});
 
     const showHideClassname = props.show ? "modal display-block" : "modal display-none";
     return (
         <div className={showHideClassname}>
-            <section className="modal-main">
+            <section className="modal-main text-center">
                 <h5 style={{float: "left"}}>Total: $24.99</h5>
                 <button onClick={props.handleClose} className="btn" style={{float: "right"}}>
-                    <i class="fas fa-times"></i>
+                    <i className="fas fa-times"></i>
                 </button>
-                    <div className="container">
+                    <form className="container" onSubmit={handleCheckout}>
                     <label>Shipping Address:</label>
                     {addresses.length ? (
                         <div>
@@ -39,13 +61,20 @@ const Checkout = (props) => {
                         </div>
                     ) : (
                             <div>
-                                <div className="row">
+                                <div className="row justify-content-center">
                                     <div className="col-sm-4">
                                         <div className="input-group mb-3 input-group-sm">
                                             <div className="input-group-prepend">
                                                 <span className="input-group-text">Name</span>
                                             </div>
-                                            <input type="text" className="form-control" placeholder="Joe Smith" />
+                                            <input 
+                                                type="text" 
+                                                className="form-control" 
+                                                placeholder="Joe Smith"
+                                                name="name" 
+                                                onChange={handleInputChange}
+                                                value={address.name}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-sm-4">
@@ -53,17 +82,31 @@ const Checkout = (props) => {
                                             <div className="input-group-prepend">
                                                 <span className="input-group-text">Street</span>
                                             </div>
-                                            <input type="text" className="form-control" placeholder="1234 Abby Ln" />
+                                            <input 
+                                                type="text" 
+                                                className="form-control" 
+                                                placeholder="1234 Abby Ln" 
+                                                name="street"
+                                                onChange={handleInputChange}
+                                                value={address.street}
+                                            />
                                         </div>
                                     </div>
                                 </div>
-                                <div className="row">
+                                <div className="row justify-content-center">
                                     <div className="col-sm-3">
                                         <div className="input-group mb-3 input-group-sm">
                                             <div className="input-group-prepend">
                                                 <span className="input-group-text">City</span>
                                             </div>
-                                            <input type="text" className="form-control" placeholder="Gilbert" />
+                                            <input 
+                                                type="text" 
+                                                className="form-control" 
+                                                placeholder="Gilbert" 
+                                                name="city"
+                                                onChange={handleInputChange}
+                                                value={address.city}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-sm-3">
@@ -71,7 +114,12 @@ const Checkout = (props) => {
                                             <div className="input-group-prepend">
                                                     <span className="input-group-text">State</span>
                                             </div>
-                                            <select className="form-control" id="state" name="state">
+                                            <select 
+                                                className="form-control" 
+                                                id="state" 
+                                                name="state"
+                                                onChange={handleInputChange}
+                                                value={address.state}>
                                                 <option value="">N/A</option>
                                                 <option value="AK">Alaska</option>
                                                 <option value="AL">Alabama</option>
@@ -133,7 +181,14 @@ const Checkout = (props) => {
                                             <div className="input-group-prepend">
                                                 <span className="input-group-text">Zip</span>
                                             </div>
-                                            <input type="text" className="form-control" placeholder="12345" />
+                                            <input 
+                                                type="text" 
+                                                className="form-control" 
+                                                placeholder="12345" 
+                                                name="zip"
+                                                onChange={handleInputChange}
+                                                value={address.zip}    
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -145,14 +200,13 @@ const Checkout = (props) => {
 
                         </div>
                     ) : (
-                            <Elements>
-                                <AddMethodForm />
-                            </Elements>
+                            <CardElement />
                         )}
-                </div>
+                    <input type="submit" value="Purchase" className="btn btn-success btn-block mt-5" />
+                </form>
             </section>
         </div>
     );
 }
 
-export default Checkout;
+export default injectStripe(Checkout);

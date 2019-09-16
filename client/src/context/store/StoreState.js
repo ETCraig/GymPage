@@ -13,7 +13,7 @@ import {
     // GET_ORDERS,
     GET_PRODUCT,
     GET_PRODUCTS,
-    // PROCESS_PURCHASE,
+    PROCESS_PURCHASE,
     REMOVE_PRODUCT,
     SET_LOADING,
     STORE_ERROR
@@ -223,17 +223,18 @@ const StoreState = props => {
     //         });
     //     }
     // }
-    // //
-    // const processPurchase = async () => {
-    //     try {
-
-    //     } catch (err) {
-    //         dispatch({
-    //             type: STORE_ERROR,
-    //             payload: err.response.msg
-    //         });
-    //     }
-    // }
+    //
+    const processPurchase = async data => {
+        try {
+            const res = await axios.post('/api/store/checkout', {data});
+            console.log(res);
+        } catch (err) {
+            dispatch({
+                type: STORE_ERROR,
+                payload: err.response.msg
+            });
+        }
+    }
     // //
     // const getOrders = async limit => {
     //     try {
@@ -304,6 +305,7 @@ const StoreState = props => {
                 removeFromCart,
                 emptyCart,
                 getMethods,
+                processPurchase,
                 setLoading
             }}
         >

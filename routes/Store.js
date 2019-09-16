@@ -277,8 +277,19 @@ router.delete('/method/:id', Authentication, async (req, res) => {
 //@Desc     Purchase Product's
 //@Access   Private
 router.post('/checkout', Authentication, async (req, res) => {
-
-});
+    console.log(req.body);
+    try {
+        // let {status} = await stripe.charged.create({
+        //     amount: data.amount,
+        //     currency: "usd",
+        //     description: "GymPage Transaction.",
+        //     source: req.body
+        // }); 
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server Error');
+    }
+}); 
 
 //@Route    GET api/store/receipts
 //@Desc     Get User's Receipts & Past Orders
