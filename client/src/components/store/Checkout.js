@@ -48,6 +48,7 @@ const Checkout = (props) => {
                 amount: parseFloat(total),
             }
             console.log(data);
+            await processPurchase(data);
         } else if (props.stripe) {
             setLoading();
             let { token } = await props.stripe.createToken();
@@ -58,7 +59,7 @@ const Checkout = (props) => {
                 amount: parseFloat(total),
             }
             console.log(data)
-            // await processPurchase(data);
+            await processPurchase(data);
         } else {
             console.log('Stripe.js has not loaded.');
         }

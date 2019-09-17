@@ -200,13 +200,10 @@ router.post('/methods', Authentication, async (req, res) => {
     try {
         let user = await User.findById(req.user.id);
         let customer_id = user.stripe_id;
-        console.log('HERE', user);
-        var listOptions = { limit: 3 };
         stripe.customers.listSources(customer_id, function(err, sources) {
             if (err) {
                 return res.status(404).json({ msg: 'No Payment Methods Found.' });
             }
-            console.log('SOURCES', sources);
             res.json(sources);
         });
     } catch (err) {
@@ -330,7 +327,7 @@ router.post('/checkout', Authentication, async (req, res) => {
             await receipt.save();
 
             res.status(200).send('HIT THE BE');
-        } else if (data.sourceId && data.sourceId.length > 0) {
+        } else if (data.source && data.source.length > 0) {
             console.log('OLD CARD');
             const user = await User.findById(req.user.id);
 
@@ -341,7 +338,7 @@ router.post('/checkout', Authentication, async (req, res) => {
                 currency: "usd",
                 description: "GymPage Transaction.",
                 customer: customer_id,
-                source: data.sourceId
+                source: data.source
             });
 
             let receipt = new Receipt({
