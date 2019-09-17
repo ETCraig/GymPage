@@ -225,9 +225,19 @@ const StoreState = props => {
     // }
     //
     const processPurchase = async data => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
         try {
-            const res = await axios.post('/api/store/checkout', {data});
+            const res = await axios.post('/api/store/checkout', data, config);
             console.log(res);
+
+            dispatch({
+                type: PROCESS_PURCHASE,
+                payload: res.data
+            });
         } catch (err) {
             dispatch({
                 type: STORE_ERROR,
@@ -294,6 +304,7 @@ const StoreState = props => {
                 product: state.product,
                 cart: state.cart,
                 methods: state.methods,
+                total: state.total,
                 error: state.error,
                 loading: state.loading,
                 getProduct,

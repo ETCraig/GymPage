@@ -6,6 +6,7 @@ const Cart = require('../models/Cart');
 const { check, validationResult } = require('express-validator');
 const config = require('config');
 const Product = require('../models/Product');
+const Profile = require('../models/Profile');
 const Receipt = require('../models/Receipt');
 const User = require('../models/User');
 
@@ -277,14 +278,51 @@ router.delete('/method/:id', Authentication, async (req, res) => {
 //@Desc     Purchase Product's
 //@Access   Private
 router.post('/checkout', Authentication, async (req, res) => {
-    console.log(req.body);
+    let data = req.body;
+    console.log(data);
     try {
-        // let {status} = await stripe.charged.create({
-        //     amount: data.amount,
-        //     currency: "usd",
-        //     description: "GymPage Transaction.",
-        //     source: req.body
-        // }); 
+        if(data.token) {
+            console.log('NEW CARD');
+            const user = await User.findById(req.user.id);
+            console.log(user.stripe_id, data.amount)
+            let newSource = await stripe.sources.create({
+                type: 'card',
+                currency: 'usd',
+                token: data.token.id,
+                owner: {
+                    email: user.email
+                }
+            });
+            const customer_id = user.stripe_id;
+            let connectUserToSource = await stripe.customers.createSource(
+                customer_id,
+                { source: newSource.id }
+            );
+            let status = await stripe.charges.create({
+                amount: 999,
+                currency: "usd",
+                description: "GymPage Transaction.",
+                customer: customer_id,
+                source: newSource.id
+            }); 
+            if(data.address) {
+                let profile = await Profile.findOne({user: req.user.id});
+
+                const newAddress = {
+                    name: data.address.name,
+                    street: data.address.street,
+                    city: data.address.city,
+                    state: data.address.state,
+                    zip: data.address.zip,
+                };
+
+                profile.address.unshift({newAddress});
+            }
+            res.status(200).send('HIT THE BE');
+        } else if (data.sourceId && data.sourceId.length > 0) {
+            console.log('OLD CARD');
+            res.status(200).send('HIT THE BE');
+        }
     } catch (err) {
         console.log(err);
         res.status(500).send('Server Error');

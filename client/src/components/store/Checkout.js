@@ -13,7 +13,7 @@ import {
 const Checkout = (props) => {
     const storeContext = useContext(StoreContext);
 
-    const { getMethods, processPurchase } = storeContext;
+    const { getMethods, processPurchase, setLoading, total } = storeContext;
 
     useEffect(() => {
         getMethods();
@@ -33,9 +33,15 @@ const Checkout = (props) => {
         e.preventDefault();
         console.log('HIT', address)
         if (props.stripe) {
+            setLoading();
             let {token} = await props.stripe.createToken();
             console.log(token);
-            // let data = {}
+            let data = {
+                token,
+                address,
+                amount: parseFloat(total)
+            }
+            await processPurchase(data);
         } else {
             console.log('Stripe.js has not loaded.');
         }
@@ -49,7 +55,7 @@ const Checkout = (props) => {
     return (
         <div className={showHideClassname}>
             <section className="modal-main text-center">
-                <h5 style={{float: "left"}}>Total: $24.99</h5>
+                <h5 style={{float: "left"}}>Total: ${total}</h5>
                 <button onClick={props.handleClose} className="btn" style={{float: "right"}}>
                     <i className="fas fa-times"></i>
                 </button>

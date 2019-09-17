@@ -75,7 +75,10 @@ export default (state, action) => {
             }
         case PROCESS_PURCHASE:
             return {
-
+                ...state,
+                cart: null,
+                total: 0,
+                loading: false
             }
         case GET_ORDERS: 
             return {

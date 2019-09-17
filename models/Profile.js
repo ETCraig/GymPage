@@ -53,7 +53,7 @@ const ProfileSchema = new Schema({
             }
         }
     ],
-    addresses: [
+    address: [
         {
             name: {
                 type: String,
@@ -72,7 +72,7 @@ const ProfileSchema = new Schema({
                 required: true
             },
             zip: {
-                type: Number,
+                type: String,
                 required: true
             }
         }
