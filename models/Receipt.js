@@ -15,9 +15,25 @@ const ReceiptSchema = new Schema({
         type: String,
         required: true
     },
+    address: {
+        name: {
+            type: String
+        },
+        street: {
+            type: String
+        },
+        city: {
+            type: String
+        },
+        state: {
+            type: String
+        },
+        zip: {
+            type: String
+        }
+    },
     receipt_url: {
         type: String,
-        required: true
     },
     time: {
         type: Number,

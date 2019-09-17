@@ -189,10 +189,10 @@ const StoreState = props => {
         try {
             console.log('HIT GET METHODS');
             const res = await axios.post('/api/store/methods', {}, config);
-
+            console.log('METHODS', res);
             dispatch({
                 type: GET_METHODS,
-                payload: res.data
+                payload: res.data.data
             });
         } catch (err) {
             dispatch({

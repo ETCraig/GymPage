@@ -13,7 +13,7 @@ import {
 const Checkout = (props) => {
     const storeContext = useContext(StoreContext);
 
-    const { getMethods, processPurchase, setLoading, total } = storeContext;
+    const { getMethods, methods, processPurchase, setLoading, total } = storeContext;
 
     useEffect(() => {
         getMethods();
@@ -47,7 +47,6 @@ const Checkout = (props) => {
         }
     }
 
-    const [wallets] = useState([]);
     const [addresses] = useState([]);
     const [address, setAddress] = useState({name: '', street: '', city: '', state: '', zip: '',});
 
@@ -201,10 +200,14 @@ const Checkout = (props) => {
                             </div>
                         )}
                     <label>Payment Method:</label>
-                    {wallets.length ? (
-                        <div>
-
-                        </div>
+                    {methods != null ? (
+                        methods.map(wallet => (
+                            <div className="container" key={wallet.id}>
+                                <div>
+                                    {wallet.card.last4}
+                                </div>
+                            </div>
+                        ))
                     ) : (
                             <CardElement />
                         )}

@@ -129,7 +129,7 @@ router.post('/user-cart', Authentication, async (req, res) => {
         console.log(cart)
         if (!cart) {
             cart = null;
-            
+
             res.json(cart);
         } else {
             res.json(cart);
@@ -147,7 +147,7 @@ router.delete('/cart/:product_id', Authentication, async (req, res) => {
     console.log(req.params.product_id);
     let product = req.params.product_id;
     try {
-        const cart = await Cart.findOne({owner: req.user.id});
+        const cart = await Cart.findOne({ owner: req.user.id });
 
         const item = cart.items.find(item => item._id == product);
 
@@ -178,12 +178,12 @@ router.patch('/cart/:product_id', Authentication, async (req, res) => {
     console.log('HERE', product, newCount);
     try {
         let updatedCart = await Cart.findOneAndUpdate(
-            {"owner": req.user.id, "items._id": product},
-            {$set: {"items.$.count": newCount}},
-            {new: true}
+            { "owner": req.user.id, "items._id": product },
+            { $set: { "items.$.count": newCount } },
+            { new: true }
         );
 
-        const cart = await Cart.findOne({owner: req.user.id});
+        const cart = await Cart.findOne({ owner: req.user.id });
 
         res.json(cart.items);
     } catch (err) {
@@ -192,23 +192,23 @@ router.patch('/cart/:product_id', Authentication, async (req, res) => {
     }
 });
 
-//@Route    GET api/store/methods
+//@Route    POST api/store/methods
 //@Desc     Get User's Payment Methods
 //@Access   Private
 router.post('/methods', Authentication, async (req, res) => {
     console.log('stripe_id', req.body);
     try {
         let user = await User.findById(req.user.id);
-
-        console.log(user);
-
-        let sources = await stripe.customers.listSources(user.stripe_id);
-
-        if (!sources) {
-            return res.status(404).json({ msg: 'No Payment Methods Found.' });
-        }
-
-        res.json(sources);
+        let customer_id = user.stripe_id;
+        console.log('HERE', user);
+        var listOptions = { limit: 3 };
+        stripe.customers.listSources(customer_id, function(err, sources) {
+            if (err) {
+                return res.status(404).json({ msg: 'No Payment Methods Found.' });
+            }
+            console.log('SOURCES', sources);
+            res.json(sources);
+        });
     } catch (err) {
         console.error(err)
         res.status(500).send('Server Error');
@@ -281,7 +281,7 @@ router.post('/checkout', Authentication, async (req, res) => {
     let data = req.body;
     console.log(data);
     try {
-        if(data.token) {
+        if (data.token) {
             console.log('NEW CARD');
             const user = await User.findById(req.user.id);
             console.log(user.stripe_id, data.amount)
@@ -294,40 +294,74 @@ router.post('/checkout', Authentication, async (req, res) => {
                 }
             });
             const customer_id = user.stripe_id;
+            console.log('SOURECE', newSource);
             let connectUserToSource = await stripe.customers.createSource(
                 customer_id,
                 { source: newSource.id }
             );
-            let status = await stripe.charges.create({
+            let transaction = await stripe.charges.create({
                 amount: 999,
                 currency: "usd",
                 description: "GymPage Transaction.",
                 customer: customer_id,
                 source: newSource.id
-            }); 
-            if(data.address) {
-                let profile = await Profile.findOne({user: req.user.id});
+            });
+            // if(data.address) {
+            //     let profile = await Profile.findOne({user: req.user.id});
 
-                const newAddress = {
-                    name: data.address.name,
-                    street: data.address.street,
-                    city: data.address.city,
-                    state: data.address.state,
-                    zip: data.address.zip,
-                };
+            //     const newAddress = {
+            //         name: data.address.name,
+            //         street: data.address.street,
+            //         city: data.address.city,
+            //         state: data.address.state,
+            //         zip: data.address.zip,
+            //     };
 
-                profile.address.unshift({newAddress});
-            }
+            //     profile.address.unshift({newAddress});
+            // }
+            let receipt = new Receipt({
+                user: req.user.id,
+                amount: data.amount,
+                currency: 'usd',
+                address: data.address,
+                time: Date.now()
+            });
+
+            await receipt.save();
+
             res.status(200).send('HIT THE BE');
         } else if (data.sourceId && data.sourceId.length > 0) {
             console.log('OLD CARD');
+            const user = await User.findById(req.user.id);
+
+            const customer_id = user.stripe_id;
+
+            let transaction = await stripe.charges.create({
+                amount: 999,
+                currency: "usd",
+                description: "GymPage Transaction.",
+                customer: customer_id,
+                source: data.sourceId
+            });
+
+            let receipt = new Receipt({
+                user: req.user.id,
+                amount: data.amount,
+                currency: 'usd',
+                address: data.address,
+                time: Date.now()
+            });
+
+            await receipt.save();
+
             res.status(200).send('HIT THE BE');
         }
     } catch (err) {
         console.log(err);
         res.status(500).send('Server Error');
     }
-}); 
+
+});
 
 //@Route    GET api/store/receipts
 //@Desc     Get User's Receipts & Past Orders
@@ -340,11 +374,11 @@ router.get('/receipts', Authentication, async (req, res) => {
 
         let receipt = await Receipt.find({ user: user }).populate(
             'user', [
-                'amount',
-                'currency',
-                'receipt_url',
-                'time'
-            ]
+            'amount',
+            'currency',
+            'receipt_url',
+            'time'
+        ]
         ).sort({ date: -1 }).limit(Number(limit));
 
         let data = {
