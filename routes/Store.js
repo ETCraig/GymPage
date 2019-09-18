@@ -200,7 +200,7 @@ router.post('/methods', Authentication, async (req, res) => {
     try {
         let user = await User.findById(req.user.id);
         let customer_id = user.stripe_id;
-        stripe.customers.listSources(customer_id, function(err, sources) {
+        stripe.customers.listSources(customer_id, function (err, sources) {
             if (err) {
                 return res.status(404).json({ msg: 'No Payment Methods Found.' });
             }
@@ -276,12 +276,27 @@ router.delete('/method/:id', Authentication, async (req, res) => {
 //@Access   Private
 router.post('/checkout', Authentication, async (req, res) => {
     let data = req.body;
-    console.log(data);
     try {
+        if (!data.address._id) {
+            let profile = await Profile.findOne({ user: req.user.id });
+
+            const newAddress = {
+                name: data.address.name,
+                street: data.address.street,
+                city: data.address.city,
+                state: data.address.state,
+                zip: data.address.zip,
+            };
+
+            profile.address.unshift(newAddress);
+
+            await profile.save();
+        }
+
         if (data.token) {
-            console.log('NEW CARD');
+
             const user = await User.findById(req.user.id);
-            console.log(user.stripe_id, data.amount)
+
             let newSource = await stripe.sources.create({
                 type: 'card',
                 currency: 'usd',
@@ -291,11 +306,12 @@ router.post('/checkout', Authentication, async (req, res) => {
                 }
             });
             const customer_id = user.stripe_id;
-            console.log('SOURECE', newSource);
+
             let connectUserToSource = await stripe.customers.createSource(
                 customer_id,
                 { source: newSource.id }
             );
+
             let transaction = await stripe.charges.create({
                 amount: 999,
                 currency: "usd",
@@ -303,32 +319,7 @@ router.post('/checkout', Authentication, async (req, res) => {
                 customer: customer_id,
                 source: newSource.id
             });
-            // if(data.address) {
-            //     let profile = await Profile.findOne({user: req.user.id});
-
-            //     const newAddress = {
-            //         name: data.address.name,
-            //         street: data.address.street,
-            //         city: data.address.city,
-            //         state: data.address.state,
-            //         zip: data.address.zip,
-            //     };
-
-            //     profile.address.unshift({newAddress});
-            // }
-            let receipt = new Receipt({
-                user: req.user.id,
-                amount: data.amount,
-                currency: 'usd',
-                address: data.address,
-                time: Date.now()
-            });
-
-            await receipt.save();
-
-            res.status(200).send('HIT THE BE');
         } else if (data.source && data.source.length > 0) {
-            console.log('OLD CARD');
             const user = await User.findById(req.user.id);
 
             const customer_id = user.stripe_id;
@@ -340,19 +331,27 @@ router.post('/checkout', Authentication, async (req, res) => {
                 customer: customer_id,
                 source: data.source
             });
-
-            let receipt = new Receipt({
-                user: req.user.id,
-                amount: data.amount,
-                currency: 'usd',
-                address: data.address,
-                time: Date.now()
-            });
-
-            await receipt.save();
-
-            res.status(200).send('HIT THE BE');
         }
+
+        let updatedCart = await Cart.findOneAndUpdate(
+            { "owner": req.user.id },
+            { $set: { "items": [] } },
+            { new: true }
+        );
+
+        const cart = await Cart.findOne({ owner: req.user.id });
+
+        let receipt = new Receipt({
+            user: req.user.id,
+            amount: data.amount,
+            currency: 'usd',
+            address: data.address,
+            time: Date.now()
+        });
+
+        await receipt.save();
+
+        res.status(200).send(receipt);
     } catch (err) {
         console.log(err);
         res.status(500).send('Server Error');
