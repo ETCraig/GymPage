@@ -277,6 +277,7 @@ router.delete('/method/:id', Authentication, async (req, res) => {
 router.post('/checkout', Authentication, async (req, res) => {
     let data = req.body;
     try {
+        console.log(data);
         if (!data.address._id) {
             let profile = await Profile.findOne({ user: req.user.id });
 

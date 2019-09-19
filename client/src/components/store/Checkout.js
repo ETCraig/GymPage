@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../styles/Checkout.css';
 import ProfileContext from '../../context/profile/profileContext';
 import StoreContext from '../../context/store/storeContext';
+import { withRouter } from 'react-router-dom';
 
 import {
     CardElement,
@@ -83,6 +84,7 @@ const Checkout = (props) => {
     return (
         <div className={showHideClassname}>
             <section className="modal-main text-center">
+                <div>
                 <h5 style={{ float: "left" }}>Total: ${total}</h5>
                 <button onClick={props.handleClose} className="btn" style={{ float: "right" }}>
                     <i className="fas fa-times"></i>
@@ -269,9 +271,10 @@ const Checkout = (props) => {
                         )}
                     <input type="submit" value="Purchase" className="btn btn-success btn-block mt-5" />
                 </form>
+                </div>
             </section>
         </div>
     );
 }
 
-export default injectStripe(Checkout);
+export default injectStripe(withRouter(Checkout));

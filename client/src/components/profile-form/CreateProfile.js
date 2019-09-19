@@ -52,7 +52,7 @@ const CreateProfile = (props) => {
         if (username === '' || exp === '' || bio === '') {
             console.log('Empty', username, exp, bio);
         } else {
-           await updateProfile({
+            await updateProfile({
                 username,
                 exp,
                 bio,
