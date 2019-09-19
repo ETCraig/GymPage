@@ -9,6 +9,7 @@ import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import MuscleGroup from './components/exercises/MuscleGroup';
 import NotFound from './components/layout/NotFound';
+import PaymentSuccess from './components/store/PaymentSuccess';
 import Product from './components/store/Product';
 import Store from './components/store/Store';
 import UserProfile from './components/profile/UserProfile';
@@ -34,6 +35,7 @@ const Routes = () => {
                 <PrivateRoute exact path="/profile" component={UserProfile} />
                 <PrivateRoute exact path="/store" component={Store} />
                 <PrivateRoute exact path="/cart" component={Cart} />
+                <PrivateRoute exact path="/success" component={PaymentSuccess} />
                 <PrivateRoute exact path="/routines" component={Routines} />
                 <Route component={NotFound} />
             </Switch>

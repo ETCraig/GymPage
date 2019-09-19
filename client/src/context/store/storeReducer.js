@@ -50,7 +50,7 @@ export default (state, action) => {
         case EDIT_PRODUCT:
             return {
                 ...state,
-                
+                cart: payload
             }
         case REMOVE_PRODUCT:
             return {

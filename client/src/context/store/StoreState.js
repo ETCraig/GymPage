@@ -134,7 +134,7 @@ const StoreState = props => {
 
         try {
             const res = await axios.patch(`/api/store/cart/${product_id}`, {count}, config);
-
+            console.log(res)
             dispatch({
                 type: EDIT_PRODUCT,
                 payload: res.data
@@ -284,7 +284,7 @@ const StoreState = props => {
 
     const calculateTotal = () => {
         let due = initialState.total;
-        console.log(state.cart)
+        console.log('CART', state.cart.items)
         let products = state.cart.items;
 
         for(let i = 0; i< products.length; i++) {
