@@ -288,9 +288,9 @@ const StoreState = props => {
         let products = state.cart.items;
 
         for(let i = 0; i< products.length; i++) {
-            due = due + products[i].item.sizes[0].price
+            due = due + (products[i].item.sizes[0].price * products[i].count);
         }
-        console.log(due);
+        console.log('DUE', due);
         dispatch({
             type: CALCULATE_TOTAL,
             payload: due

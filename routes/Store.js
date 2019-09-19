@@ -293,6 +293,8 @@ router.post('/checkout', Authentication, async (req, res) => {
             await profile.save();
         }
 
+        const convertedAmount = data.amount * 100;
+
         if (data.token) {
 
             const user = await User.findById(req.user.id);
@@ -313,7 +315,7 @@ router.post('/checkout', Authentication, async (req, res) => {
             );
 
             let transaction = await stripe.charges.create({
-                amount: 999,
+                amount: convertedAmount,
                 currency: "usd",
                 description: "GymPage Transaction.",
                 customer: customer_id,
@@ -325,7 +327,7 @@ router.post('/checkout', Authentication, async (req, res) => {
             const customer_id = user.stripe_id;
 
             let transaction = await stripe.charges.create({
-                amount: 999,
+                amount: convertedAmount,
                 currency: "usd",
                 description: "GymPage Transaction.",
                 customer: customer_id,
