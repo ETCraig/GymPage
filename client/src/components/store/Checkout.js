@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import AddMethodForm from './AddMethodForm';
 import '../styles/Checkout.css';
+import ProfileContext from '../../context/profile/profileContext';
 import StoreContext from '../../context/store/storeContext';
 
 import {
@@ -12,25 +12,36 @@ import {
 
 const Checkout = (props) => {
     const storeContext = useContext(StoreContext);
+    const profileContext = useContext(ProfileContext);
 
     const { getMethods, methods, processPurchase, setLoading, total } = storeContext;
+    const { profile } = profileContext;
 
     useEffect(() => {
         getMethods();
+        console.log(profile, '!');
+        console.log(profileContext, '!!');
+        if(profile != null && profile.address && profile.address.length > 0) {
+            setAddresses(profile.address);
+        }
         //eslint-disable-next-line
     }, []);
 
-    // if(props.show) {
-    //     getMethods();
-    // }
-
     const handleInputChange = e => {
         const { name, value } = e.target
-        setAddress({ ...address, [name]: value });
+        setNewAddress({ ...newAddress, [name]: value });
+    }
+
+    const updateAddress = _id => {
+        if (address && address.length > 1) {
+            setAddress('');
+        } else {
+            setAddress(_id);
+        }
     }
 
     const updateSource = id => {
-        if(source && source.length > 1) {
+        if (source && source.length > 1) {
             setSource('');
         } else {
             setSource(id);
@@ -39,34 +50,33 @@ const Checkout = (props) => {
 
     const handleCheckout = async e => {
         e.preventDefault();
-        console.log('HIT', address, source)
-        if(source && source.length > 1) {
+        if (source && source.length > 1) {
             setLoading();
             let data = {
                 source,
-                address,
+                address: newAddress,
                 amount: parseFloat(total),
             }
-            console.log(data);
             await processPurchase(data);
+            props.history.push('/success');
         } else if (props.stripe) {
             setLoading();
             let { token } = await props.stripe.createToken();
-            console.log(token);
             let data = {
                 token,
                 address,
                 amount: parseFloat(total),
             }
-            console.log(data)
             await processPurchase(data);
+            props.history.push('/success');
         } else {
             console.log('Stripe.js has not loaded.');
         }
     }
 
-    const [addresses] = useState([]);
-    const [address, setAddress] = useState({ name: '', street: '', city: '', state: '', zip: '', });
+    const [addresses, setAddresses] = useState([]);
+    const [newAddress, setNewAddress] = useState({ name: 'Dummy Address', street: '1234 St', city: 'City', state: 'Somewhere', zip: '12345', });
+    const [address, setAddress] = useState('');
     const [source, setSource] = useState('');
 
     const showHideClassname = props.show ? "modal display-block" : "modal display-none";
@@ -80,9 +90,26 @@ const Checkout = (props) => {
                 <form className="container" onSubmit={handleCheckout}>
                     <label>Shipping Address:</label>
                     {addresses.length ? (
-                        <div>
-
-                        </div>
+                        addresses.map(address => (
+                            <div key={address._id} className="container">
+                                <div className="card" onClick={() => updateAddress(address._id)}>
+                                    <div className="card-body row justify-content-between">
+                                        <div className="mb-3">
+                                            {address.name}
+                                        </div>
+                                        <div className="mb-3">
+                                            {address.street}
+                                        </div>
+                                        <div className="mb-3">
+                                            {address.city}, {address.state}
+                                        </div>
+                                        <div className="mb-3">
+                                            {address.zip}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
                     ) : (
                             <div>
                                 <div className="row justify-content-center">
@@ -97,7 +124,7 @@ const Checkout = (props) => {
                                                 placeholder="Joe Smith"
                                                 name="name"
                                                 onChange={handleInputChange}
-                                                value={address.name}
+                                                value={newAddress.name}
                                             />
                                         </div>
                                     </div>
@@ -112,7 +139,7 @@ const Checkout = (props) => {
                                                 placeholder="1234 Abby Ln"
                                                 name="street"
                                                 onChange={handleInputChange}
-                                                value={address.street}
+                                                value={newAddress.street}
                                             />
                                         </div>
                                     </div>
@@ -129,7 +156,7 @@ const Checkout = (props) => {
                                                 placeholder="Gilbert"
                                                 name="city"
                                                 onChange={handleInputChange}
-                                                value={address.city}
+                                                value={newAddress.city}
                                             />
                                         </div>
                                     </div>
@@ -143,7 +170,7 @@ const Checkout = (props) => {
                                                 id="state"
                                                 name="state"
                                                 onChange={handleInputChange}
-                                                value={address.state}>
+                                                value={newAddress.state}>
                                                 <option value="">N/A</option>
                                                 <option value="AK">Alaska</option>
                                                 <option value="AL">Alabama</option>
@@ -211,7 +238,7 @@ const Checkout = (props) => {
                                                 placeholder="12345"
                                                 name="zip"
                                                 onChange={handleInputChange}
-                                                value={address.zip}
+                                                value={newAddress.zip}
                                             />
                                         </div>
                                     </div>

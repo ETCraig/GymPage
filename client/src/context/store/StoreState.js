@@ -293,7 +293,7 @@ const StoreState = props => {
         console.log('DUE', due);
         dispatch({
             type: CALCULATE_TOTAL,
-            payload: due
+            payload: due.toFixed(2)
         });
     }
 
