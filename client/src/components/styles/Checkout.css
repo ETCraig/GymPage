@@ -30,3 +30,8 @@
   .display-none {
     display: none;
   }
+
+.selected {
+  border: 2px solid #da7618;
+  color: aquamarine;
+}

@@ -92,28 +92,38 @@ const Checkout = (props) => {
                 <form className="container" onSubmit={handleCheckout}>
                     <label>Shipping Address:</label>
                     {addresses.length ? (
-                        addresses.map(address => (
-                            <div key={address._id} className="container">
-                                <div className="card" onClick={() => updateAddress(address._id)}>
+                        addresses.map(location => (
+                            <div key={location._id} className="container">
+                                <div style={{border: address._id === location._id ? "3px solid #da7618" : ""}} className="card" onClick={() => updateAddress(location._id)}>
                                     <div className="card-body row justify-content-between">
                                         <div className="mb-3">
-                                            {address.name}
+                                            {location.name}
                                         </div>
                                         <div className="mb-3">
-                                            {address.street}
+                                            {location.street}
                                         </div>
                                         <div className="mb-3">
-                                            {address.city}, {address.state}
+                                            {location.city}, {location.state}
                                         </div>
                                         <div className="mb-3">
-                                            {address.zip}
+                                            {location.zip}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         ))
-                    ) : (
-                            <div>
+                    ) : null }
+                    <div style={{marginTop: "15px"}}></div>
+                        <button 
+                            className="btn btn-primary" 
+                            type="button" 
+                            data-toggle="collapse" 
+                            data-target="#addressCollapse" 
+                            aria-expanded="false" 
+                            aria-controls="addressCollapse">
+                            Use New Address
+                        </button>
+                            <div className="collapse mt-2" id="addressCollapse">
                                 <div className="row justify-content-center">
                                     <div className="col-sm-4">
                                         <div className="input-group mb-3 input-group-sm">
@@ -246,12 +256,12 @@ const Checkout = (props) => {
                                     </div>
                                 </div>
                             </div>
-                        )}
+                    <div style={{marginTop: "15px"}}></div>
                     <label>Payment Method:</label>
                     {methods != null ? (
                         methods.map(wallet => (
                             <div className="container" key={wallet.id}>
-                                <div className="card" onClick={() => updateSource(wallet.id)}>
+                                <div style={{border: source === wallet.id ? "3px solid #da7618" : ""}} className="card" onClick={() => updateSource(wallet.id)}>
                                     <div className="card-body row justify-content-between">
                                         <div className="mb-3">
                                             {wallet.card.brand}
@@ -266,9 +276,19 @@ const Checkout = (props) => {
                                 </div>
                             </div>
                         ))
-                    ) : (
+                    ) : null }
+                        <button 
+                            className="btn btn-primary" 
+                            type="button" 
+                            data-toggle="collapse" 
+                            data-target="#walletCollapse" 
+                            aria-expanded="false" 
+                            aria-controls="walletCollapse">
+                            Use New Address
+                        </button>
+                        <div className="collapse mb-2" id="walletCollapse">
                             <CardElement />
-                        )}
+                        </div>
                     <input type="submit" value="Purchase" className="btn btn-success btn-block mt-5" />
                 </form>
                 </div>
