@@ -3,7 +3,7 @@ import React, { Fragment, useContext, useEffect } from 'react';
 import Loading from '../layout/Loading';
 import ProfileContext from '../../context/profile/profileContext';
 
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 const DashReRoute = () => {
     const profileContext = useContext(ProfileContext);
@@ -14,14 +14,17 @@ const DashReRoute = () => {
         getUserProfile();
         //eslint-disable-next-line
     }, []);
+
+    const renderRedirect = () => {
+        return <Redirect to='/feed' />
+    }
+
     return (
         <Fragment>
             {loading ? 
                 <Loading /> :
             profile !== null && !loading ?
-                <Fragment>
-                    <h4>Your Profile Was Found.</h4>
-                </Fragment> :
+                renderRedirect() :
                 <Fragment>
                     <p>You have not yet set up a profile, please add some info.</p>
                     <Link to="/create-profile" className="btn btn-primary my-1">

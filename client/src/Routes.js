@@ -10,6 +10,7 @@ import Login from './components/auth/Login';
 import MuscleGroup from './components/exercises/MuscleGroup';
 import NotFound from './components/layout/NotFound';
 import PaymentSuccess from './components/store/PaymentSuccess';
+import Posts from './components/posts/Posts';
 import Product from './components/store/Product';
 import Store from './components/store/Store';
 import UserProfile from './components/profile/UserProfile';
@@ -27,6 +28,7 @@ const Routes = () => {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 <PrivateRoute exact path="/" component={Dashboard} />
+                <PrivateRoute exact path='/feed' component={Posts} />
                 <PrivateRoute exact path="/create-profile" component={CreateProfile} />
                 <PrivateRoute exact path="/exercise/:id" component={Exercise} />
                 <PrivateRoute exact path="/exercise-menu" component={ExerciseMenu} />
