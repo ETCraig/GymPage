@@ -137,7 +137,7 @@ router.post('/', [Authentication, [
 });
 
 //@Route    GET api/posts
-//@Desc     Gets sll Posts
+//@Desc     Gets ll Posts
 //@Access   private
 router.get('/', Authentication, async (req, res) => {
     try {

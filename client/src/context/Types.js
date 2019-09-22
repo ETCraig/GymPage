@@ -56,3 +56,12 @@ export const PROCESS_PURCHASE = 'PURCHASE_PRODUCTS';
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 export const SET_LOADING = 'SET_LOADING';
 export const STORE_ERROR = 'STORE_ERROR';
+//POST TYPES
+export const CREATE_POST = 'CREATE_POST';
+export const GET_POST = 'GET_POST';
+export const GET_POSTS = 'GET_POSTS';
+export const DELETE_POST = 'DELETE_POST';
+export const LIKE_POST = 'LIKE_POST';
+export const UNLIKE_POST = 'UNLIKE_POST';
+export const COMMENT_POST = 'COMMENT_POST';
+export const UNCOMMENT_POST = 'UNCOMMENT_POST';

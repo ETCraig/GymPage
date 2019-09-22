@@ -1,10 +1,12 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 
 import PostForm from './PostForm';
 import PostItem from './PostItem';
 import SinglePost from './SinglePost';
+import Loading from '../layout/Loading';
 
 const Posts = () => {
+    
     return (
         <Fragment>
             <h1 className="large text-primary">News Feed</h1>
