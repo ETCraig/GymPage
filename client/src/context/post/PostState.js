@@ -13,11 +13,95 @@ import {
     LIKE_POST,
     UNLIKE_POST,
     COMMENT_POST,
-    UNCOMMENT_POS,
+    UNCOMMENT_POST,
 } from '../Types';
 
-const PostState = props => {
+import axios from 'axios';
 
+const PostState = props => {
+    const initialState = {
+        post: {},
+        posts: [],
+        error: null
+    }
+
+    const [state, dispatch] = useReducer(PostReducer, initialState);
+
+    const createNewPost = () => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+
+    const getAllPosts = () => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+
+    const getSinglePost = () => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+
+    const deleteSinglePost = () => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+
+    const likePost = () => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+
+    const unlikePost = () => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+
+    const createComment = () => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+
+    const deleteComment = () => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+
+    return (
+        <PostContext.Provider
+            value={{
+                post: state.post,
+                posts: state.posts,
+                error: state.errors
+            }}
+        >
+            {props.children}
+        </PostContext.Provider>
+    );
 }
 
 export default AuthState;
