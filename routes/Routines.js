@@ -21,9 +21,10 @@ router.post('/', [Authentication, [
         res.status(400).json({ errors: errors.array() });
     }
 
-    let { name, type, description, public } = req.body;
-    let { creator } = req.user.id;
     try {
+        let { name, type, description, public } = req.body;
+        let { creator } = req.user.id;
+
         let routine = await new Routine({
             creator,
             name,
@@ -48,9 +49,11 @@ router.post('/workout/:routine_id', [Authentication, [
     check('day_num', 'Day 0r Number is Required.').not().isEmpty(),
     check('name', 'Workout Name is Required.').not().isEmpty()
 ]], async (req, res) => {
-    let { day_num, name } = req.body;
-    let routine = req.params.routine_id;
+
     try {
+        let { day_num, name } = req.body;
+        let routine = req.params.routine_id;
+
         let workout = await new Workout({
             routine,
             day_num,
@@ -98,8 +101,9 @@ router.get('/private', Authentication, async (req, res) => {
 //@Desc     Delete a Routine
 //@Access   Private
 router.delete('/:routine_id', Authentication, async (req, res) => {
-    const routineId = req.params.routine_id;
     try {
+        const routineId = req.params.routine_id;
+
         await Workout.deleteMany({ routine: routineId });
 
         await Routine.findOneAndDelete({ _id: routineId });
@@ -142,8 +146,9 @@ router.delete('/workout/:workout_id', Authentication, async (req, res) => {
 //@Desc     Create Or Update User's Record
 //@Access   Private
 router.post('/exercise/:id', Authentication, async (req, res) => {
-    let { max_reps, max_weight } = req.body;
     try {
+        let { max_reps, max_weight } = req.body;
+
         let exer = await Exercise.find({ _id: req.params.id, "user_record.holder": req.user.id });
 
         if (exer.length < 1) {
@@ -189,10 +194,10 @@ router.patch('/:id', [Authentication, [
         res.status(400).json({ errors: errors.array() });
     }
 
-    const routineId = req.params.id;
-    let { name, type, description, public } = req.body;
-
     try {
+        const routineId = req.params.id;
+        let { name, type, description, public } = req.body;
+
         let routine = await Routine.findByIdAndUpdate(
             { _id: routineId },
             { $set: { name, type, description, public } },
@@ -218,10 +223,10 @@ router.patch('/workout/:id', [Authentication, [
         res.status(400).json({ errors: errors.array() });
     }
 
-    const routineId = req.params.id;
-    let { day_num, name } = req.body;
-
     try {
+        const routineId = req.params.id;
+        let { day_num, name } = req.body;
+
         let workout = await Workout.findByIdAndUpdate(
             { _id: routineId },
             { $set: { day_num, name } },
@@ -239,8 +244,9 @@ router.patch('/workout/:id', [Authentication, [
 //@Desc     Add Exercise to Workout
 //@Access   Private
 router.put('/workout/:id/:exercise_id', Authentication, async (req, res) => {
-    let { sets, reps } = req.body;
     try {
+        let { sets, reps } = req.body;
+
         let workout = await Workout.findById(req.params.id);
 
         let exercise = await Exercise.findById(req.params.exercise_id)
@@ -352,9 +358,9 @@ router.post('/comment/:id', [Authentication, [
         res.status(400).json({ errors: errors.array() });
     }
 
-    let { text, rating } = req.body;
-
     try {
+        let { text, rating } = req.body;
+
         const user = await User.findById(req.user.id).select('-password');
 
         const profile = await Profile.findOne({ user: req.user.id });

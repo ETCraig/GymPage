@@ -201,8 +201,9 @@ router.get('/:id', Authentication, async (req, res) => {
 //@Desc     Add Exercise to Routine
 //@Access   Private
 router.put('/:workout_id/:id', Authentication, async (req, res) => {
-    let { sets, reps } = req.body;
     try {
+        let { sets, reps } = req.body;
+
         let workout = await Workout.findById(req.params.workout_id);
 
         let exercise = await Exercise.findById(req.params.id);
@@ -247,8 +248,9 @@ router.put('/:workout_id/:id', Authentication, async (req, res) => {
 //@Desc     Edit Exercise in Workout
 //@Access   Private
 router.put('/:workout_id/:id', Authentication, async (req, res) => {
-    let { sets, reps } = req.body;
     try {
+        let { sets, reps } = req.body;
+
         await Workout.update(
             { "_id": req.params.workout_id, "exercises._id": req.params.id },
             { $set: { reps, sets } }

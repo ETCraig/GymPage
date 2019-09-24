@@ -22,28 +22,28 @@ router.post('/', [Authentication, [
         res.status(400).json({ errors: errors.array() });
     }
 
-    const {
-        username,
-        exp,
-        bio,
-        weight,
-        feet,
-        inches,
-        bmi
-    } = req.body;
-
-    const profileFields = {};
-
-    profileFields.user = req.user.id;
-    if (username) profileFields.username = username;
-    if (exp) profileFields.exp = exp;
-    if (bio) profileFields.bio = bio;
-    if (weight) profileFields.weight = weight;
-    if (feet) profileFields.feet = feet;
-    if (inches) profileFields.inches = inches;
-    if (bmi) profileFields.bio = bio;
-
     try {
+        const {
+            username,
+            exp,
+            bio,
+            weight,
+            feet,
+            inches,
+            bmi
+        } = req.body;
+    
+        const profileFields = {};
+    
+        profileFields.user = req.user.id;
+        if (username) profileFields.username = username;
+        if (exp) profileFields.exp = exp;
+        if (bio) profileFields.bio = bio;
+        if (weight) profileFields.weight = weight;
+        if (feet) profileFields.feet = feet;
+        if (inches) profileFields.inches = inches;
+        if (bmi) profileFields.bio = bio;
+
         let profile = await Profile.findOne({ user: req.user.id });
 
         if (profile) {
@@ -123,23 +123,23 @@ router.get('/user/:profile_id', async (req, res) => {
 //@Desc     Record Workout Session
 //@Access   Private
 router.post('/session', Authentication, async (req, res) => {
-    const {
-        routine,
-        weight,
-        exercises,
-        newRecord,
-        duration
-    } = req.body;
-
-    const newSes = {
-        routine,
-        weight,
-        exercises,
-        newRecord,
-        duration
-    }
-
     try {
+        const {
+            routine,
+            weight,
+            exercises,
+            newRecord,
+            duration
+        } = req.body;
+    
+        const newSes = {
+            routine,
+            weight,
+            exercises,
+            newRecord,
+            duration
+        }
+        
         const profile = await Profile.findOne({ user: req.user.id });
 
         profile.sessions.unshift(newSes);

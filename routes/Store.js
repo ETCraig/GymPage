@@ -18,8 +18,9 @@ const stripe = require('stripe')(secret_key);
 //@Desc     Create a Product
 //@Access   Admin
 router.post('/', Authentication, async (req, res) => {
-    let { name, category, brand } = req.body;
     try {
+        let { name, category, brand } = req.body;
+
         let product = new Product({
             name,
             category,
@@ -83,9 +84,9 @@ router.get('/:id', Authentication, async (req, res) => {
 //@Desc     Create or Update Cart
 //@Access   Private
 router.post('/cart', Authentication, async (req, res) => {
-    let item = req.body.product;
-    let count = req.body.amount;
     try {
+        let item = req.body.product;
+        let count = req.body.amount;
         let cart = await Cart.findOne({ owner: req.user.id });
         console.log(cart);
         if (!cart || cart.length < 1) {
@@ -145,8 +146,9 @@ router.post('/user-cart', Authentication, async (req, res) => {
 //@Access   Private
 router.delete('/cart/:product_id', Authentication, async (req, res) => {
     console.log(req.params.product_id);
-    let product = req.params.product_id;
     try {
+        let product = req.params.product_id;
+
         const cart = await Cart.findOne({ owner: req.user.id });
 
         const item = cart.items.find(item => item._id == product);
@@ -172,11 +174,11 @@ router.delete('/cart/:product_id', Authentication, async (req, res) => {
 //@Desc     Edit Product in users Cart
 //@Access   Private
 router.patch('/cart/:product_id', Authentication, async (req, res) => {
-    console.log('HIT')
-    let product = req.params.product_id;
-    let newCount = req.body.count;
     console.log('HERE', product, newCount);
     try {
+        let product = req.params.product_id;
+        let newCount = req.body.count;
+
         let updatedCart = await Cart.findOneAndUpdate(
             { "owner": req.user.id, "items._id": product },
             { $set: { "items.$.count": newCount } },
@@ -216,9 +218,10 @@ router.post('/methods', Authentication, async (req, res) => {
 //@Desc     Create Payment Method
 //@Access   Private
 router.post('/method', Authentication, async (req, res) => {
-    let { email, stripe_id } = req.user;
-    let { tokenId } = req.body;
     try {
+        let { email, stripe_id } = req.user;
+        let { tokenId } = req.body;
+
         stripe.sources.create({
             type: 'card',
             currency: 'usd',
@@ -250,9 +253,10 @@ router.post('/method', Authentication, async (req, res) => {
 //@Desc     Delete User Payment Method
 //@Access   Private
 router.delete('/method/:id', Authentication, async (req, res) => {
-    let { sourceId } = req.params;
-    let { stripe_id } = req.user;
     try {
+        let { sourceId } = req.params;
+        let { stripe_id } = req.user;
+
         await stripe.customers.deleteSource(
             stripe_id,
             sourceId,
@@ -275,8 +279,9 @@ router.delete('/method/:id', Authentication, async (req, res) => {
 //@Desc     Purchase Product's
 //@Access   Private
 router.post('/checkout', Authentication, async (req, res) => {
-    let data = req.body;
     try {
+        let data = req.body;
+
         console.log(data);
         if (!data.address._id) {
             let profile = await Profile.findOne({ user: req.user.id });
@@ -366,9 +371,10 @@ router.post('/checkout', Authentication, async (req, res) => {
 //@Desc     Get User's Receipts & Past Orders
 //@Access   Private
 router.get('/receipts', Authentication, async (req, res) => {
-    let { limit } = req.query;
-    let user = req.user.id;
     try {
+        let { limit } = req.query;
+        let user = req.user.id;
+
         let maxLength = await Receipt.find({ user: user }).countDocuments();
 
         let receipt = await Receipt.find({ user: user }).populate(

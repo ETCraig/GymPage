@@ -78,8 +78,8 @@ router.patch('/password', [Authentication, [
         res.status(400).json({ errors: errors.array() });
     }
 
-    const { password } = req.body;
     try {
+        const { password } = req.body;
 
         const salt = await bcrypt.genSalt(10);
 
@@ -109,9 +109,9 @@ router.patch('/email', [Authentication, [
         res.status(400).json({ errors: errors.array() });
     }
 
-    const { email } = req.body;
-
     try {
+        const { email } = req.body;
+
         let user = await User.findOneAndUpdate(
             { _id: req.user.id },
             { $set: { email } },
