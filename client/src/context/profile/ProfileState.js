@@ -4,13 +4,13 @@ import ProfileContext from './profileContext';
 import ProfileReducer from './profileReducer';
 
 import {
-    // DELETE_PROFILE,
-    // GET_PROFILE,
-    // GET_PROFILES,
+    DELETE_PROFILE,
+    GET_PROFILE,
+    GET_PROFILES,
     GET_USER_PROFILE,
     PROFILE_ERROR,
-    // RECORD_SESSION,
-    UPDATE_PROFILE
+    RECORD_SESSION,
+    UPDATE_PROFILE,
 } from '../Types';
 
 import axios from 'axios';
@@ -65,37 +65,74 @@ const ProfileState = props => {
         }
     }
 
-    // const getProfiles = async () => {
-    //     try {
+    const getProfiles = async () => {
+        try {
+            const res = await axios.get('/api/profile/community');
 
-    //     } catch (err) {
+            dispatch({
+                type: GET_PROFILES,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: err.response.msg
+            });
+        }
+    }
 
-    //     }
-    // }
+    const getProfile = async profile_id => {
+        try {
+            const res = await axios.get(`/api/profile/user/${profile_id}`);
 
-    // const getProfile = async () => {
-    //     try {
+            dispatch({
+                type: GET_PROFILE,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: err.response.msg
+            });
+        }
+    }
 
-    //     } catch (err) {
+    const recordSession = async session => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        try {
+            const res = await axios.post('/api/profile/session', session, config);
 
-    //     }
-    // }
+            dispatch({
+                type: RECORD_SESSION,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: err.response.msg
+            });
+        }
+    }
 
-    // const recordSession = async () => {
-    //     try {
+    const deleteProfile = async () => {
+        try {
+            const res = await axios.delete('/api/profile');
 
-    //     } catch (err) {
-
-    //     }
-    // }
-
-    // const deleteProfile = async () => {
-    //     try {
-
-    //     } catch (err) {
-
-    //     }
-    // }
+            dispatch({
+                type: DELETE_PROFILE,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: err.response.msg
+            });
+        }
+    }
 
     return (
         <ProfileContext.Provider
@@ -105,7 +142,11 @@ const ProfileState = props => {
                 loading: state.loading,
                 error: state.error,
                 getUserProfile,
-                updateProfile
+                updateProfile,
+                getProfile,
+                getProfiles,
+                recordSession,
+                deleteProfile
             }}
         >
             {props.children}
