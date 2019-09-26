@@ -14,6 +14,7 @@ import {
     UNLIKE_POST,
     COMMENT_POST,
     UNCOMMENT_POST,
+    POST_ERROR
 } from '../Types';
 
 import axios from 'axios';
@@ -27,67 +28,141 @@ const PostState = props => {
 
     const [state, dispatch] = useReducer(PostReducer, initialState);
 
-    const createNewPost = () => {
+    const createNewPost = formData => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
         try {
-            
-        } catch (error) {
-            
+            const res = await axios.post('/api/posts', formData, config);
+
+            dispatch({
+                type: CREATE_POST,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: POST_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
     const getAllPosts = () => {
         try {
-            
-        } catch (error) {
-            
+            const res = await axios.get('/api/posts');
+
+            dispatch({
+                type: GET_POSTS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: POST_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
-    const getSinglePost = () => {
+    const getSinglePost = id => {
         try {
-            
-        } catch (error) {
-            
+            const res = await axios.get(`/api/posts/${id}`);
+
+            dispatch({
+                type: GET_POST,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: POST_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
-    const deleteSinglePost = () => {
+    const deleteSinglePost = id => {
         try {
-            
-        } catch (error) {
-            
+            const res = await axios.delete(`/api/posts/${id}`);
+
+            dispatch({
+                type: DELETE_POST,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: POST_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
-    const likePost = () => {
-        try {
+    const likePost = id => {
+        try {       
+            const res = await axios.put(`/api/posts/like/${id}`);
             
-        } catch (error) {
-            
+            dispatch({
+                type: LIKE_POST,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: POST_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
-    const unlikePost = () => {
+    const unlikePost = id => {
         try {
+            const res = await axios.put(`/api/posts/unlike/${id}`);
             
-        } catch (error) {
-            
+            dispatch({
+                type: UNLIKE_POST,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: POST_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
-    const createComment = () => {
+    const createComment = (id, formData) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
         try {
-            
-        } catch (error) {
-            
+            const res = await axios.post(`/api/posts/comment/${id}`, formData, config);
+
+            dispatch({
+                type: COMMENT_POST,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: POST_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
-    const deleteComment = () => {
+    const deleteComment = (id, comment_id) => {
         try {
-            
-        } catch (error) {
-            
+            const res = await axios.delete(`/api/posts/comment/${id}/${comment_id}`);
+
+            dispatch({
+                type: UNCOMMENT_POST,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: POST_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
@@ -96,7 +171,15 @@ const PostState = props => {
             value={{
                 post: state.post,
                 posts: state.posts,
-                error: state.errors
+                error: state.errors,
+                createNewPost,
+                getAllPosts,
+                getSinglePost,
+                deleteSinglePost,
+                likePost,
+                unlikePost,
+                createComment,
+                deleteComment
             }}
         >
             {props.children}

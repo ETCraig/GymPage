@@ -65,6 +65,7 @@ export const LIKE_POST = 'LIKE_POST';
 export const UNLIKE_POST = 'UNLIKE_POST';
 export const COMMENT_POST = 'COMMENT_POST';
 export const UNCOMMENT_POST = 'UNCOMMENT_POST';
+export const POST_ERROR = 'POST_ERROR';
 //ARTICLE TYPES
 export const CREATE_ARTICLE = 'CREATE_ARTICLE';
 export const USERS_ARTICLES = 'USERS_ARTICLES';
