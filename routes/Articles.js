@@ -150,7 +150,7 @@ router.get('/:id', Authentication, async (req, res) => {
 //@Route    GET api/articles/community/all
 //@Desc     Get Community Articles
 //@Access   Private
-router.get('/community/all', Authentication, async (req, res) => {
+router.get('/community', Authentication, async (req, res) => {
     try {
         const articles = await Article.find();
 
@@ -256,7 +256,7 @@ router.put('/favorite/:id', Authentication, async (req, res) => {
     }
 });
 
-//@Route    POST api/articles/unfavorite/:id
+//@Route    PUT api/articles/unfavorite/:id
 //@Desc     Unfavorite Article by ID
 //@Access   Private
 router.put('/unfavorite/:id', Authentication, async (req, res) => {
@@ -316,7 +316,7 @@ router.post('/comment/:id', [Authentication, [
     }
 });
 
-//@Route    POST api/articles/comment/:id/:article_id
+//@Route    POST api/articles/comment/:id/:comment_id
 //@Desc     Delete Comment from Article
 //@Access   Private
 router.delete('/comment/:id/:comment_id', Authentication, async (req, res) => {

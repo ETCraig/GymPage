@@ -5,7 +5,8 @@ import UserReducer from './userReducer';
 import {
     UPDATE_AVATAR,
     UPDATE_EMAIL,
-    UPDATE_PASSWORD
+    UPDATE_PASSWORD,
+    USER_ERROR
 } from '../Types';
 
 import axios from 'axios';
@@ -15,32 +16,60 @@ const UserState = props => {
 
     const [state, dispatch] = useReducer(UserReducer, initialState);
 
-    const updateUserAvatar = () => {
+    const updateUserAvatar = avatar => {
         try {
+            const res = await axios.patch('/api/user/avatar', avatar);
 
-        } catch (error) {
-
+            dispatch({
+                type: UPDATE_AVATAR,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: USER_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
-    const updateUserEmail = () => {
+    const updateUserEmail = email => {
         try {
+            const res = await axios.patch('/api/user/password', email);
 
-        } catch (error) {
-
+            dispatch({
+                type: UPDATE_EMAIL,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: USER_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
-    const updateUserPassword = () => {
+    const updateUserPassword = password => {
         try {
+            const res = await axios.patch('/api/user/password', password);
 
-        } catch (error) {
-
+            dispatch({
+                type: UPDATE_PASSWORD,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: USER_ERROR,
+                payload: err.response.msg
+            });
         }
     }
 
     <UserContext.Provider
-        value={{}}
+        value={{
+            updateUserAvatar,
+            updateUserEmail,
+            updateUserPassword
+        }}
     >
         {props.children}
     </UserContext.Provider>
