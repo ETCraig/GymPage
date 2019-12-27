@@ -1,4 +1,4 @@
-const UserActionTypes = {
+const AuthActionTypes = {
     CHECK_USER_ACTION: 'CHECK_USER_ACTION',
     SIGN_IN_START: 'SIGN_IN_START',
     SIGN_IN_SUCCESS: 'SIGN_IN_SUCCESS',
@@ -11,4 +11,4 @@ const UserActionTypes = {
     SIGN_UP_FAILURE: 'SIGN_UP_FAILURE'
 }
 
-export default UserActionTypes;
+export default AuthActionTypes;

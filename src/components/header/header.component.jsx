@@ -7,8 +7,8 @@ import {
     OptionButton
 } from './header.styles';
 
-import { selectCurrentUser } from '../../redux/user/user.selector';
-import { signOutStart } from '../../redux/user/user.actions';
+import { selectCurrentUser } from '../../redux/auth/auth.selector';
+import { signOutStart } from '../../redux/auth/auth.actions';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';

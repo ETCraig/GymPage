@@ -1,10 +1,18 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
-import UserActionTypes from './user.types';
-import { signInFailure, signOutFailure, signOutSuccess, signUpFailure } from './user.actions';
+import AuthActionTypes from './auth.types';
+import axios from 'axios';
+import { signInFailure, signOutFailure, signOutSuccess, signUpFailure, signInSuccess } from './auth.actions';
 
-export function* setUserAuthStatus() {
+const config = {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+}
 
+export function* setUserAuthStatus(userData) {
+        localStorage.setItem('token', userData.token);
+        yield put(signInSuccess({ id: userData.user.id, ...userData.user }));
 }
 
 export function* isUserAuthenticated() {
@@ -15,9 +23,10 @@ export function* isUserAuthenticated() {
     }
 }
 
-export function* signIn({ payload: { email, password } }) {
+export function* signIn(payload) {
     try {
-
+        const { user } = yield axios.post('/api/auth/login', payload, config);
+        yield setUserAuthStatus(user);
     } catch (error) {
         yield put(signInFailure(error));
     }
@@ -45,23 +54,23 @@ export function* signInAfterSignUp({ payload: { user, additionalData } }) {
 }
 
 export function* onCheckUserSession() {
-    yield takeLatest(UserActionTypes.CHECK_USER_ACTION, isUserAuthenticated);
+    yield takeLatest(AuthActionTypes.CHECK_USER_ACTION, isUserAuthenticated);
 }
 
 export function* onSignInStart() {
-    yield takeLatest(UserActionTypes.SIGN_IN_START, signIn);
+    yield takeLatest(AuthActionTypes.SIGN_IN_START, signIn);
 }
 
 export function* onSignOutStart() {
-    yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
+    yield takeLatest(AuthActionTypes.SIGN_OUT_START, signOut);
 }
 
 export function* onSignUpStart() {
-    yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
+    yield takeLatest(AuthActionTypes.SIGN_UP_START, signUp);
 }
 
 export function* onSignUpSuccess() {
-    yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
+    yield takeLatest(AuthActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
 }
 
 export function* userSagas() {

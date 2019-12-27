@@ -4,8 +4,8 @@ import './App.css';
 import Header from './components/header/header.component';
 import HomePage from './pages/homepage/homepage.component';
 
-import { checkUserSession } from './redux/user/user.actions';
-import { selectCurrentUser } from './redux/user/user.selector';
+import { checkUserSession } from './redux/auth/auth.actions';
+import { selectCurrentUser } from './redux/auth/auth.selector';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
