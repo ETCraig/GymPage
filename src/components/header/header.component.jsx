@@ -1,16 +1,22 @@
 import React from 'react';
-import { 
-    HeaderContainer, 
-    LogoContainer, 
+import {
+    HeaderContainer,
+    LogoContainer,
     OptionContainer,
     OptionLink,
     OptionButton
 } from './header.styles';
 
-const Header = () => (
+import { selectCurrentUser } from '../../redux/user/user.selector';
+import { signOutStart } from '../../redux/user/user.actions';
+
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+const Header = ({ currentUser, signOutStart }) => (
     <HeaderContainer>
         <LogoContainer to="/">
-            <i className="fas fa-dumbbell" style={{color: "black"}}></i>
+            <i className="fas fa-dumbbell" style={{ color: "black" }}></i>
         </LogoContainer>
         <OptionContainer>
             <OptionLink to="/shop">
@@ -19,8 +25,26 @@ const Header = () => (
             <OptionLink to="/plans">
                 PLANS
             </OptionLink>
+            {
+                currentUser ?
+                    <OptionButton as="div" onClick={signOutStart}>
+                        SIGN OUT
+                    </OptionButton>
+                    :
+                    <OptionLink to="/signin">
+                        SIGN IN
+                    </OptionLink>
+            }
         </OptionContainer>
     </HeaderContainer>
 );
 
-export default Header;
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
+});
+
+const mapDispatchToProps = dispatch => ({
+    signOutStart: () => dispatch(signOutStart())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

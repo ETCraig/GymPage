@@ -1,11 +1,15 @@
 import React, { lazy, Suspense } from 'react';
 import './App.css';
 
-import { connect } from 'react-redux';
-import { Route, Redirect, Switch } from 'react-router-dom';
-
 import Header from './components/header/header.component';
 import HomePage from './pages/homepage/homepage.component';
+
+import { checkUserSession } from './redux/user/user.actions';
+import { selectCurrentUser } from './redux/user/user.selector';
+
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
 const App = () => {
   return (
@@ -18,4 +22,12 @@ const App = () => {
   );
 }
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(checkUserSession())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
