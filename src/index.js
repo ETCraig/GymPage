@@ -1,10 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { StripeProvider } from 'react-stripe-elements';
+
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 ReactDOM.render(
-<StripeProvider apiKey='pk_test_kPuqN3JaLiSE9ukURyhMzCWY00ZE77NxF6'>
-    <App />
-</StripeProvider>
+    <Provider store={store}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>
 , document.getElementById('root'));
