@@ -1,18 +1,11 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import AuthActionTypes from './auth.types';
-import axios from 'axios';
+import { signUpNewUser } from '../../api/auth/auth.utils';
 import { signInFailure, signOutFailure, signOutSuccess, signUpFailure, signInSuccess } from './auth.actions';
 
-const config = {
-    headers: {
-        'Content-Type': 'application/json'
-    }
-}
-
 export function* setUserAuthStatus(userData) {
-        localStorage.setItem('token', userData.token);
-        yield put(signInSuccess({ id: userData.user.id, ...userData.user }));
+    yield put(signInSuccess({ id: userData._id, ...userData.user }));
 }
 
 export function* isUserAuthenticated() {
@@ -25,8 +18,8 @@ export function* isUserAuthenticated() {
 
 export function* signIn(payload) {
     try {
-        const { user } = yield axios.post('/api/auth/login', payload, config);
-        yield setUserAuthStatus(user);
+        // const { user } = yield axios.post('/api/auth/login', payload, config);
+        // yield setUserAuthStatus(user);
     } catch (error) {
         yield put(signInFailure(error));
     }
@@ -41,9 +34,11 @@ export function* signOut() {
     }
 }
 
-export function* signUp({ payload: { } }) {
+export function* signUp(payload) {
     try {
-
+        console.log(payload)
+        const { user } = yield signUpNewUser(payload);
+        yield setUserAuthStatus(user);
     } catch (error) {
         yield put(signUpFailure(error));
     }
@@ -73,12 +68,12 @@ export function* onSignUpSuccess() {
     yield takeLatest(AuthActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
 }
 
-export function* userSagas() {
+export function* authSagas() {
     yield all([
-        onSignInStart,
-        isUserAuthenticated,
-        onSignOutStart,
-        onSignUpStart,
-        onSignUpSuccess
+        call(onSignInStart),
+        call(isUserAuthenticated),
+        call(onSignOutStart),
+        call(onSignUpStart),
+        call(onSignUpSuccess)
     ]);
 }
