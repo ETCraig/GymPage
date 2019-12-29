@@ -1,8 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import './App.css';
 
+import ErrorHandler from './components/error-handler/error-handler.component';
 import Header from './components/header/header.component';
-import HomePage from './pages/homepage/homepage.component';
 import Spinner from './components/spinner/spinner.component';
 
 import { checkUserSession } from './redux/auth/auth.actions';
@@ -13,6 +13,7 @@ import { createStructuredSelector } from 'reselect';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
 const AuthContainer = lazy(() => import('./pages/auth-container/auth-container.component'));
+const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
 
 const App = () => {
   const currentUser = false;
@@ -20,10 +21,12 @@ const App = () => {
     <div>
       <Header />
       <Switch>
-        <Suspense fallback={Spinner}>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/SignIn" render={() => currentUser ? <Redirect to="/" /> : <AuthContainer />} />
-        </Suspense>
+        <ErrorHandler>
+          <Suspense fallback={<Spinner />}>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/SignIn" render={() => currentUser ? <Redirect to="/" /> : <AuthContainer />} />
+          </Suspense>
+        </ErrorHandler>
       </Switch>
     </div>
   );
