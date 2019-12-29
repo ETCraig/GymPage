@@ -18,9 +18,9 @@ const invertedButtonStyles = css`
     border: 1px solid black;
 
     &:hover {
-        background-color: black;
-        color: white;
-        border: none;
+      background-color: black;
+      color: white;
+      border: none;
     }
 `;
 
@@ -37,7 +37,7 @@ export const CustomButtonContainer = styled.button`
     padding: 0 35px 0 35px;
     font-size: 15px;
     text-transform: uppercase;
-    font-family: 'Open Sans Condensed;
+    font-family: 'Open Sans Condensed';
     font-weight: bolder;
     cursor: pointer;
     display: flex;
