@@ -10,10 +10,10 @@ import { connect } from 'react-redux';
 
 const SignUp = ({ signUpStart }) => {
     const [credentials, setCredentials] = useState({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
+        name: 'Name',
+        email: 'email@gmail.com',
+        password: 'password12',
+        confirmPassword: 'password12'
     });
 
     const { name, email, password, confirmPassword } = credentials;
@@ -24,8 +24,8 @@ const SignUp = ({ signUpStart }) => {
     }
 
     const handleSubmit = async e => {
+        console.log('Hit Submit', credentials);
         e.preventDefault();
-
         if (password !== confirmPassword) {
             alert("Passwords Do Not Match.");
             return;
@@ -71,8 +71,8 @@ const SignUp = ({ signUpStart }) => {
                     label="Confirm Password"
                     required
                 />
+                <CustomButton type="submit">Sign Up</CustomButton>
             </form>
-            <CustomButton type="submit">Sign Up</CustomButton>
         </SignUpContainer>
     );
 }
