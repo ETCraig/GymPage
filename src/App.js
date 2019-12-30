@@ -1,51 +1,43 @@
-import React, { Fragment } from 'react';
+import React, { lazy, Suspense } from 'react';
 import './App.css';
 
-import Footer from './components/layout/Footer';
-import NavBar from './components/layout/NavBar';
+import ErrorHandler from './components/error-handler/error-handler.component';
+import Header from './components/header/header.component';
+import Spinner from './components/spinner/spinner.component';
 
-import AlertState from './context/alerts/AlertState';
-import AuthState from './context/auth/AuthState';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ExerciseState from './context/exercise/ExerciseState';
-import StoreState from './context/store/StoreState';
-import ProfileState from './context/profile/ProfileState';
-import RoutineState from './context/routine/RoutineState';
-import Routes from './Routes';
-import setAuthToken from './utils/setAuthToken';
+import { checkUserSession } from './redux/auth/auth.actions';
+import { selectCurrentUser } from './redux/auth/auth.selector';
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { Route, Redirect, Switch } from 'react-router-dom';
+
+const AuthContainer = lazy(() => import('./pages/auth-container/auth-container.component'));
+const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
 
 const App = () => {
+  const currentUser = false;
   return (
-    <AuthState>
-      <AlertState>
-        <ProfileState>
-          <RoutineState>
-            <ExerciseState>
-              <StoreState>
-                <Router>
-                  <Fragment>
-                    <NavBar />
-                    <div className="App">
-                      <Switch>
-                        <Route component={Routes} />
-                      </Switch>
-                      <div className="footer-app-wrapper">
-                        <Footer />
-                      </div>
-                    </div>
-                  </Fragment>
-                </Router>
-              </StoreState>
-            </ExerciseState>
-          </RoutineState>
-        </ProfileState>
-      </AlertState>
-    </AuthState>
+    <div>
+      <Header />
+      <Switch>
+        <ErrorHandler>
+          <Suspense fallback={<Spinner />}>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/SignIn" render={() => currentUser ? <Redirect to="/" /> : <AuthContainer />} />
+          </Suspense>
+        </ErrorHandler>
+      </Switch>
+    </div>
   );
 }
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(checkUserSession())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
