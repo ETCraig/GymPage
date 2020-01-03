@@ -1,11 +1,12 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import AuthActionTypes from './auth.types';
-import { signUpNewUser } from '../../api/auth/auth.utils';
+import { signUpNewUser, signInUser } from '../../api/auth/auth.utils';
 import { signInFailure, signOutFailure, signOutSuccess, signUpFailure, signInSuccess } from './auth.actions';
 
 export function* setUserAuthStatus(userData) {
-    yield put(signInSuccess({ id: userData._id, ...userData.user }));
+    console.log(userData)
+    yield put(signInSuccess({ ...userData }));
 }
 
 export function* isUserAuthenticated() {
@@ -18,8 +19,9 @@ export function* isUserAuthenticated() {
 
 export function* signIn(payload) {
     try {
-        // const { user } = yield axios.post('/api/auth/login', payload, config);
-        // yield setUserAuthStatus(user);
+        const user = yield signInUser(payload);
+        console.log(user);
+        yield setUserAuthStatus(user);
     } catch (error) {
         yield put(signInFailure(error));
     }
@@ -36,7 +38,6 @@ export function* signOut() {
 
 export function* signUp(payload) {
     try {
-        console.log(payload)
         const { user } = yield signUpNewUser(payload);
         yield setUserAuthStatus(user);
     } catch (error) {

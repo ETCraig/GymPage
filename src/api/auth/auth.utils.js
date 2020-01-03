@@ -19,6 +19,12 @@ export const signUpNewUser = async credentials => {
 
 export const signInUser = async credentials => {
     const data = credentials.payload;
-    const user = await axios.post('/api/auth/login', data, config);
+    const returnedUser = await axios.post('/api/auth/login', data, config);
+    if(returnedUser.status !== 200) return undefined;
+    console.log(returnedUser);
+    let user = returnedUser.data.user;
+    console.log(user, returnedUser.data.user);
+    let token = returnedUser.data.token;
+    localStorage.setItem('token', token);
     return user;
 }

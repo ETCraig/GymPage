@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import './App.css';
 
 import ErrorHandler from './components/error-handler/error-handler.component';
@@ -15,8 +15,10 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 const AuthContainer = lazy(() => import('./pages/auth-container/auth-container.component'));
 const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
 
-const App = () => {
-  const currentUser = false;
+const App = ({ checkUserSession, currentUser }) => {
+  useEffect(() => {
+    checkUserSession();
+  }, [checkUserSession]);
   return (
     <div>
       <Header />

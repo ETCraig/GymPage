@@ -11,9 +11,9 @@ import { connect } from 'react-redux';
 const SignUp = ({ signUpStart }) => {
     const [credentials, setCredentials] = useState({
         name: 'Name',
-        email: 'email@gmail.com',
-        password: 'password12',
-        confirmPassword: 'password12'
+        email: 'email2@gmail.com',
+        password: 'password13',
+        confirmPassword: 'password13'
     });
 
     const { name, email, password, confirmPassword } = credentials;

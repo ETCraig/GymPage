@@ -8,11 +8,11 @@ import {
 import CustomButton from '../custom-button/custom-button.component';
 import FormInput from '../form-input/form-input.component';
 
-import { onSignInStart } from '../../redux/auth/auth.saga';
+import { signInStart } from '../../redux/auth//auth.actions';
 
 import { connect } from 'react-redux';
 
-const SignIn = ({ onSignInStart }) => {
+const SignIn = ({ signInStart }) => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
 
     const { email, password } = credentials;
@@ -24,7 +24,7 @@ const SignIn = ({ onSignInStart }) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        onSignInStart(email, password);
+        signInStart(email, password);
     }
     
     return (
@@ -57,7 +57,7 @@ const SignIn = ({ onSignInStart }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    onSignInStart: (email, password) => dispatch(onSignInStart({ email, password }))
+    signInStart: (email, password) => dispatch(signInStart({ email, password }))
 });
 
 export default connect(null, mapDispatchToProps)(SignIn);
