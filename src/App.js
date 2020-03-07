@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import './App.css';
-import HomePage from './pages/homepage/homepage.component';
+
+import Routes from './router';
 
 const App = () => {
   return (
     <div className="App">
-      <HomePage />
+      <Routes />
     </div>
   );
 }
