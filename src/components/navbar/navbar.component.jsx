@@ -6,17 +6,17 @@ const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark static-top">
             <div className="container">
-                <a href="#" className="navbar-brand">GymPage</a>
+                <Link to="/" className="navbar-brand">GymPage</Link>
                 <button className="navbar-toggler" dtat-toggle="collapse" data-target="navbar-nav">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div id="navbar-nav" class="collapse navbar-collapse">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <Link to="/login" class="nav-link">Login</Link>
+                <div id="navbar-nav" className="collapse navbar-collapse">
+                    <ul className="navbar-nav ml-auto">
+                        <li className="nav-item">
+                            <Link to="/login" className="nav-link">Login</Link>
                         </li>
-                        <li class="nav-item">
-                            <Link to="/register" class="nav-link">Register</Link>
+                        <li className="nav-item">
+                            <Link to="/register" className="nav-link">Register</Link>
                         </li>
                     </ul>
                 </div>

@@ -26,18 +26,18 @@ const LoginContent = () => {
                                 <div className="input-group-append primary">
                                     <span className="input-group-text bg-primary"><i className="fas fa-user"></i></span>
                                 </div>
-                                <input type="email" name="" className="form-control" value="" placeholder="email" />
+                                <input type="email" name="email" className="form-control" placeholder="email" />
                             </div>
                             <div className="input-group mb-2">
                                 <div className="input-group-append">
                                     <span className="input-group-text bg-primary"><i className="fas fa-key"></i></span>
                                 </div>
-                                <input type="password" name="" className="form-control" value="" placeholder="password" />
+                                <input type="password" name="password" className="form-control" placeholder="password" />
                             </div>
                             <div className="form-group">
                                 <div className="custom-control custom-checkbox">
                                     <input type="checkbox" className="custom-control-input" id="customControlInline" />
-                                    <label className="custom-control-label" for="customControlInline">Remember me</label>
+                                    <label className="custom-control-label" htmlFor="customControlInline">Remember me</label>
                                 </div>
                             </div>
                             <LoginBtnContainer className="d-flex justify-content-center mt-3">
@@ -48,10 +48,10 @@ const LoginContent = () => {
 
                     <div className="mt-4">
                         <div className="d-flex justify-content-center links">
-                            Don't have an account? <a href="#" className="ml-2">Sign Up</a>
+                            Don't have an account? <Link to="/register" className="ml-2">Sign Up</Link>
                         </div>
                         <div className="d-flex justify-content-center links">
-                            <a href="#">Forgot your password?</a>
+                            <Link to="/">Forgot your password?</Link>
                         </div>
                     </div>
                 </LoginCard>
