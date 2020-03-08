@@ -7,7 +7,7 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark static-top">
             <div className="container">
                 <Link to="/" className="navbar-brand">GymPage</Link>
-                <button className="navbar-toggler" dtat-toggle="collapse" data-target="navbar-nav">
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-nav">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div id="navbar-nav" className="collapse navbar-collapse">

@@ -1,5 +1,5 @@
-import React from 'react';
-import { 
+import React, { useState } from 'react';
+import {
     LoginCard,
     LoginLogoContainer,
     LoginLogo,
@@ -11,8 +11,15 @@ import {
 import { Link } from 'react-router-dom';
 
 const LoginContent = () => {
+
+    const [credentials, setCredentials] = useState({ email: "", password: "" });
+
+    const handleChange = e => setCredentials({ ...credentials, [e.target.name]: e.target.value });
+
+    const { email, password } = credentials;
+
     return (
-        <div className="container h-100" style={{marginTop: "150px"}}>
+        <div className="container h-100" style={{ marginTop: "150px" }}>
             <div className="d-flex justify-content-center h-100">
                 <LoginCard>
                     <div className="d-flex justify-content-center">
@@ -26,13 +33,27 @@ const LoginContent = () => {
                                 <div className="input-group-append primary">
                                     <span className="input-group-text bg-primary"><i className="fas fa-user"></i></span>
                                 </div>
-                                <input type="email" name="email" className="form-control" placeholder="email" />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={email}
+                                    className="form-control"
+                                    placeholder="email"
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div className="input-group mb-2">
                                 <div className="input-group-append">
                                     <span className="input-group-text bg-primary"><i className="fas fa-key"></i></span>
                                 </div>
-                                <input type="password" name="password" className="form-control" placeholder="password" />
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={password}
+                                    className="form-control"
+                                    placeholder="password"
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div className="form-group">
                                 <div className="custom-control custom-checkbox">

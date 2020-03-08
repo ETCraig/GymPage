@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     RegisterBtn,
     RegisterBtnContainer,
@@ -11,6 +11,23 @@ import {
 import { Link } from 'react-router-dom';
 
 const RegisterContent = () => {
+
+    const [credentials, setCredentials] = useState({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    });
+
+    const handleChange = e => setCredentials({ ...credentials, [e.target.name]: e.target.value });
+
+    const {
+        username,
+        email,
+        password,
+        confirmPassword
+    } = credentials;
+
     return (
         <div className="container h-100" style={{ marginTop: "150px" }}>
             <div className="d-flex justify-content-center h-100">
@@ -26,25 +43,53 @@ const RegisterContent = () => {
                                 <div className="input-group-append primary">
                                     <span className="input-group-text bg-primary"><i className="fas fa-user"></i></span>
                                 </div>
-                                <input type="text" name="username" className="form-control" placeholder="username" />
+                                <input 
+                                    type="text" 
+                                    name="username" 
+                                    value={username}
+                                    className="form-control" 
+                                    placeholder="username" 
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div className="input-group mb-3">
                                 <div className="input-group-append primary">
                                     <span className="input-group-text bg-primary"><i className="fas fa-at"></i></span>
                                 </div>
-                                <input type="email" name="email" className="form-control" placeholder="email" />
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    value={email}
+                                    className="form-control" 
+                                    placeholder="email" 
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div className="input-group mb-3">
                                 <div className="input-group-append primary">
                                     <span className="input-group-text bg-primary"><i className="fas fa-key"></i></span>
                                 </div>
-                                <input type="password" name="password" className="form-control" placeholder="password" />
+                                <input 
+                                    type="password" 
+                                    name="password" 
+                                    value={password}
+                                    className="form-control" 
+                                    placeholder="password" 
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div className="input-group mb-2">
                                 <div className="input-group-append">
                                     <span className="input-group-text bg-primary"><i className="fas fa-key"></i></span>
                                 </div>
-                                <input type="password" name="confirmPassword" className="form-control" placeholder="confirm password" />
+                                <input 
+                                    type="password" 
+                                    name="confirmPassword" 
+                                    value={confirmPassword}
+                                    className="form-control" 
+                                    placeholder="confirm password" 
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div className="form-group">
                                 <div className="custom-control custom-checkbox">
