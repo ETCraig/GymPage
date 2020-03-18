@@ -2,7 +2,7 @@ import React from 'react';
 
 const HomeContent = () => (
     <>
-        <header className="d-flex align-items-center position-relative masthead text-white text-center" style={{ height: "70vh", backgroundImage: "url(https://cdn-ami-drupal.heartyhosting.com/sites/muscleandfitness.com/files/styles/full_node_image_1090x614/public/media/dumbbell-press-bench-man-workout-1109.jpg?itok=ux3_zLyy)" }}>
+        <header className="d-flex align-items-center position-relative masthead text-white text-center" style={{ height: "70vh", backgroundSize: "cover", backgroundImage: "url(https://cdn-ami-drupal.heartyhosting.com/sites/muscleandfitness.com/files/styles/full_node_image_1090x614/public/media/dumbbell-press-bench-man-workout-1109.jpg?itok=ux3_zLyy)" }}>
             <div className="overlay"></div>
             <div className="container">
                 <div className="row">

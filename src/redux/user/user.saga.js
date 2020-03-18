@@ -2,16 +2,15 @@ import axios from 'axios';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import UserActionTypes from './user.types';
-import { } from '';
 import {
     loginFailure,
     loginSuccess,
     logoutFailure,
-    logoutSuccess,
+    // logoutSuccess,
     registerFailure,
     registerSuccess
 } from './user.actions';
-import config from '../../utils/api-config';
+import { config } from '../../utils/api-config';
 
 export function* isUserAuthenticated() {
     try {
@@ -53,7 +52,7 @@ export function* register(payload) {
 }
 
 export function* loginAfterRegister({ payload: { user, additionalData } }) {
-    yield setUserAuthStatus(payload);
+    yield setUserAuthStatus(user, additionalData);
 }
 
 export function* onCheckUserSession() {

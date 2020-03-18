@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 const userReducer = (state = INITIAL_STATE, action) => {
     const { type, payload } = action;
     switch (type) {
-        case UserActionTypes.LOGOUT_USER_SUCCESS:
+        case UserActionTypes.LOGIN_USER_SUCCESS:
             return {
                 ...state,
                 currentUser: payload,
