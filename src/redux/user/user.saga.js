@@ -11,10 +11,11 @@ import {
     registerFailure,
     registerSuccess
 } from './user.actions';
+import config from '../../utils/api-config';
 
 export function* isUserAuthenticated() {
     try {
-        
+
     } catch (error) {
         yield put(loginFailure(error));
     }
@@ -26,7 +27,9 @@ export function* setUserAuthStatus(userData) {
 
 export function* login(payload) {
     try {
-
+        const user = yield axios.post('/api/login', payload, config);
+        console.log('USER', user);
+        yield put(loginSuccess({ id: user._id, ...user }));
     } catch (error) {
         yield put(loginFailure(error));
     }
@@ -42,7 +45,8 @@ export function* logout() {
 
 export function* register(payload) {
     try {
-
+        const newUser = yield axios.post('/api/register', payload, config);
+        yield put(registerSuccess(newUser));
     } catch (error) {
         yield put(registerFailure(error));
     }

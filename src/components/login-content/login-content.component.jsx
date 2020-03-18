@@ -8,15 +8,23 @@ import {
     LoginBtn
 } from './login-content.styles';
 
+import { loginStart } from '../../redux/user/user.actions';
+
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const LoginContent = () => {
+const LoginContent = ({ loginStart }) => {
 
     const [credentials, setCredentials] = useState({ email: "", password: "" });
 
+    const { email, password } = credentials;
+
     const handleChange = e => setCredentials({ ...credentials, [e.target.name]: e.target.value });
 
-    const { email, password } = credentials;
+    const handleLogin = e => {
+        e.preventDefault();
+        loginStart(email, password);
+    }
 
     return (
         <div className="container h-100" style={{ marginTop: "150px" }}>
@@ -28,7 +36,7 @@ const LoginContent = () => {
                         </LoginLogoContainer>
                     </div>
                     <LoginCardContainer className="d-flex justify-content-center">
-                        <form>
+                        <form onSubmit={handleLogin}>
                             <div className="input-group mb-3">
                                 <div className="input-group-append primary">
                                     <span className="input-group-text bg-primary"><i className="fas fa-user"></i></span>
@@ -62,7 +70,14 @@ const LoginContent = () => {
                                 </div>
                             </div>
                             <LoginBtnContainer className="d-flex justify-content-center mt-3">
-                                <LoginBtn type="button" name="button" className="btn btn-primary">Login</LoginBtn>
+                                <LoginBtn 
+                                    type="submit" 
+                                    name="button" 
+                                    className="btn btn-primary" 
+                                    onClick={handleLogin}
+                                >
+                                    Login
+                                </LoginBtn>
                             </LoginBtnContainer>
                         </form>
                     </LoginCardContainer>
@@ -81,4 +96,8 @@ const LoginContent = () => {
     );
 }
 
-export default LoginContent;
+const mapDispatchToProps = dispatch => ({
+    loginStart: (email, password) => dispatch(loginStart({ email, password }))
+});
+
+export default connect(null, mapDispatchToProps)(LoginContent);

@@ -8,9 +8,12 @@ import {
     RegisterLogoContainer
 } from './register-content.styles';
 
+import { registerStart } from '../../redux/user/user.actions';
+
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const RegisterContent = () => {
+const RegisterContent = ({ registerStart }) => {
 
     const [credentials, setCredentials] = useState({
         username: "",
@@ -19,14 +22,25 @@ const RegisterContent = () => {
         confirmPassword: ""
     });
 
-    const handleChange = e => setCredentials({ ...credentials, [e.target.name]: e.target.value });
-
     const {
         username,
         email,
         password,
         confirmPassword
     } = credentials;
+
+    const handleChange = e => setCredentials({ ...credentials, [e.target.name]: e.target.value });
+
+    const handleRegister = e => {
+        e.preventDefault();
+
+        if(password !== confirmPassword) {
+            alert('Passwords Do not Match!');
+            return;
+        }
+
+        registerStart(username, email, password);
+    }
 
     return (
         <div className="container h-100" style={{ marginTop: "150px" }}>
@@ -38,17 +52,17 @@ const RegisterContent = () => {
                         </RegisterLogoContainer>
                     </div>
                     <RegisterCardContainer className="d-flex justify-content-center">
-                        <form>
+                        <form onSubmit={handleRegister}>
                             <div className="input-group mb-3">
                                 <div className="input-group-append primary">
                                     <span className="input-group-text bg-primary"><i className="fas fa-user"></i></span>
                                 </div>
-                                <input 
-                                    type="text" 
-                                    name="username" 
+                                <input
+                                    type="text"
+                                    name="username"
                                     value={username}
-                                    className="form-control" 
-                                    placeholder="username" 
+                                    className="form-control"
+                                    placeholder="username"
                                     onChange={handleChange}
                                 />
                             </div>
@@ -56,12 +70,12 @@ const RegisterContent = () => {
                                 <div className="input-group-append primary">
                                     <span className="input-group-text bg-primary"><i className="fas fa-at"></i></span>
                                 </div>
-                                <input 
-                                    type="email" 
-                                    name="email" 
+                                <input
+                                    type="email"
+                                    name="email"
                                     value={email}
-                                    className="form-control" 
-                                    placeholder="email" 
+                                    className="form-control"
+                                    placeholder="email"
                                     onChange={handleChange}
                                 />
                             </div>
@@ -69,12 +83,12 @@ const RegisterContent = () => {
                                 <div className="input-group-append primary">
                                     <span className="input-group-text bg-primary"><i className="fas fa-key"></i></span>
                                 </div>
-                                <input 
-                                    type="password" 
-                                    name="password" 
+                                <input
+                                    type="password"
+                                    name="password"
                                     value={password}
-                                    className="form-control" 
-                                    placeholder="password" 
+                                    className="form-control"
+                                    placeholder="password"
                                     onChange={handleChange}
                                 />
                             </div>
@@ -82,12 +96,12 @@ const RegisterContent = () => {
                                 <div className="input-group-append">
                                     <span className="input-group-text bg-primary"><i className="fas fa-key"></i></span>
                                 </div>
-                                <input 
-                                    type="password" 
-                                    name="confirmPassword" 
+                                <input
+                                    type="password"
+                                    name="confirmPassword"
                                     value={confirmPassword}
-                                    className="form-control" 
-                                    placeholder="confirm password" 
+                                    className="form-control"
+                                    placeholder="confirm password"
                                     onChange={handleChange}
                                 />
                             </div>
@@ -98,7 +112,7 @@ const RegisterContent = () => {
                                 </div>
                             </div>
                             <RegisterBtnContainer className="d-flex justify-content-center mt-3">
-                                <RegisterBtn type="button" name="button" className="btn btn-primary">Register</RegisterBtn>
+                                <RegisterBtn type="submit" name="button" className="btn btn-primary">Register</RegisterBtn>
                             </RegisterBtnContainer>
                         </form>
                     </RegisterCardContainer>
@@ -114,4 +128,8 @@ const RegisterContent = () => {
     );
 }
 
-export default RegisterContent;
+const mapDispatchToProps = dispatch => ({
+    registerStart: credentials => dispatch(registerStart(credentials))
+});
+
+export default connect(null, mapDispatchToProps)(RegisterContent);
