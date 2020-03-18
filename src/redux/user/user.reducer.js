@@ -1,7 +1,8 @@
 import UserActionTypes from './user.types';
 
 const INITIAL_STATE = {
-    currentUser: null
+    currentUser: null,
+    isAuthenticated: false
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -11,12 +12,14 @@ const userReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentUser: payload,
+                isAuthenticated: true,
                 error: null
             }
         case UserActionTypes.LOGOUT_USER_SUCCESS:
             return {
                 ...state,
                 currentUser: null,
+                isAuthenticated: false,
                 error: null
             }
         case UserActionTypes.LOGIN_USER_FAILURE:

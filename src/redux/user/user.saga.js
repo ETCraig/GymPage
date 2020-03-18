@@ -24,11 +24,12 @@ export function* setUserAuthStatus(userData) {
     yield put(loginSuccess({ ...userData }));
 }
 
-export function* login(payload) {
+export function* login({ payload: { email, password } }) {
     try {
-        const user = yield axios.post('/api/login', payload, config);
+        const body = { email, password };
+        const user = yield axios.post('/api/user/login', body, config);
         console.log('USER', user);
-        yield put(loginSuccess({ id: user._id, ...user }));
+        yield put(loginSuccess(user.data));
     } catch (error) {
         yield put(loginFailure(error));
     }

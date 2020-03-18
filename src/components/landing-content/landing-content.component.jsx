@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HomeContent = () => (
+const LandingContent = () => (
     <>
         <header className="d-flex align-items-center position-relative masthead text-white text-center" style={{ height: "70vh", backgroundSize: "cover", backgroundImage: "url(https://cdn-ami-drupal.heartyhosting.com/sites/muscleandfitness.com/files/styles/full_node_image_1090x614/public/media/dumbbell-press-bench-man-workout-1109.jpg?itok=ux3_zLyy)" }}>
             <div className="overlay"></div>
@@ -122,4 +122,4 @@ const HomeContent = () => (
     </>
 );
 
-export default HomeContent;
+export default LandingContent;
