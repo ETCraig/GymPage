@@ -1,43 +1,34 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import './App.css';
 
-import ErrorHandler from './components/error-handler/error-handler.component';
-import Header from './components/header/header.component';
-import Spinner from './components/spinner/spinner.component';
+import Footer from './components/footer/footer.component';
+import HomeFeed from './pages/home-feed/home-feed.component';
+import landing from './pages/landing/landing.component';
+import Login from './pages/login/login.component';
+import Navbar from './components/navbar/navbar.component';
+import Register from './pages/register/register.component';
 
-import { checkUserSession } from './redux/auth/auth.actions';
-import { selectCurrentUser } from './redux/auth/auth.selector';
+import PrivateRoute from './utils/PrivateRoute';
+import { Route, Switch } from 'react-router-dom';
+import setAuthToken from './utils/SetAuthToken';
 
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { Route, Redirect, Switch } from 'react-router-dom';
-
-const AuthContainer = lazy(() => import('./pages/auth-container/auth-container.component'));
-const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
-  const currentUser = false;
   return (
-    <div>
-      <Header />
+    <div className="App">
+      <Navbar />
       <Switch>
-        <ErrorHandler>
-          <Suspense fallback={<Spinner />}>
-            <Route exact path="/" component={HomePage} />
-            <Route exact path="/SignIn" render={() => currentUser ? <Redirect to="/" /> : <AuthContainer />} />
-          </Suspense>
-        </ErrorHandler>
+        <Route exact path="/" component={landing} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
+        <PrivateRoute exact path="/home" component={HomeFeed} />
       </Switch>
+      <Footer />
     </div>
   );
 }
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
-});
-
-const mapDispatchToProps = dispatch => ({
-  checkUserSession: () => dispatch(checkUserSession())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
