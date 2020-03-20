@@ -1,36 +1,36 @@
 import React from 'react';
 
 const Footer = () => (
-    <footer class="footer bg-dark mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-                    <ul class="list-inline mb-2">
-                        <li class="list-inline-item">
+    <footer className="footer bg-dark mt-5">
+        <div className="container">
+            <div className="row">
+                <div className="col-lg-6 h-100 text-center text-lg-left my-auto">
+                    <ul className="list-inline mb-2">
+                        <li className="list-inline-item">
                             <a href="#">About</a>
                         </li>
-                        <li class="list-inline-item">&sdot;</li>
-                        <li class="list-inline-item">
+                        <li className="list-inline-item">&sdot;</li>
+                        <li className="list-inline-item">
                             <a href="#">Contact</a>
                         </li>
                     </ul>
-                    <p class="text-muted small mb-4 mb-lg-0">&copy; GymPage 2020. All Rights Reserved.</p>
+                    <p className="text-muted small mb-4 mb-lg-0">&copy; GymPage 2020. All Rights Reserved.</p>
                 </div>
-                <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
-                    <ul class="list-inline mb-0">
-                        <li class="list-inline-item mr-3">
+                <div className="col-lg-6 h-100 text-center text-lg-right my-auto">
+                    <ul className="list-inline mb-0">
+                        <li className="list-inline-item mr-3">
                             <a href="#">
-                                <i class="fab fa-facebook fa-2x fa-fw"></i>
+                                <i className="fab fa-facebook fa-2x fa-fw"></i>
                             </a>
                         </li>
-                        <li class="list-inline-item mr-3">
+                        <li className="list-inline-item mr-3">
                             <a href="#">
-                                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
+                                <i className="fab fa-twitter-square fa-2x fa-fw"></i>
                             </a>
                         </li>
-                        <li class="list-inline-item">
+                        <li className="list-inline-item">
                             <a href="#">
-                                <i class="fab fa-instagram fa-2x fa-fw"></i>
+                                <i className="fab fa-instagram fa-2x fa-fw"></i>
                             </a>
                         </li>
                     </ul>

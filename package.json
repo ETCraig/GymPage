@@ -39,5 +39,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:4000"
+  "proxy": "http://ec2-13-52-77-223.us-west-1.compute.amazonaws.com:4000"
 }
