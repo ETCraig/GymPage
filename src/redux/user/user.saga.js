@@ -6,21 +6,26 @@ import {
     loginFailure,
     loginSuccess,
     logoutFailure,
-    // logoutSuccess,
+    logoutSuccess,
     registerFailure,
     registerSuccess
 } from './user.actions';
 import { config } from '../../utils/api-config';
+import setAuthToken from '../../utils/SetAuthToken';
 
-export function* isUserAuthenticated() {
-    try {
+// export function* isUserAuthenticated() {
+//     try {
 
-    } catch (error) {
-        yield put(loginFailure(error));
-    }
-}
+//     } catch (error) {
+//         yield put(loginFailure(error));
+//     }
+// }
 
 export function* setUserAuthStatus(userData) {
+    if(localStorage.token) {
+        yield setAuthToken(localStorage.token);
+    }
+
     yield put(loginSuccess({ ...userData }));
 }
 
@@ -37,7 +42,7 @@ export function* login({ payload: { email, password } }) {
 
 export function* logout() {
     try {
-
+        yield put(logoutSuccess());
     } catch (error) {
         yield put(logoutFailure(error));
     }
@@ -79,7 +84,7 @@ export function* onRegisterSuccess() {
 export function* userSagas() {
     yield all([
         call(onLoginStart),
-        call(isUserAuthenticated),
+        // call(isUserAuthenticated),
         call(onLogoutStart),
         call(onRegisterStart),
         call(onRegisterSuccess)
