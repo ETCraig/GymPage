@@ -8,8 +8,12 @@ import Navbar from './components/navbar/navbar.component';
 import Register from './pages/register/register.component';
 
 import PrivateRoute from './utils/PrivateRoute';
-
 import { Route, Switch } from 'react-router-dom';
+import setAuthToken from './utils/SetAuthToken';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
   return (
