@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 
+import Footer from './components/footer/footer.component';
 import HomeFeed from './pages/home-feed/home-feed.component';
 import landing from './pages/landing/landing.component';
 import Login from './pages/login/login.component';
@@ -25,6 +26,7 @@ const App = () => {
         <Route exact path="/register" component={Register} />
         <PrivateRoute exact path="/home" component={HomeFeed} />
       </Switch>
+      <Footer />
     </div>
   );
 }

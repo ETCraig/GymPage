@@ -63,9 +63,9 @@ const LandingContent = () => (
                         <h3 className="mt-3 text-red h4">Smash your Goals</h3>
                         <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.</p>
                     </div>
-                    <div className="col-12 pt-3">
+                    {/* <div className="col-12 pt-3">
                         <a className="btn bg-red text-white" target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Neuschwanstein_Castle" role="button">Learn More →</a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>
@@ -76,33 +76,33 @@ const LandingContent = () => (
 
                     <img className="col-lg-6 order-lg-2 text-white showcase-img" alt="home-showcase" src="https://images.theconversation.com/files/135964/original/image-20160830-28213-1nhm6d8.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=496&fit=clip" />
                     <div className="col-lg-6 order-lg-1 my-auto showcase-text">
-                        <h2>Fully Responsive Design</h2>
-                        <p className="lead mb-0">When you use a theme created by Start Bootstrap, you know that the theme will look great on any device, whether it's a phone, tablet, or desktop the page will behave responsively!</p>
+                        <h2>Easy To Use & Customize</h2>
+                        <p className="lead mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga necessitatibus ut architecto qui delectus ea aut asperiores a, ullam atque quia animi illum accusantium.</p>
                     </div>
                 </div>
                 <div className="row no-gutters">
                     <img className="col-lg-6 text-white showcase-img" alt="home-showcase" src="https://images.theconversation.com/files/135964/original/image-20160830-28213-1nhm6d8.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=496&fit=clip" />
                     <div className="col-lg-6 my-auto showcase-text">
-                        <h2>Updated For Bootstrap 4</h2>
-                        <p className="lead mb-0">Newly improved, and full of great utility classNamees, Bootstrap 4 is leading the way in mobile responsive web development! All of the themes on Start Bootstrap are now using Bootstrap 4!</p>
+                        <h2>Created For All Workouts</h2>
+                        <p className="lead mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga necessitatibus ut architecto qui delectus ea aut asperiores a, ullam atque quia animi illum accusantium.</p>
                     </div>
                 </div>
                 <div className="row no-gutters">
                     <img className="col-lg-6 order-lg-2 text-white showcase-img" alt="home-showcase" src="https://images.theconversation.com/files/135964/original/image-20160830-28213-1nhm6d8.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=496&fit=clip" />
                     <div className="col-lg-6 order-lg-1 my-auto showcase-text">
-                        <h2>Easy to Use &amp; Customize</h2>
-                        <p className="lead mb-0">Landing Page is just HTML and CSS with a splash of SCSS for users who demand some deeper customization options. Out of the box, just add your content and images, and your new landing page will be ready to go!</p>
+                        <h2>Detailed Analytics & Graphs</h2>
+                        <p className="lead mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga necessitatibus ut architecto qui delectus ea aut asperiores a, ullam atque quia animi illum accusantium.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section className="call-to-action text-white text-center">
+        <section className="call-to-action text-white text-center mt-5">
             <div className="overlay"></div>
             <div className="container">
                 <div className="row">
                     <div className="col-xl-9 mx-auto">
-                        <h2 className="mb-4">Ready to get started? Sign up now!</h2>
+                        <h2 className="mb-4">Ready to learn more?</h2>
                     </div>
                     <div className="col-md-10 col-lg-8 col-xl-7 mx-auto">
                         <form>
@@ -111,7 +111,7 @@ const LandingContent = () => (
                                     <input type="email" className="form-control form-control-lg" placeholder="Enter your email..." />
                                 </div>
                                 <div className="col-12 col-md-3">
-                                    <button type="submit" className="btn btn-block btn-lg btn-primary">Sign up!</button>
+                                    <button type="submit" className="btn btn-block btn-lg btn-primary">Reach out!</button>
                                 </div>
                             </div>
                         </form>

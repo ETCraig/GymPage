@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Footer = () => (
-    <footer class="footer bg-light">
+    <footer class="footer bg-dark mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
@@ -13,16 +13,8 @@ const Footer = () => (
                         <li class="list-inline-item">
                             <a href="#">Contact</a>
                         </li>
-                        <li class="list-inline-item">&sdot;</li>
-                        <li class="list-inline-item">
-                            <a href="#">Terms of Use</a>
-                        </li>
-                        <li class="list-inline-item">&sdot;</li>
-                        <li class="list-inline-item">
-                            <a href="#">Privacy Policy</a>
-                        </li>
                     </ul>
-                    <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2019. All Rights Reserved.</p>
+                    <p class="text-muted small mb-4 mb-lg-0">&copy; GymPage 2020. All Rights Reserved.</p>
                 </div>
                 <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
                     <ul class="list-inline mb-0">
