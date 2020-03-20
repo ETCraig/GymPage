@@ -1,1 +1,1 @@
-export default API = "http://ec2-13-52-77-223.us-west-1.compute.amazonaws.com:4000"
+export const API = "http://ec2-13-52-77-223.us-west-1.compute.amazonaws.com:4000"

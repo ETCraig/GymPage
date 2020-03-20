@@ -12,7 +12,7 @@ import {
 } from './user.actions';
 import { config } from '../../utils/api-config';
 import setAuthToken from '../../utils/SetAuthToken';
-import API from '../../utils/api';
+import { API } from '../../utils/api';
 
 // export function* isUserAuthenticated() {
 //     try {
@@ -23,7 +23,7 @@ import API from '../../utils/api';
 // }
 
 export function* setUserAuthStatus(userData) {
-    if(localStorage.token) {
+    if (localStorage.token) {
         yield setAuthToken(localStorage.token);
     }
 
