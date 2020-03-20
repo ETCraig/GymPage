@@ -12,6 +12,7 @@ import {
 } from './user.actions';
 import { config } from '../../utils/api-config';
 import setAuthToken from '../../utils/SetAuthToken';
+import API from '../../utils/api';
 
 // export function* isUserAuthenticated() {
 //     try {
@@ -32,7 +33,7 @@ export function* setUserAuthStatus(userData) {
 export function* login({ payload: { email, password } }) {
     try {
         const body = { email, password };
-        const user = yield axios.post('/api/user/login', body, config);
+        const user = yield axios.post(`${API}/api/user/login`, body, config);
         console.log('USER', user);
         yield put(loginSuccess(user.data));
     } catch (error) {
@@ -50,7 +51,7 @@ export function* logout() {
 
 export function* register(payload) {
     try {
-        const newUser = yield axios.post('/api/register', payload, config);
+        const newUser = yield axios.post(`${API}/api/register`, payload, config);
         yield put(registerSuccess(newUser));
     } catch (error) {
         yield put(registerFailure(error));
