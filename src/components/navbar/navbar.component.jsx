@@ -10,10 +10,10 @@ const Navbar = ({ isAuthenticated, logoutStart }) => {
     const authLinks = (
         <>
             <li className="nav-item">
-                <Link to="/" className="nav-link">Home</Link>
+                <Link to="/home" className="nav-link">Home</Link>
             </li>
             <li className="nav-item">
-                <Link to="/" className="nav-link">Exercises</Link>
+                <Link to="/muscles" className="nav-link">Exercises</Link>
             </li>
             <li className="nav-item">
                 <Link to="/" className="nav-link">Routines</Link>
